@@ -1,0 +1,12 @@
+{
+  "name": "ynab-banco-industrial-gt-operator",
+  "private": true,
+  "author": {
+    "name": "Carlos González",
+    "email": "carlos.rgn@gmail.com"
+  },
+  "keywords": [],
+  "scripts": {
+    "dev": "pnpm -r dev"
+  }
+}
