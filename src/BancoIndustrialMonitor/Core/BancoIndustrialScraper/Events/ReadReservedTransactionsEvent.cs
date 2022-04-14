@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BancoIndustrialMonitor.Application.BIScraper.Models;
 
 namespace BancoIndustrialMonitor.Application.BIScraper.Events;

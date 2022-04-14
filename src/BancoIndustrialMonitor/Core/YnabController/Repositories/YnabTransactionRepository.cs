@@ -35,8 +35,10 @@ public class YnabTransactionRepository
 
   public async Task<IList<YnabTransaction>> GetRecent()
   {
-    var sinceDate =
-      DateOnly.FromDateTime(DateTime.Now).AddDays(-40).ToString("o");
+    var lastMonth = DateTime.Now.AddMonths(-2);
+    var sinceDate = DateOnly
+      .FromDateTime(new(lastMonth.Year, lastMonth.Month, 1))
+      .ToString("o");
     var json = await _httpClient
       .Request(
         $"budgets/{_options.BudgetId}/accounts/{_options.AccountId}/transactions")
@@ -82,13 +84,20 @@ public class YnabTransactionRepository
   private readonly Dictionary<string, Dictionary<string, dynamic>>
     _pendingUpdates = new();
 
-  public void AddPendingUpdate(string ynabTxId, string key, dynamic? value)
+  private void AddPendingUpdate(string ynabTxId, string key, dynamic? value)
   {
     if (!_pendingUpdates.ContainsKey(ynabTxId)) {
       _pendingUpdates.Add(ynabTxId, new() {{"id", ynabTxId}});
     }
 
     _pendingUpdates[ynabTxId].Add(key: key, value: value);
+  }
+
+  private void AddPendingUpdate(string ynabTxId, object dict)
+  {
+    foreach (var property in dict.GetType().GetProperties()) {
+      AddPendingUpdate(ynabTxId, property.Name, property.GetValue(dict));
+    }
   }
 
   private async Task<int> CommitPendingUpdates()
@@ -166,6 +175,23 @@ public class YnabTransactionRepository
       description);
     var (payeeId, categoryId) =
       GetPayeeAndCategoryForDescription(description, recentTransactions);
+
+    // see if there is a scheduled ynab transaction we should be replacing
+    if (payeeId != null && categoryId != null) {
+      var txGeneratedFromSchedule = recentTransactions.FirstOrDefault(ynabTx =>
+        ynabTx.PayeeId == payeeId &&
+        ynabTx.CategoryId == categoryId && ynabTx.Memo == "" &&
+        !ynabTx.Approved);
+      if (txGeneratedFromSchedule != null) {
+        AddPendingUpdate(txGeneratedFromSchedule.Id, new {
+          date = date.ToString("o"),
+          amount = ynabAmount,
+          memo = metadata.SerializeMemo(),
+        });
+        return true;
+      }
+    }
+
     _pendingCreations.Add(new {
       account_id = _options.AccountId,
       date = date.ToString("o"),
@@ -204,5 +230,10 @@ public class YnabTransactionRepository
   public void UpdateTransactionCategory(string ynabTxId, string? categoryId)
   {
     AddPendingUpdate(ynabTxId, "category_id", categoryId);
+  }
+
+  public void UpdateTransactionDate(string ynabTxId, DateOnly date)
+  {
+    AddPendingUpdate(ynabTxId, "date", date.ToString("o"));
   }
 }

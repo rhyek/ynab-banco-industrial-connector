@@ -7,6 +7,6 @@
   },
   "keywords": [],
   "scripts": {
-    "dev": "pnpm -r dev"
+    "dev": "pnpm -r start"
   }
 }

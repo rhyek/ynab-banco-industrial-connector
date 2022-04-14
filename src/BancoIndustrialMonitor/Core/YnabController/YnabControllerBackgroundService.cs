@@ -47,11 +47,11 @@ public class YnabControllerBackgroundService : BackgroundService
     CancellationToken stoppingToken)
   {
     while (!stoppingToken.IsCancellationRequested) {
-      var readdReservedTransactionsEvent =
+      var readReservedTransactionsEvent =
         await _readReservedTransactionsEventChannel.Reader.ReadAsync(
           stoppingToken);
       var recentYnabTransactions = await _ynabTransactionRepository.GetRecent();
-      foreach (var reservedTx in readdReservedTransactionsEvent
+      foreach (var reservedTx in readReservedTransactionsEvent
                  .ReservedTransactions) {
         var (reference, date, amount) = reservedTx;
         var ynabTx =
@@ -115,12 +115,29 @@ public class YnabControllerBackgroundService : BackgroundService
           confirmedTx.Description != "MOVIM. EN DOLARES ELECTRON"
             ? confirmedTx.Description
             : ynabTx.Metadata.Description;
-
-        if (ynabTx.Metadata.Description != finalDescription) {
+        var whatMetadataShouldBe = new YnabTransactionMetadata(
+          reference: confirmedTx.Reference,
+          auto: ynabTx.Metadata.Auto,
+          description: finalDescription,
+          myDescription: ynabTx.Metadata.MyDescription,
+          overrideDate: ynabTx.Metadata.OverrideDate
+        );
+        if (ynabTx.Metadata != whatMetadataShouldBe) {
           _ynabTransactionRepository.UpdateTransactionMetadata(ynabTx.Id,
-            new(confirmedTx.Reference, ynabTx.Metadata.Auto,
-              confirmedTx.Description));
+            whatMetadataShouldBe);
         }
+
+        // if (ynabTx.Metadata.OverrideDate.HasValue) {
+        //   if (DateOnly.FromDateTime(ynabTx.Date) !=
+        //       ynabTx.Metadata.OverrideDate.Value) {
+        //     _ynabTransactionRepository.UpdateTransactionDate(ynabTx.Id,
+        //       ynabTx.Metadata.OverrideDate.Value);
+        //   }
+        // }
+        // else if (DateOnly.FromDateTime(ynabTx.Date) != confirmedTx.Date) {
+        //   _ynabTransactionRepository.UpdateTransactionDate(ynabTx.Id,
+        //     confirmedTx.Date);
+        // }
 
         var (payeeId, categoryId) =
           YnabTransactionRepository.GetPayeeAndCategoryForDescription(

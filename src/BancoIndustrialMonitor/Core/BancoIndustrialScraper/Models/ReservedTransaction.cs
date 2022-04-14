@@ -1,3 +1,5 @@
+using System;
+
 namespace BancoIndustrialMonitor.Application.BIScraper.Models;
 
 public record ReservedTransaction (

@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Playwright;
 
 namespace BancoIndustrialMonitor.Application.BIScraper.Interfaces;

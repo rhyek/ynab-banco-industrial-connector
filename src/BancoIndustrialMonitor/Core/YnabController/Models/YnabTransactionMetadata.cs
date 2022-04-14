@@ -1,17 +1,32 @@
 namespace BancoIndustrialMonitor.Application.YnabController.Models;
 
 public record YnabTransactionMetadata
-(
-  string? Reference,
-  bool Auto,
-  string? Description
-)
 {
+  public string? Reference { get; init; }
+  public bool Auto { get; init; }
+  public string? Description { get; init; }
+  public string? MyDescription { get; init; }
+  public DateOnly? OverrideDate { get; init; }
+
+  public YnabTransactionMetadata(string? reference, bool auto,
+    string? description, string? myDescription = null,
+    DateOnly? overrideDate = null)
+  {
+    Reference = reference;
+    Auto = auto;
+    Description = description?.Replace(";", "_");
+    MyDescription = myDescription?.Replace(";", "_");
+    OverrideDate = overrideDate;
+  }
+
   public static YnabTransactionMetadata DeserializeMemo(string memo)
   {
     string? reference = null;
     string? description = null;
+    string? myDescription = null;
+    DateOnly? overrideDate = null;
     var auto = false;
+
     memo.Split(";")
       .Select(part => part.Trim())
       .Where(part => part != string.Empty)
@@ -28,14 +43,20 @@ public record YnabTransactionMetadata
             case "desc" or "description":
               description = value;
               break;
+            case "mydesc" or "midesc":
+              myDescription = value;
+              break;
             case "auto":
               auto = value == "1";
+              break;
+            case "ovrddate":
+              overrideDate = DateOnly.Parse(value);
               break;
           }
         }
       });
     return new(reference, auto,
-      description);
+      description, myDescription, overrideDate);
   }
 
   public string SerializeMemo()
@@ -46,6 +67,12 @@ public record YnabTransactionMetadata
     }
     if (Description != null) {
       dict.Add("desc", Description);
+    }
+    if (!string.IsNullOrWhiteSpace(MyDescription)) {
+      dict.Add("mydesc", MyDescription);
+    }
+    if (OverrideDate.HasValue) {
+      dict.Add("ovrddate", OverrideDate.Value.ToString("o"));
     }
     dict.Add("auto", Auto ? "1" : "0");
     var memo = string

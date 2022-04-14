@@ -1,8 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Channels;
+using System.Threading.Tasks;
 using BancoIndustrialMonitor.Application.BIScraper.Events;
 using BancoIndustrialMonitor.Application.BIScraper.Interfaces;
 using BancoIndustrialMonitor.Application.BIScraper.Models;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 
@@ -16,6 +22,8 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
   private readonly Channel<ReadConfirmedTransactionsEvent>
     _readConfirmedTransactionsEventChannel;
 
+  private readonly MemoryCache _cache = new(new MemoryCacheOptions());
+
   public ConfirmedTransactionsMonitorJob(
     ILogger<ConfirmedTransactionsMonitorJob> logger,
     Channel<ReadConfirmedTransactionsEvent>
@@ -27,10 +35,12 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
       readConfirmedTransactionsEventChannel;
   }
 
-  public async Task Run(IPage page, IElementHandle accountCell,
+  private async Task<IList<ConfirmedTransaction>> GetConfirmedTransactions(
+    IPage page, IElementHandle accountCell,
     CancellationToken cancellationToken)
   {
     _logger.LogInformation("Reading confirmed transactions...");
+
     var confirmedTransactions = new List<ConfirmedTransaction>();
     if (await accountCell.EvaluateHandleAsync(@"
       (element) =>
@@ -143,7 +153,7 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
         // only go back to month list if it's the first run
         if (iteration == 1) {
           var goBackButton =
-            (await page.WaitForSelectorAsync("text=\"Regresar\""))!;
+            (await page.WaitForSelectorAsync("button:has-text(\"Regresar\")"))!;
           await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
           await goBackButton.ClickAsync();
         }
@@ -154,6 +164,19 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
 
     confirmedTransactions =
       confirmedTransactions.OrderBy((t) => t.Date).ToList();
+
+    return confirmedTransactions;
+  }
+
+  public async Task Run(IPage page, IElementHandle accountCell,
+    CancellationToken cancellationToken)
+  {
+    var confirmedTransactions = await _cache.GetOrCreateAsync(
+      "confirmedTransactions",
+      cacheEntry => {
+        cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
+        return GetConfirmedTransactions(page, accountCell, cancellationToken);
+      });
 
     await _readConfirmedTransactionsEventChannel.Writer.WriteAsync(
       new(confirmedTransactions), cancellationToken);

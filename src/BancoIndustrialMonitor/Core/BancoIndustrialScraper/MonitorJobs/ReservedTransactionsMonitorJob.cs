@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Channels;
+using System.Threading.Tasks;
 using BancoIndustrialMonitor.Application.BIScraper.Events;
 using BancoIndustrialMonitor.Application.BIScraper.Interfaces;
 using BancoIndustrialMonitor.Application.BIScraper.Models;

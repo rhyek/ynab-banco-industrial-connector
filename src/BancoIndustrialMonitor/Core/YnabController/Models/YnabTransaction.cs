@@ -18,6 +18,7 @@ public record YnabTransaction
   decimal Amount,
   string Memo,
   string Cleared,
+  bool Approved,
   [JsonProperty("payee_id")]
   string? PayeeId,
   [JsonProperty("category_id")]

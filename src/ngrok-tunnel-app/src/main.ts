@@ -12,10 +12,18 @@ import { config as dotenv } from 'dotenv';
     debug: true,
   });
   // ngrok http --region=us --hostname=ynab-controller.rhyek.ngrok.io 80
-  const url = await ngrok.connect({
-    authtoken: process.env['DEV_NGROK_AUTH_TOKEN'],
-    addr: 3700,
-    subdomain: 'ynab-controller.rhyek',
-  });
-  console.log(`ngrok tunnel available at ${url}`);
+  while (true) {
+    try {
+      const url = await ngrok.connect({
+        authtoken: process.env['DEV_NGROK_AUTH_TOKEN'],
+        addr: 3700,
+        subdomain: 'ynab-controller.rhyek',
+      });
+      console.log(`ngrok tunnel available at ${url}`);
+      break;
+    } catch (error) {
+      console.error(error);
+      await new Promise((resolve) => setTimeout(resolve, 2_000));
+    }
+  }
 })();
