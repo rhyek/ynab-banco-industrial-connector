@@ -8,5 +8,8 @@
   "keywords": [],
   "scripts": {
     "dev": "pnpm -r start"
+  },
+  "devDependencies": {
+    "dotenv-cli": "~5.1.0"
   }
 }

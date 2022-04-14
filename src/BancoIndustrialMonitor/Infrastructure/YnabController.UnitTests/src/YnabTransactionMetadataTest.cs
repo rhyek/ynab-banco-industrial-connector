@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.YnabApiResponses;
 using Xunit;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController.UnitTests;
 

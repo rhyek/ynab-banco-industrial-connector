@@ -3,7 +3,7 @@
 using Newtonsoft.Json;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
+  Models;
 
 public static class YnabTransactionCleared
 {

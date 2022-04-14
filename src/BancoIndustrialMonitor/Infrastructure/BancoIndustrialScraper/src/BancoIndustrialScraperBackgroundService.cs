@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Playwright;
+using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Events;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Interfaces;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.MonitorJobs;
@@ -120,6 +121,9 @@ public class BancoIndustrialScraperBackgroundService : BackgroundService
         "Attempt: {Attempts}. Pending jobs: {PendingCount}",
         attempts, pendingJobs.Count);
       _logger.LogInformation("Logging in to bank...");
+      if (_options.Auth == null) {
+        throw new Exception("Options are null");
+      }
       try {
         var page = await browser.NewPageAsync();
         await page.GotoAsync(

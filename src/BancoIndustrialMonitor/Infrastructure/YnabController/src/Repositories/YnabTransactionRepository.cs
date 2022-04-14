@@ -6,8 +6,7 @@ using Flurl.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController.
   Repositories;

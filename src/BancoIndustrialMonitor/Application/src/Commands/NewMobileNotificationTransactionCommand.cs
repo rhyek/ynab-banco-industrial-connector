@@ -1,11 +1,10 @@
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Commands;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
 using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 
 namespace YnabBancoIndustrialConnector.Application.Commands;
 
@@ -18,7 +17,7 @@ public class
   NewMobileNotificationTransactionCommandHandler : IRequestHandler<
     NewMobileNotificationTransactionCommand>
 {
-  private readonly YnabControllerOptions _options;
+  private readonly ApplicationOptions _options;
 
   private readonly ILogger<NewMobileNotificationTransactionCommandHandler>
     _logger;
@@ -28,7 +27,7 @@ public class
   private readonly YnabTransactionRepository _ynabTransactionRepository;
 
   public NewMobileNotificationTransactionCommandHandler(
-    IOptions<YnabControllerOptions> options,
+    IOptions<ApplicationOptions> options,
     ILogger<NewMobileNotificationTransactionCommandHandler> logger,
     IMediator mediator,
     YnabTransactionRepository ynabTransactionRepository
@@ -57,7 +56,7 @@ public class
     if (mobileNotificationTx != null
         && mobileNotificationTx.Origin == TransactionOrigin.Establishment
         && mobileNotificationTx.Account == _options
-          .BiMobileNotificationAccountNameForEstablishmentTransactions) {
+          .BancoIndustrialMobileNotificationAccountNameForEstablishmentTransactions) {
       var amount = mobileNotificationTx.Currency == "Q"
         ? 0
         : mobileNotificationTx.Type == TransactionType.Debit

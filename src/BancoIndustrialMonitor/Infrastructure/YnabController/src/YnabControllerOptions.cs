@@ -1,5 +1,4 @@
-namespace YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
+namespace YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 public class YnabControllerOptions
 {

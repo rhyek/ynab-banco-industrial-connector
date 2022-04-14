@@ -1,13 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using System.Threading.Channels;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Events;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController;
 

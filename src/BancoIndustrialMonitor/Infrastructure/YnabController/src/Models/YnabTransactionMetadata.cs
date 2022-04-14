@@ -1,5 +1,5 @@
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
+  Models;
 
 public record YnabTransactionMetadata
 {

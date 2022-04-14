@@ -1,5 +1,4 @@
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.
-  YnabApiResponses;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 
 // in typescript this could be done inline/anonymously
 // <{ data: { transactions: TransactionModel[] } }>

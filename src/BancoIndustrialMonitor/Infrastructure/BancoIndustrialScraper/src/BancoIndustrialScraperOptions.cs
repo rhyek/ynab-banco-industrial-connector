@@ -1,4 +1,4 @@
-namespace YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.Models;
+namespace YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
 
 public class BancoIndustrialScraperOptions
 {
@@ -11,7 +11,7 @@ public class BancoIndustrialScraperOptions
     public string Password { get; set; } = default!;
   }
 
-  public BancoIndustrialScraperOptionsAuth Auth { get; set; } = default!;
+  public BancoIndustrialScraperOptionsAuth? Auth { get; set; }
 
   public string AccountId { get; set; } = default!;
 }

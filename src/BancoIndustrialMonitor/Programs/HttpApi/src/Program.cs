@@ -14,7 +14,14 @@ builder.Services.AddControllers();
 // builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 
-builder.Services.ConfigureOptionsFromEnvs();
+if (builder.Environment.IsDevelopment()) {
+  Console.WriteLine("Loading .env");
+  DotNetEnv.Env.TraversePath().Load();
+  // this is normally done automatically, but we need to re-run it
+  // due to our loading the .env file post startup
+  builder.Configuration.AddEnvironmentVariables();
+}
+builder.Services.ConfigureOptions(builder.Configuration);
 
 const string corsPolicy = "MyCorsPolicy";
 builder.Services.AddCors(options =>
@@ -25,11 +32,6 @@ builder.Services.AddYnabController();
 builder.Services.AddApplication();
 
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment()) {
-  Console.WriteLine("Loading .env");
-  DotNetEnv.Env.TraversePath().Load();
-}
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
