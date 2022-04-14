@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoIndustrialScraper", "Core\BancoIndustrialScraper\BancoIndustrialScraper.csproj", "{DEFABECC-6CB2-432E-8D53-6FB876BD7AFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoIndustrialScraper", "Infrastructure\BancoIndustrialScraper\BancoIndustrialScraper.csproj", "{DEFABECC-6CB2-432E-8D53-6FB876BD7AFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpApi", "Programs\HttpApi\HttpApi.csproj", "{AB289BCF-F7C2-4ED8-8908-2E3DF5D3167A}"
 EndProject
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Programs", "Programs", "{01
 		Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.assets.cache = Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.assets.cache
 		Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.dll = Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.dll
 		Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.genruntimeconfig.cache = Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.genruntimeconfig.cache
-		Programs\HttpApi.UnitTests\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs = Programs\HttpApi.UnitTests\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
+		Programs\HttpApi.UnitTests\obj\Debug\net6.0\.NETCoreApp,Version = v6.0.AssemblyAttributes.cs = Programs\HttpApi.UnitTests\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
 		Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.pdb = Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.pdb
 		Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.csproj.CopyComplete = Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.csproj.CopyComplete
 		Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.AssemblyInfo.cs = Programs\HttpApi.UnitTests\obj\Debug\net6.0\HttpApi.UnitTests.AssemblyInfo.cs
@@ -1049,11 +1049,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Programs", "Programs", "{01
 		Programs\HttpApi.UnitTests\ParseMobileNotificationsTests.cs = Programs\HttpApi.UnitTests\ParseMobileNotificationsTests.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabController", "Core\YnabController\YnabController.csproj", "{E1EE74F7-7A25-471D-967E-9D0BE19CB8B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabController", "Infrastructure\YnabController\YnabController.csproj", "{E1EE74F7-7A25-471D-967E-9D0BE19CB8B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabController.UnitTests", "Application\YnabController.UnitTests\YnabController.UnitTests.csproj", "{D2C14C66-DBC9-4D35-9B28-B935D76ECA0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIMonitor.UnitTests", "Application\BIMonitor.UnitTests\BIMonitor.UnitTests.csproj", "{62A6AA5D-C649-4171-BB67-DA8F291E288D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoIndustrialScraper.UnitTests", "Infrastructure\BancoIndustrialScraper.UnitTests\BancoIndustrialScraper.UnitTests.csproj", "{9D11A05C-6F30-42E9-AD72-405A12F643FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YnabController.UnitTests", "Infrastructure\YnabController.UnitTests\YnabController.UnitTests.csproj", "{AB849796-516D-4FC2-9E37-71423AA4097C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{19CD11EA-2B8B-4DB3-B8CC-4759467A5726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1088,5 +1094,17 @@ Global
 		{62A6AA5D-C649-4171-BB67-DA8F291E288D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62A6AA5D-C649-4171-BB67-DA8F291E288D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62A6AA5D-C649-4171-BB67-DA8F291E288D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D11A05C-6F30-42E9-AD72-405A12F643FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D11A05C-6F30-42E9-AD72-405A12F643FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D11A05C-6F30-42E9-AD72-405A12F643FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D11A05C-6F30-42E9-AD72-405A12F643FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB849796-516D-4FC2-9E37-71423AA4097C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB849796-516D-4FC2-9E37-71423AA4097C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB849796-516D-4FC2-9E37-71423AA4097C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB849796-516D-4FC2-9E37-71423AA4097C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19CD11EA-2B8B-4DB3-B8CC-4759467A5726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CD11EA-2B8B-4DB3-B8CC-4759467A5726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CD11EA-2B8B-4DB3-B8CC-4759467A5726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19CD11EA-2B8B-4DB3-B8CC-4759467A5726}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

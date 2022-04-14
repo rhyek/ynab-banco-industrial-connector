@@ -14,12 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\BancoIndustrialScraper\BancoIndustrialScraper.csproj" />
-    <ProjectReference Include="..\..\Core\YnabController\YnabController.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models" />
+    <ProjectReference Include="..\..\Application\Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BancoIndustrialScraper\BancoIndustrialScraper.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\YnabController\YnabController.csproj" />
   </ItemGroup>
 
 </Project>
