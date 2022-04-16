@@ -1,8 +1,8 @@
-using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.Models;
+namespace YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.
+  Models;
 
 public enum TransactionType
 {

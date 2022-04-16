@@ -20,8 +20,6 @@
 
     <ItemGroup>
       <PackageReference Include="Flurl.Http" Version="3.2.2" />
-      <PackageReference Include="MediatR" Version="10.0.1" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     </ItemGroup>
 
     <ItemGroup>

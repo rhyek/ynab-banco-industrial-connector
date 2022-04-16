@@ -1,8 +1,6 @@
-using System;
-
 namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
 
-public record ConfirmedTransaction (
+public record ConfirmedBankTransaction (
   DateOnly Date,
   string Description,
   string Reference,

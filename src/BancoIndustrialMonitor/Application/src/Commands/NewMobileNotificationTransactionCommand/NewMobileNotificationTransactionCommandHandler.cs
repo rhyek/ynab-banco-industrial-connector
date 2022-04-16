@@ -1,45 +1,40 @@
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Commands;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
-using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.Models;
+using YnabBancoIndustrialConnector.Infrastructure.BIScraper;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
+using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
 
 namespace YnabBancoIndustrialConnector.Application.Commands;
 
-public class NewMobileNotificationTransactionCommand : IRequest
-{
-  public string MobileNotificationText { get; init; } = default!;
-}
-
 public class
   NewMobileNotificationTransactionCommandHandler : IRequestHandler<
-    NewMobileNotificationTransactionCommand>
+    NewMobileNotificationTransactionCommand, MobileNotificationTransaction?>
 {
   private readonly ApplicationOptions _options;
-
   private readonly ILogger<NewMobileNotificationTransactionCommandHandler>
     _logger;
-
-  private readonly IMediator _mediator;
-
+  private readonly BancoIndustrialScraperService _bancoIndustrialScraperService;
   private readonly YnabTransactionRepository _ynabTransactionRepository;
+  private readonly YnabControllerService _ynabControllerService;
 
   public NewMobileNotificationTransactionCommandHandler(
     IOptions<ApplicationOptions> options,
     ILogger<NewMobileNotificationTransactionCommandHandler> logger,
-    IMediator mediator,
-    YnabTransactionRepository ynabTransactionRepository
-  )
+    BancoIndustrialScraperService bancoIndustrialScraperService,
+    YnabTransactionRepository ynabTransactionRepository,
+    YnabControllerService ynabControllerService)
   {
     _options = options.Value;
     _logger = logger;
-    _mediator = mediator;
     _ynabTransactionRepository = ynabTransactionRepository;
+    _ynabControllerService = ynabControllerService;
+    _bancoIndustrialScraperService = bancoIndustrialScraperService;
   }
 
-  public async Task<Unit> Handle(
+  public async Task<MobileNotificationTransaction?> Handle(
     NewMobileNotificationTransactionCommand request,
     CancellationToken cancellationToken)
   {
@@ -62,19 +57,25 @@ public class
         : mobileNotificationTx.Type == TransactionType.Debit
           ? -mobileNotificationTx.Amount
           : mobileNotificationTx.Amount;
-      if (await _ynabTransactionRepository.CreateTransaction(
-            reference: mobileNotificationTx.Reference,
-            amount: amount,
-            date: DateOnly.FromDateTime(mobileNotificationTx.DateTime),
-            cleared: YnabTransactionCleared.Uncleared,
-            description: mobileNotificationTx.Description)) {
+      var wasCreated = await _ynabTransactionRepository.CreateTransaction(
+        reference: mobileNotificationTx.Reference,
+        amount: amount,
+        date: DateOnly.FromDateTime(mobileNotificationTx.DateTime),
+        cleared: YnabTransactionCleared.Uncleared,
+        description: mobileNotificationTx.Description);
+      if (wasCreated) {
         await _ynabTransactionRepository.CommitChanges();
-        await _mediator.Send(
-          new RequestReadTransactionsCommand(ReadTransactionsType.Reserved),
-          cancellationToken);
+        var reservedBankTxs =
+          await _bancoIndustrialScraperService.ScrapeReservedTransactions(
+            cancellationToken);
+        if (reservedBankTxs != null) {
+          await _ynabControllerService.ProcessReservedBankTransactions(
+            reservedBankTxs,
+            cancellationToken);
+        }
       }
     }
 
-    return Unit.Value;
+    return mobileNotificationTx;
   }
 }

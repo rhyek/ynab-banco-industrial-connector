@@ -1,36 +1,25 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Events;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Interfaces;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper.MonitorJobs;
 
-public class ReservedTransactionsMonitorJob : IMonitorJob
+public class
+  ReservedTransactionsScraperJob : IScraperJob<IList<ReservedBankTransaction>>
 {
-  private readonly ILogger<ReservedTransactionsMonitorJob>
+  private readonly ILogger<ReservedTransactionsScraperJob>
     _logger;
 
-  private readonly Channel<ReadReservedTransactionsEvent>
-    _readReservedTransactionsEventChannel;
-
-  public ReservedTransactionsMonitorJob(
-    ILogger<ReservedTransactionsMonitorJob> logger,
-    Channel<ReadReservedTransactionsEvent>
-      readReservedTransactionsEventChannel
+  public ReservedTransactionsScraperJob(
+    ILogger<ReservedTransactionsScraperJob> logger
   )
   {
     _logger = logger;
-    _readReservedTransactionsEventChannel =
-      readReservedTransactionsEventChannel;
   }
 
-  public async Task Run(IPage page, IElementHandle accountCell,
+  public async Task<IList<ReservedBankTransaction>> Run(IPage page,
+    IElementHandle accountCell,
     CancellationToken cancellationToken)
   {
     _logger.LogInformation("Reading reserved transactions...");
@@ -86,15 +75,14 @@ public class ReservedTransactionsMonitorJob : IMonitorJob
             };
           })))
         .Where(t => t.status.ToUpper() == "VIGENTE")
-        .Select(t => new ReservedTransaction(t.reference,
+        .Select(t => new ReservedBankTransaction(t.reference,
           t.date, t.amount))
         .OrderBy(t => t.Date)
         .ToList();
-      await _readReservedTransactionsEventChannel.Writer.WriteAsync(
-        new(reservedTransactions),
-        cancellationToken);
-      _logger.LogInformation("Notified {Count} reserved transactions",
+      _logger.LogInformation("Read {Count} reserved transactions",
         reservedTransactions.Count);
+      return reservedTransactions;
     }
+    return Array.Empty<ReservedBankTransaction>();
   }
 }

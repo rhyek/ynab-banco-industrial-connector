@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -126,7 +122,8 @@ public class YnabTransactionRepository
 
   public async Task CommitChanges()
   {
-    await Task.WhenAll(CommitPendingCreations(), CommitPendingUpdates());
+    var count = await Task.WhenAll(CommitPendingCreations(), CommitPendingUpdates());
+    _logger.LogInformation("Commited {Count} change(s)", count.Sum());
   }
 
   public static (string? payeeId, string? categoryId)

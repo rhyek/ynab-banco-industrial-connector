@@ -1,47 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Events;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Interfaces;
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper.MonitorJobs;
 
-public class ConfirmedTransactionsMonitorJob : IMonitorJob
+public class ConfirmedTransactionsScraperJob : IScraperJob<IList<ConfirmedBankTransaction>>
 {
-  private readonly ILogger<ConfirmedTransactionsMonitorJob>
+  private readonly ILogger<ConfirmedTransactionsScraperJob>
     _logger;
-
-  private readonly Channel<ReadConfirmedTransactionsEvent>
-    _readConfirmedTransactionsEventChannel;
 
   private readonly MemoryCache _cache = new(new MemoryCacheOptions());
 
-  public ConfirmedTransactionsMonitorJob(
-    ILogger<ConfirmedTransactionsMonitorJob> logger,
-    Channel<ReadConfirmedTransactionsEvent>
-      readConfirmedTransactionsEventChannel
+  public ConfirmedTransactionsScraperJob(
+    ILogger<ConfirmedTransactionsScraperJob> logger
   )
   {
     _logger = logger;
-    _readConfirmedTransactionsEventChannel =
-      readConfirmedTransactionsEventChannel;
   }
 
-  private async Task<IList<ConfirmedTransaction>> GetConfirmedTransactions(
+  private async Task<IList<ConfirmedBankTransaction>> GetConfirmedTransactions(
     IPage page, IElementHandle accountCell,
     CancellationToken cancellationToken)
   {
     _logger.LogInformation("Reading confirmed transactions...");
 
-    var confirmedTransactions = new List<ConfirmedTransaction>();
+    var confirmedTransactions = new List<ConfirmedBankTransaction>();
     if (await accountCell.EvaluateHandleAsync(@"
       (element) =>
         element.closest('tr').querySelector(':scope > td:nth-child(5) a')
@@ -141,7 +127,7 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
                                .Match(amountText.Trim()).Value
                            );
 
-              return new ConfirmedTransaction(
+              return new ConfirmedBankTransaction(
                 date,
                 description,
                 reference,
@@ -168,7 +154,7 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
     return confirmedTransactions;
   }
 
-  public async Task Run(IPage page, IElementHandle accountCell,
+  public async Task<IList<ConfirmedBankTransaction>> Run(IPage page, IElementHandle accountCell,
     CancellationToken cancellationToken)
   {
     var confirmedTransactions = await _cache.GetOrCreateAsync(
@@ -177,10 +163,8 @@ public class ConfirmedTransactionsMonitorJob : IMonitorJob
         cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
         return GetConfirmedTransactions(page, accountCell, cancellationToken);
       });
-
-    await _readConfirmedTransactionsEventChannel.Writer.WriteAsync(
-      new(confirmedTransactions), cancellationToken);
-    _logger.LogInformation("Notified {Count} confirmed transactions",
+    _logger.LogInformation("Read {Count} confirmed transactions",
       confirmedTransactions.Count);
+    return confirmedTransactions;
   }
 }
