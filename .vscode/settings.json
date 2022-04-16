@@ -1,5 +1,5 @@
 {
   "files.exclude": {
-    "src/BancoIndustrialMonitor": true
+    "src/BancoIndustrialMonitor": false
   }
 }
