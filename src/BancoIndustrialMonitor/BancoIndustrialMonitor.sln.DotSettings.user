@@ -3,5 +3,5 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b10a76f5_002D44c2_002D409d_002D9a43_002De0555eab07cf/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Solution /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=62a6aa5d_002Dc649_002D4171_002Dbb67_002Dda8f291e288d_0023BIMonitor_002EUnitTests/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=d2c14c66_002Ddbc9_002D4d35_002D9b28_002Db935d76eca0e_0023YnabController_002EUnitTests/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	
+	</wpf:ResourceDictionary>
