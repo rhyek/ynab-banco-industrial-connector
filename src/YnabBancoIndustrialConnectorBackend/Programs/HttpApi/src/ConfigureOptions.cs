@@ -11,21 +11,22 @@ namespace YnabBancoIndustrialConnector.Programs.HttpApi;
 
 public static class ConfigureOptionsExtensionMethods
 {
-  public static void MyConfigureOptions(
-    this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+  public static void ConfigureAllOptions(
+    this IServiceCollection serviceCollection, ConfigurationManager config,
+    IWebHostEnvironment environment)
   {
-    if (builder.Environment.IsDevelopment()) {
+    if (environment.IsDevelopment()) {
       Console.WriteLine("Loading .env");
       DotNetEnv.Env.TraversePath().Load();
       // this is normally done automatically, but we need to re-run it
       // due to our loading the .env file post startup
-      builder.Configuration.AddEnvironmentVariables();
+      config.AddEnvironmentVariables();
     }
     serviceCollection.Configure<YnabControllerOptions>(
-      builder.Configuration.GetSection("YNAB"));
+      config.GetSection("YNAB"));
     serviceCollection.Configure<BancoIndustrialScraperOptions>(
-      builder.Configuration.GetSection("BANCO_INDUSTRIAL_SCRAPER"));
+      config.GetSection("BANCO_INDUSTRIAL_SCRAPER"));
     serviceCollection.Configure<ApplicationOptions>(
-      builder.Configuration.GetSection("APPLICATION"));
+      config.GetSection("APPLICATION"));
   }
 }
