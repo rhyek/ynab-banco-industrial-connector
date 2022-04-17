@@ -1,0 +1,10 @@
+{
+  "name": "deploy",
+  "type": "module",
+  "main": "src/index.js",
+  "dependencies": {
+    "@pulumi/aws": "~5.1.3",
+    "@pulumi/awsx": "~0.40.0",
+    "@pulumi/pulumi": "~3.29.0"
+  }
+}

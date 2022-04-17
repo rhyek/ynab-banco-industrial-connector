@@ -9,7 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/src/ConfigureOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/src/ConfigureOptions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +66,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650156336665</updated>
-      <workItem from="1650156345946" duration="2185000" />
+      <workItem from="1650156345946" duration="2504000" />
     </task>
     <servers />
   </component>

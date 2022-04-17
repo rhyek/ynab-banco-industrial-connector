@@ -1,0 +1,17 @@
+config:
+  ynab-banco-industrial-connector.deploy:APPLICATION__BancoIndustrialMobileNotificationAccountNameForEstablishmentTransactions:
+    secure: AAABAJKZSoFHW4L8I+7bwO/ObYTQigqS0ED/+Lc69yCLXBWpvp7CF0w=
+  ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__AccountId:
+    secure: AAABADKxhEMZZUEl8RwHC4nlKovyngrdcBAWuDQdbtYF3vWRKcs9xtIK
+  ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__Password:
+    secure: AAABAJ/KSEgtREWEL5n0O1wLiTBtbCclOu+Xvv4VXqFS0PoQ5P3VtjpjqWC+xfg=
+  ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__UserId:
+    secure: AAABANS/a1rjH65y/pEIJWusDvPY215+/8iCQbo71JozjCP92uZl
+  ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__Username:
+    secure: AAABAF4VXfdzRUPgjZeDj+Fh+V4Hj4+x4FSOEYav1agcr0ioog==
+  ynab-banco-industrial-connector.deploy:YNAB__AccountId:
+    secure: AAABAHizIyX5dB81wsDJEmIqsZ/pURH4qS7X+wEBHTcTrM/56eiyIbJpzKxw0ofqkY4yw2qP7Mf6mDBwhjLQ/OwJX+Q=
+  ynab-banco-industrial-connector.deploy:YNAB__BudgetId:
+    secure: AAABAELLHxdSIQ7oPcXOq6SIwKk6hZvuXfKlQdGXHRL2wK2HJ0QTsnK7zy+ENaGua4qDzqH3W922CQy2CkNKuLVwJJ4=
+  ynab-banco-industrial-connector.deploy:YNAB__PersonalAccessToken:
+    secure: AAABALAItEdCATTpYBBTE9/DvP5UbJ40267yio0TRCSkNbhKVrEFXXM51VVPG5AlF2E0ltUUyl4oZfCPrkaJIc8C8JfXkIqh2DMrRP+Ej/c/7gJw6GD3XUTLkqCg1Ox5

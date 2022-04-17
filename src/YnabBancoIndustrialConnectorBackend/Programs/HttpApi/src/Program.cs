@@ -2,8 +2,10 @@ using YnabBancoIndustrialConnector.Infrastructure.BIScraper;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 using YnabBancoIndustrialConnector.Programs.HttpApi;
 using MediatR;
+using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
+using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
 using YnabBancoIndustrialConnector.Programs.HttpApi.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,10 +32,16 @@ var app = builder.Build();
 app.UseCors(corsPolicy);
 
 app.MapGet("/", () => Results.Redirect("/status"));
-app.MapGet("/status", () => Results.Json(new {
-  health = "ok",
-  version = "1.0"
-}));
+app.MapGet("/status",
+  (IOptions<BancoIndustrialScraperOptions> biScraperOptions) => Results.Json(new {
+    health = "ok",
+    version = "1.0",
+    biScraperOptions = new {
+      auth = new {
+        username = biScraperOptions.Value.Auth?.Username
+      }
+    }
+  }));
 
 app.MapPost("/request-read-transactions/confirmed",
   async (IMediator mediator) => Results.Ok(

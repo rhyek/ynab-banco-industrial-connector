@@ -1,4 +1,4 @@
 packages:
   - 'src/ngrok-tunnel-app'
   - 'src/tasker-javascriptlet'
-  - 'infra'
+  - 'infra/*'

@@ -1,3 +1,0 @@
-name: ynab-banco-industrial-connector-infra
-runtime: nodejs
-description: A minimal TypeScript Pulumi program

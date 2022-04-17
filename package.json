@@ -1,5 +1,5 @@
 {
-  "name": "ynab-banco-industrial-gt-operator",
+  "name": "ynab-banco-industrial-connector",
   "private": true,
   "author": {
     "name": "Carlos González",
@@ -10,6 +10,9 @@
     "dev": "pnpm -r start"
   },
   "devDependencies": {
-    "dotenv-cli": "~5.1.0"
+    "dotenv": "~16.0.0",
+    "dotenv-cli": "~5.1.0",
+    "execa": "~6.1.0",
+    "typescript": "~4.6"
   }
 }

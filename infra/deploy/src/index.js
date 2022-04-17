@@ -1,30 +1,16 @@
-import * as pulumi from '@pulumi/pulumi';
-import * as aws from '@pulumi/aws';
-import * as awsx from '@pulumi/awsx';
+// @ts-check
+import pulumi from '@pulumi/pulumi';
+import aws from '@pulumi/aws';
+import { backendEnvironmentVariableKeys } from '../../../.scripts/consts/backend-environment-variable-keys.mjs';
+import { httpApiNamespace, projectTags } from '../../consts.mjs';
 
-// https://www.pulumi.com/blog/aws-lambda-container-support/
+const config = new pulumi.Config();
 
-const projectName = 'ynab-banco-industrial-connector';
+const buildStack = new pulumi.StackReference(
+  `rhyek/ynab-banco-industrial-connector.build/${pulumi.getStack()}`
+);
 
-const httpApiNamespace = `${projectName}-http-api`;
-
-const projectTags = { project: projectName };
-
-// container image
-
-const repo = new awsx.ecr.Repository(`${httpApiNamespace}-repo`, {
-  tags: {
-    ...projectTags,
-  },
-});
-
-const image = repo.buildAndPushImage({
-  dockerfile:
-    '../src/YnabBancoIndustrialConnectorBackend/Programs/HttpApi/Dockerfile',
-  context: '../src/YnabBancoIndustrialConnectorBackend',
-});
-
-// lambda
+const httpApiFuncImage = buildStack.getOutput('httpApiFuncImage');
 
 const role = new aws.iam.Role(`${httpApiNamespace}-lambda-role`, {
   assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({
@@ -44,11 +30,21 @@ new aws.iam.RolePolicyAttachment(
 
 const httpApiFunc = new aws.lambda.Function(`${httpApiNamespace}-lambda`, {
   packageType: 'Image',
-  imageUri: image,
+  imageUri: httpApiFuncImage,
   role: role.arn,
   timeout: 900,
   tags: {
     ...projectTags,
+  },
+  environment: {
+    variables: {
+      ...Object.fromEntries(
+        backendEnvironmentVariableKeys.map((key) => [
+          key,
+          config.requireSecret(key),
+        ])
+      ),
+    },
   },
 });
 
