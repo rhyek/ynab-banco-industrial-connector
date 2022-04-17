@@ -36,6 +36,7 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
   deploy:
     name: Deploy
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - name: Configure AWS Credentials
