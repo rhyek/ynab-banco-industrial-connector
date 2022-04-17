@@ -14,14 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
-if (builder.Environment.IsDevelopment()) {
-  Console.WriteLine("Loading .env");
-  DotNetEnv.Env.TraversePath().Load();
-  // this is normally done automatically, but we need to re-run it
-  // due to our loading the .env file post startup
-  builder.Configuration.AddEnvironmentVariables();
-}
-builder.Services.ConfigureOptions(builder.Configuration);
+builder.Services.MyConfigureOptions(builder);
 
 const string corsPolicy = "MyCorsPolicy";
 builder.Services.AddCors(options =>
@@ -35,8 +28,11 @@ var app = builder.Build();
 
 app.UseCors(corsPolicy);
 
-app.MapGet("/", () => Results.Redirect("/health-check"));
-app.MapGet("/health-check", () => Results.Text("ok"));
+app.MapGet("/", () => Results.Redirect("/status"));
+app.MapGet("/status", () => Results.Json(new {
+  health = "ok",
+  version = "1.0"
+}));
 
 app.MapPost("/request-read-transactions/confirmed",
   async (IMediator mediator) => Results.Ok(
@@ -54,6 +50,13 @@ app.MapPost("/mobile-app-notifications/register-new",
       }));
   });
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "3700";
-
-app.Run(url: $"http://0.0.0.0:{port}");
+if (app.Environment.IsDevelopment()) {
+  // handled by .NET Kestrel web server
+  var port = Environment.GetEnvironmentVariable("PORT") ?? "3700";
+  app.Run(url: $"http://0.0.0.0:{port}");
+}
+else {
+  // never give up
+  // handled by Amazon.Lambda.AspNetCoreServer
+  app.Run();
+}
