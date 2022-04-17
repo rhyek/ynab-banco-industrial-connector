@@ -1,8 +1,12 @@
 name: CICD
+
 on:
   push:
     branches:
       - main
+
+env:
+  DOCKER_BUILDKIT: 1
 
 jobs:
   build:
