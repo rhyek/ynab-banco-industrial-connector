@@ -34,3 +34,28 @@ jobs:
           command: up
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.32.8
+      - uses: actions/checkout@v2
+      - run: pnpm --filter={infra/deploy} install
+      - uses: pulumi/actions@v3
+        with:
+          work-dir: infra/deploy
+          stack-name: dev
+          command: up
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
