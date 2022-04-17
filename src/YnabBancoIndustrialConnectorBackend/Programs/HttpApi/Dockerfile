@@ -8,8 +8,8 @@ RUN --mount=type=cache,target=/root/.nuget/packages \
   --configuration Release \ 
   --runtime linux-x64 \
   --self-contained false \ 
-  --output /app/publish \
-  -p:PublishReadyToRun=true
+  --output /app/publish
+#  -p:PublishReadyToRun=true # this is really slow: https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
 
 # https://gallery.ecr.aws/lambda/dotnet
 FROM public.ecr.aws/lambda/dotnet:6
