@@ -20,15 +20,15 @@ public record YnabTransactionMetadata
     OverrideDate = overrideDate;
   }
 
-  public static YnabTransactionMetadata DeserializeMemo(string memo)
+  public static YnabTransactionMetadata DeserializeMemo(string? memo)
   {
     string? reference = null;
     string? description = null;
     string? myDescription = null;
     DateOnly? overrideDate = null;
     var auto = false;
-
-    memo.Split(";")
+    
+    memo?.Split(";")
       .Select(part => part.Trim())
       .Where(part => part != string.Empty)
       .ToList()

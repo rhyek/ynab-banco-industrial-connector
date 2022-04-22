@@ -54,10 +54,11 @@ public class
     // in the bank statement.
     if (mobileNotificationTx != null
         && mobileNotificationTx.Origin == TransactionOrigin.Establishment
-        && mobileNotificationTx.Account == _options
-          .BancoIndustrialMobileNotificationAccountNameForEstablishmentTransactions) {
+        && (mobileNotificationTx.Account == _options
+              .BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
+            || mobileNotificationTx.Account == _options
+              .BancoIndustrialMobileNotificationCreditCardAccountNameForEstablishmentTransactions)) {
       var amount = mobileNotificationTx.Currency switch {
-        "Q" => 0,
         "USD" => mobileNotificationTx.Amount,
         _ => await _currencyConverterService.ToUsd(
           mobileNotificationTx.Currency, mobileNotificationTx.Amount)
@@ -65,8 +66,13 @@ public class
       if (mobileNotificationTx.Type == TransactionType.Debit) {
         amount *= -1;
       }
+      var accountType = mobileNotificationTx.Account == _options
+        .BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
+        ? AccountType.Debit
+        : AccountType.Credit;
       var wasCreated = await _ynabTransactionRepository.CreateTransaction(
         reference: mobileNotificationTx.Reference,
+        accountType: accountType,
         amount: amount,
         date: DateOnly.FromDateTime(mobileNotificationTx.DateTime),
         cleared: YnabTransactionCleared.Uncleared,

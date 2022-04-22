@@ -27,11 +27,12 @@ public class YnabControllerService
   {
     _logger.LogInformation("Processing {Count} reserved bank transactions",
       reservedBankTransactions.Count);
-    var recentYnabTransactions = await _ynabTransactionRepository.GetRecent();
+    var recentYnabTransactions = await _ynabTransactionRepository.GetRecent(AccountType.Debit);
     foreach (var reservedTx in reservedBankTransactions) {
       var (reference, date, amount) = reservedTx;
       var ynabTx =
         await _ynabTransactionRepository.FindByReference(reference,
+          AccountType.Debit,
           recentYnabTransactions);
       if (ynabTx != null) {
         if (amount != Math.Abs(ynabTx.Amount)) {
@@ -45,6 +46,7 @@ public class YnabControllerService
       else {
         await _ynabTransactionRepository.CreateTransaction(
           reference,
+          AccountType.Debit,
           -amount,
           date,
           YnabTransactionCleared.Uncleared,
@@ -61,11 +63,12 @@ public class YnabControllerService
   {
     _logger.LogInformation("Processing {Count} confirmed bank transactions",
       confirmedBankTransactions.Count);
-    var recentYnabTransactions = await _ynabTransactionRepository.GetRecent();
+    var recentYnabTransactions = await _ynabTransactionRepository.GetRecent(AccountType.Debit);
     foreach (var confirmedTx in confirmedBankTransactions) {
       var ynabTx =
         await _ynabTransactionRepository.FindByReference(
           confirmedTx.Reference,
+          AccountType.Debit,
           recentYnabTransactions);
 
       // if reserved tx not in ynab, create it
@@ -73,6 +76,7 @@ public class YnabControllerService
         if (confirmedTx.Date >= new DateOnly(2022, 2, 20)) {
           await _ynabTransactionRepository.CreateTransaction(
             reference: confirmedTx.Reference,
+            accountType: AccountType.Debit,
             amount: confirmedTx
               .Amount, // in confirmed transactions we know the sign, so do not convert here
             date: confirmedTx.Date,

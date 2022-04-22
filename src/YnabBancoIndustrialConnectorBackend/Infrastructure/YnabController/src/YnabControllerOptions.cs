@@ -6,10 +6,7 @@ public class YnabControllerOptions
 
   public string BudgetId { get; set; } = default!;
 
-  public string AccountId { get; set; } = default!;
-
-  public string BiMobileNotificationAccountNameForEstablishmentTransactions {
-    get;
-    set;
-  } = default!;
+  public string DebitCardAccountId { get; set; } = default!;
+  
+  public string CreditCardAccountId { get; set; } = default!;
 }

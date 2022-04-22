@@ -51,6 +51,11 @@ public record MobileNotificationTransaction()
       @$"BiMovil: Se ha (?<operation>.+) (?<currency>(.+?))\.(?<amount>.+) en (?<originPhrase>el Establecimiento|la Agencia): (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
     var match = regex.Match(message);
     if (match.Success) {
+      var currency = match.Groups["currency"].Value switch {
+        "Q" => "GTQ",
+        "US" => "USD",
+        _ => match.Groups["currency"].Value
+      };
       var type = match.Groups["operation"].Value.Contains("credito")
         ? TransactionType.Credit
         : TransactionType.Debit;
@@ -60,7 +65,7 @@ public record MobileNotificationTransaction()
           : TransactionOrigin.Agency;
       return new() {
         Reference = match.Groups["reference"].Value,
-        Currency = match.Groups["currency"].Value,
+        Currency = currency,
         Amount = decimal.Parse(match.Groups["amount"].Value),
         Type = type,
         Description = match.Groups["description"].Value,

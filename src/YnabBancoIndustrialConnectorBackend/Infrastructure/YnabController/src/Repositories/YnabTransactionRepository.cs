@@ -7,6 +7,12 @@ using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController.
   Repositories;
 
+public enum AccountType
+{
+  Credit,
+  Debit
+}
+
 public class YnabTransactionRepository
 {
   private readonly YnabControllerOptions _options;
@@ -34,15 +40,25 @@ public class YnabTransactionRepository
       });
   }
 
-  public async Task<IList<YnabTransaction>> GetRecent()
+  public string GetAccountIdForType(AccountType type)
   {
+    return type switch {
+      AccountType.Debit => _options.DebitCardAccountId,
+      _ => _options.CreditCardAccountId
+    };
+  }
+
+  public async Task<IList<YnabTransaction>> GetRecent(
+    AccountType accountType)
+  {
+    var accountId = GetAccountIdForType(accountType);
     var lastMonth = DateTime.Now.AddMonths(-2);
     var sinceDate = DateOnly
       .FromDateTime(new(lastMonth.Year, lastMonth.Month, 1))
       .ToString("o");
     var json = await _httpClient
       .Request(
-        $"budgets/{_options.BudgetId}/accounts/{_options.AccountId}/transactions")
+        $"budgets/{_options.BudgetId}/accounts/{accountId}/transactions")
       .SetQueryParams(new {
         since_date = sinceDate
       })
@@ -55,9 +71,10 @@ public class YnabTransactionRepository
   }
 
   public async Task<YnabTransaction?> FindByReference(string reference,
+    AccountType accountType,
     IList<YnabTransaction>? source = null)
   {
-    return (source ?? await GetRecent())
+    return (source ?? await GetRecent(accountType))
       .FirstOrDefault(t => t.Metadata.Reference == reference);
   }
 
@@ -122,7 +139,8 @@ public class YnabTransactionRepository
 
   public async Task CommitChanges()
   {
-    var count = await Task.WhenAll(CommitPendingCreations(), CommitPendingUpdates());
+    var count =
+      await Task.WhenAll(CommitPendingCreations(), CommitPendingUpdates());
     _logger.LogInformation("Commited {Count} change(s)", count.Sum());
   }
 
@@ -162,7 +180,9 @@ public class YnabTransactionRepository
     return (payeeId, categoryId);
   }
 
-  public async Task<bool> CreateTransaction(string reference, decimal amount,
+  public async Task<bool> CreateTransaction(string reference,
+    AccountType accountType,
+    decimal amount,
     DateOnly date, string cleared,
     string? description = null,
     IList<YnabTransaction>? recentTransactions = null)
@@ -170,10 +190,10 @@ public class YnabTransactionRepository
     var ynabAmount = decimal.ToInt32(amount * 1_000);
     var metadata = new YnabTransactionMetadata(reference, true,
       description);
-    recentTransactions ??= await GetRecent();
+    recentTransactions ??= await GetRecent(accountType);
     var (payeeId, categoryId) =
       GetPayeeAndCategoryForDescription(description, recentTransactions);
-    
+
     // see if there is a scheduled ynab transaction we should be replacing
     if (payeeId != null && categoryId != null) {
       var txGeneratedFromSchedule = recentTransactions.FirstOrDefault(ynabTx =>
@@ -189,7 +209,8 @@ public class YnabTransactionRepository
         return true;
       }
     }
-    var existing = await FindByReference(reference, source: recentTransactions);
+    var existing = await FindByReference(reference, accountType,
+      source: recentTransactions);
     if (existing != null) {
       if (existing.Metadata != metadata || existing.Amount != ynabAmount ||
           (payeeId != null && existing.PayeeId != payeeId) ||
@@ -206,7 +227,7 @@ public class YnabTransactionRepository
     }
 
     _pendingCreations.Add(new {
-      account_id = _options.AccountId,
+      account_id = GetAccountIdForType(accountType),
       date = date.ToString("o"),
       amount = ynabAmount,
       cleared,
