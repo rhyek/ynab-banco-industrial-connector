@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Infrastructure\YnabController\YnabController.csproj" />
+      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

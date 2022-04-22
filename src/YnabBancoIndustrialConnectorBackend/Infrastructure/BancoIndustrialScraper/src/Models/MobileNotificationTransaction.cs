@@ -48,7 +48,7 @@ public record MobileNotificationTransaction()
   {
     const string datetimeRegex = @"(?<datetime>\d{2}-[a-zA-Z]{3} \d{2}:\d{2})";
     var regex = new Regex(
-      @$"BiMovil: Se ha (?<operation>.+) (?<currency>(US|Q))\.(?<amount>.+) en (?<originPhrase>el Establecimiento|la Agencia): (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
+      @$"BiMovil: Se ha (?<operation>.+) (?<currency>(.+?))\.(?<amount>.+) en (?<originPhrase>el Establecimiento|la Agencia): (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
     var match = regex.Match(message);
     if (match.Success) {
       var type = match.Groups["operation"].Value.Contains("credito")

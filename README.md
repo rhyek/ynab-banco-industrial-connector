@@ -22,22 +22,42 @@ https://pikedev.com/net-6-minimal-api-on-aws-lambda/
 - Build and image:
   ```bash
   docker build -t ynab-banco-idustrial-connector-lambda -f Programs/HttpApi/Dockerfile .
-  docker run --rm -p 9000:8080 ynab-banco-idustrial-connector-lambda
+  docker run \
+    --rm \
+    -p 9000:8080 \
+    --name ynab-banco-idustrial-connector-lambda \
+    ynab-banco-idustrial-connector-lambda
+  docker exec -it ynab-banco-idustrial-connector-lambda /bin/bash
   ```
-- Test request:
+- Test get status request:
   ```bash
   curl -s -L -X POST 'http://localhost:9000/2015-03-31/functions/function/invocations' \
-  -H 'Content-Type: application/json' \
-  --data-raw '{
-    "version": "2.0",
-    "requestContext": {
-      "http": {
-        "method": "GET",
-        "path": "/status"
+    -H 'Content-Type: application/json' \
+    --data-raw '{
+      "version": "2.0",
+      "requestContext": {
+        "http": {
+          "method": "GET",
+          "path": "/status"
+        }
       }
-    }
-  }' \
-  | jq '.body | fromjson'
+    }' \
+    | jq '.body | fromjson'
+  ```
+- Test request confirmed requests request:
+  ```bash
+  curl -s -L -X POST 'http://localhost:9000/2015-03-31/functions/function/invocations' \
+    -H 'Content-Type: application/json' \
+    --data-raw '{
+      "version": "2.0",
+      "requestContext": {
+        "http": {
+          "method": "POST",
+          "path": "/request-read-transactions/confirmed"
+        }
+      }
+    }' \
+    | jq '.body | fromjson'
   ```
 - HttpApi event payloads: https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-lambda.html
 

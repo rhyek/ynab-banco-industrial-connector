@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
 using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
+using YnabBancoIndustrialConnector.Infrastructure.CurrencyConverter;
 using YnabBancoIndustrialConnector.Programs.HttpApi.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddBancoIndustrialScraper();
 builder.Services.AddYnabController();
 builder.Services.AddApplication();
+builder.Services.AddCurrencyConverter();
 
 var app = builder.Build();
 
@@ -33,15 +35,18 @@ app.UseCors(corsPolicy);
 
 app.MapGet("/", () => Results.Redirect("/status"));
 app.MapGet("/status",
-  (IOptions<BancoIndustrialScraperOptions> biScraperOptions) => Results.Json(new {
-    health = "ok",
-    version = "1.0",
-    biScraperOptions = new {
-      auth = new {
-        username = biScraperOptions.Value.Auth?.Username
+  (IOptions<BancoIndustrialScraperOptions> biScraperOptions) => {
+    app.Logger.LogInformation("Status requested");
+    return Results.Json(new {
+      health = "ok!",
+      version = "1.0",
+      biScraperOptions = new {
+        auth = new {
+          username = biScraperOptions.Value.Auth?.Username
+        }
       }
-    }
-  }));
+    });
+  });
 
 app.MapPost("/request-read-transactions/confirmed",
   async (IMediator mediator) => Results.Ok(

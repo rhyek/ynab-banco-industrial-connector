@@ -71,6 +71,16 @@ public class MobileNotificationTransactionTests
         }
       },
       new object?[] {
+        "BiMovil: Se ha realizado un consumo por CRC.62054.00 en el Establecimiento: LA ESQUINA DE BUENOS AI Cuenta: BICHEQUE4 21-Abr 14:39 Aut.183575.",
+        new MobileNotificationTransaction() {
+          Reference = "183575", Currency = "CRC",
+          Amount = 62054.00m, Type = TransactionType.Debit,
+          Description = "LA ESQUINA DE BUENOS AI",
+          Account = "BICHEQUE4", DateTime = new(2022, 4, 21, 14, 39, 0),
+          Origin = TransactionOrigin.Establishment
+        }
+      },
+      new object?[] {
         "This is gibberish",
         null
       }

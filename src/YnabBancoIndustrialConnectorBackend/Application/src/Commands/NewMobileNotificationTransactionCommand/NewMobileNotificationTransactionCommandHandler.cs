@@ -6,6 +6,7 @@ using YnabBancoIndustrialConnector.Infrastructure.BIScraper;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
+using YnabBancoIndustrialConnector.Interfaces;
 
 namespace YnabBancoIndustrialConnector.Application.Commands;
 
@@ -19,18 +20,21 @@ public class
   private readonly BancoIndustrialScraperService _bancoIndustrialScraperService;
   private readonly YnabTransactionRepository _ynabTransactionRepository;
   private readonly YnabControllerService _ynabControllerService;
+  private readonly ICurrencyConverterService _currencyConverterService;
 
   public NewMobileNotificationTransactionCommandHandler(
     IOptions<ApplicationOptions> options,
     ILogger<NewMobileNotificationTransactionCommandHandler> logger,
     BancoIndustrialScraperService bancoIndustrialScraperService,
     YnabTransactionRepository ynabTransactionRepository,
-    YnabControllerService ynabControllerService)
+    YnabControllerService ynabControllerService,
+    ICurrencyConverterService currencyConverterService)
   {
     _options = options.Value;
     _logger = logger;
     _ynabTransactionRepository = ynabTransactionRepository;
     _ynabControllerService = ynabControllerService;
+    _currencyConverterService = currencyConverterService;
     _bancoIndustrialScraperService = bancoIndustrialScraperService;
   }
 
@@ -52,11 +56,15 @@ public class
         && mobileNotificationTx.Origin == TransactionOrigin.Establishment
         && mobileNotificationTx.Account == _options
           .BancoIndustrialMobileNotificationAccountNameForEstablishmentTransactions) {
-      var amount = mobileNotificationTx.Currency == "Q"
-        ? 0
-        : mobileNotificationTx.Type == TransactionType.Debit
-          ? -mobileNotificationTx.Amount
-          : mobileNotificationTx.Amount;
+      var amount = mobileNotificationTx.Currency switch {
+        "Q" => 0,
+        "USD" => mobileNotificationTx.Amount,
+        _ => await _currencyConverterService.ToUsd(
+          mobileNotificationTx.Currency, mobileNotificationTx.Amount)
+      };
+      if (mobileNotificationTx.Type == TransactionType.Debit) {
+        amount *= -1;
+      }
       var wasCreated = await _ynabTransactionRepository.CreateTransaction(
         reference: mobileNotificationTx.Reference,
         amount: amount,

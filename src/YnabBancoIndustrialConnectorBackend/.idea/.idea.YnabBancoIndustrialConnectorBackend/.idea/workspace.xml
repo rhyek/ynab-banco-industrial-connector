@@ -8,8 +8,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/CurrencyConverter.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/src/CurrencyConverterService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/src/DependencyInjection.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Interfaces/Interfaces.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Interfaces/src/ICurrencyConverterService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper.UnitTests/src/MobileNotificationTransactionTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper.UnitTests/src/MobileNotificationTransactionTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/BancoIndustrialScraper.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/BancoIndustrialScraper.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/src/Models/MobileNotificationTransaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/src/Models/MobileNotificationTransaction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/Repositories/YnabTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/Repositories/YnabTransactionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +34,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e38745c94d65cb54dad5c55660612749c0690da385b9c148982feadef54/OptionsServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/26259b0a3c4b474b9f081864810b4654ba00/86/91624423/ISender.cs" root0="SKIP_HIGHLIGHTING" />
@@ -27,12 +50,15 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="27u3qkWdKeKU7bzVdsPunfx4py8" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -41,7 +67,7 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected=".NET Launch Settings Profile.HttpApi">
     <configuration name="HttpApi" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -66,14 +92,28 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1650156336665</updated>
-      <workItem from="1650156345946" duration="2504000" />
+      <workItem from="1650156345946" duration="2871000" />
+      <workItem from="1650239004938" duration="4354000" />
+      <workItem from="1650496734102" duration="4977000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
 </project>

@@ -167,17 +167,13 @@ public class YnabTransactionRepository
     string? description = null,
     IList<YnabTransaction>? recentTransactions = null)
   {
-    recentTransactions ??= await GetRecent();
-    var existing = await FindByReference(reference, source: recentTransactions);
-    if (existing != null) {
-      return false;
-    }
     var ynabAmount = decimal.ToInt32(amount * 1_000);
     var metadata = new YnabTransactionMetadata(reference, true,
       description);
+    recentTransactions ??= await GetRecent();
     var (payeeId, categoryId) =
       GetPayeeAndCategoryForDescription(description, recentTransactions);
-
+    
     // see if there is a scheduled ynab transaction we should be replacing
     if (payeeId != null && categoryId != null) {
       var txGeneratedFromSchedule = recentTransactions.FirstOrDefault(ynabTx =>
@@ -192,6 +188,21 @@ public class YnabTransactionRepository
         });
         return true;
       }
+    }
+    var existing = await FindByReference(reference, source: recentTransactions);
+    if (existing != null) {
+      if (existing.Metadata != metadata || existing.Amount != ynabAmount ||
+          (payeeId != null && existing.PayeeId != payeeId) ||
+          (categoryId != null && existing.CategoryId != categoryId)) {
+        AddPendingUpdate(existing.Id, new {
+          amount = ynabAmount,
+          memo = metadata.SerializeMemo(),
+          payee_id = payeeId ?? existing.PayeeId,
+          category_id = categoryId ?? existing.CategoryId,
+        });
+        return true;
+      }
+      return false;
     }
 
     _pendingCreations.Add(new {
