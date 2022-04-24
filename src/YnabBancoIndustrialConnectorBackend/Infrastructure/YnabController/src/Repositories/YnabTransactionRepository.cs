@@ -156,24 +156,18 @@ public class YnabTransactionRepository
         .Where(t => t.Metadata.Description == description)
         .ToList();
       if (othersWithSameDescription.Count > 0) {
-        var payeeIdGroups =
-          othersWithSameDescription
-            .Where(t => t.PayeeId != null)
-            .GroupBy(t => t.PayeeId)
-            .ToList();
-        // only use if every tx has the same payee id
-        if (payeeIdGroups.Count == 1) {
-          payeeId = payeeIdGroups.First().Key;
+        var lastForPayeeId = othersWithSameDescription
+          .Where(t => t.PayeeId != null)
+          .MaxBy(t => t.Date);
+        if (lastForPayeeId != null) {
+          payeeId = lastForPayeeId.PayeeId;
         }
 
-        var categoryIdGroups =
-          othersWithSameDescription
-            .Where(t => t.CategoryId != null)
-            .GroupBy(t => t.CategoryId)
-            .ToList();
-        // only use if every tx has the same category id
-        if (categoryIdGroups.Count == 1) {
-          categoryId = categoryIdGroups.First().Key;
+        var lastForCategoryId = othersWithSameDescription
+          .Where(t => t.CategoryId != null)
+          .MaxBy(t => t.Date);
+        if (lastForCategoryId != null) {
+          categoryId = lastForCategoryId.CategoryId;
         }
       }
     }
@@ -212,7 +206,7 @@ public class YnabTransactionRepository
     var existing = await FindByReference(reference, accountType,
       source: recentTransactions);
     if (existing != null) {
-      if (existing.Metadata != metadata || existing.Amount != ynabAmount ||
+      if (existing.Metadata != metadata || existing.Amount != amount ||
           (payeeId != null && existing.PayeeId != payeeId) ||
           (categoryId != null && existing.CategoryId != categoryId)) {
         AddPendingUpdate(existing.Id, new {

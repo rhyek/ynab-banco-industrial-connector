@@ -11,4 +11,6 @@ public class ApplicationOptions
     get;
     set;
   } = default!;
+
+  public string? ScrapeBankTransactionsSqsUrl { get; set; } = null;
 }

@@ -8,18 +8,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.scripts/consts/backend-environment-variable-keys.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/../../.scripts/consts/backend-environment-variable-keys.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../docs/architecture.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../infra/deploy/src/lambda-http-api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../infra/deploy/src/sqs-scrape-bank-transactions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/src/Commands/UpdateBankReservedTransactionsCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/MessageQueueService.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/src/DependencyInjection.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/src/MessageQueueService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Interfaces/src/IMessageQueueService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../infra/deploy/Pulumi.dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/Pulumi.dev.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../infra/deploy/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/src/ApplicationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/ApplicationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper.UnitTests/src/MobileNotificationTransactionTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper.UnitTests/src/MobileNotificationTransactionTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/src/Models/MobileNotificationTransaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/src/Models/MobileNotificationTransaction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/Models/YnabTransaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/Models/YnabTransaction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/Models/YnabTransactionMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/Models/YnabTransactionMetadata.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand/UpdateBankConfirmedTransactionsCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand/UpdateBankConfirmedTransactionsCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/src/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/DependencyInjection.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/Repositories/YnabTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/Repositories/YnabTransactionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/YnabControllerOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/YnabControllerOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/YnabControllerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/YnabControllerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +45,10 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9d4f4ac7db6d2c5d183ab2d92602280ed4349fd6e6a1b6313546b3d01fdab5/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -56,6 +69,7 @@
     "XThreadsFramesViewSplitterKey": "0.36636636",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -87,7 +101,7 @@
       <workItem from="1650156345946" duration="2871000" />
       <workItem from="1650239004938" duration="4354000" />
       <workItem from="1650496734102" duration="10969000" />
-      <workItem from="1650663523350" duration="1111000" />
+      <workItem from="1650663523350" duration="19878000" />
     </task>
     <servers />
   </component>
@@ -108,24 +122,5 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs</url>
-          <line>72</line>
-          <properties documentPath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" initialLine="72" containingFunctionPresentation="method 'Handle'">
-            <startOffsets>
-              <option value="3369" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3721" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

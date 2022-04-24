@@ -5,12 +5,15 @@ using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 namespace YnabBancoIndustrialConnector.Application.Commands;
 
+public class UpdateBankConfirmedTransactionsCommand : IRequest
+{
+}
+
 public class UpdateBankConfirmedTransactionsCommandHandler :
   IRequestHandler<UpdateBankConfirmedTransactionsCommand>
 {
   private readonly ILogger<UpdateBankConfirmedTransactionsCommandHandler>
     _logger;
-
   private readonly BancoIndustrialScraperService _bancoIndustrialScraperService;
   private readonly YnabControllerService _ynabControllerService;
 
@@ -27,6 +30,7 @@ public class UpdateBankConfirmedTransactionsCommandHandler :
   public async Task<Unit> Handle(UpdateBankConfirmedTransactionsCommand request,
     CancellationToken cancellationToken)
   {
+    _logger.LogInformation("Start");
     var confirmedTxs =
       await _bancoIndustrialScraperService.ScrapeConfirmedTransactions(
         cancellationToken);
@@ -34,6 +38,7 @@ public class UpdateBankConfirmedTransactionsCommandHandler :
       await _ynabControllerService.ProcessConfirmedBankTransactions(
         confirmedTxs, cancellationToken);
     }
+    _logger.LogInformation("End");
     return Unit.Value;
   }
 }

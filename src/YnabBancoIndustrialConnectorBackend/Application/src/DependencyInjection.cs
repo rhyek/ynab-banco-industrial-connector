@@ -1,8 +1,6 @@
 using System.Reflection;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController;
-using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
 
 namespace YnabBancoIndustrialConnector.Application;
 
