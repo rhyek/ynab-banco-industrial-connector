@@ -22,10 +22,17 @@ const role = new aws.iam.Role(`${httpApiNamespace}-lambda-role`, {
   },
 });
 new aws.iam.RolePolicyAttachment(
-  `${httpApiNamespace}-lambda-role-policy-attachment`,
+  `${httpApiNamespace}-lambda-role-lambda-execute-policy-attachment`,
   {
     role: role.name,
     policyArn: aws.iam.ManagedPolicy.AWSLambdaExecute,
+  }
+);
+new aws.iam.RolePolicyAttachment(
+  `${httpApiNamespace}-lambda-role-sqs-full-access-policy-attachment`,
+  {
+    role: role.name,
+    policyArn: aws.iam.ManagedPolicy.AmazonSQSFullAccess,
   }
 );
 

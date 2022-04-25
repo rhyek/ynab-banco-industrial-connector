@@ -1,4 +1,5 @@
 using Amazon.SQS;
+using Amazon.SQS.Model;
 using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Interfaces;
@@ -8,7 +9,7 @@ namespace MessageQueueService;
 public class MessageQueueService : IMessageQueueService
 {
   private readonly IAmazonSQS _sqs;
-  private IOptions<ApplicationOptions> _options;
+  private readonly IOptions<ApplicationOptions> _options;
 
   public MessageQueueService(IAmazonSQS sqs,
     IOptions<ApplicationOptions> options)
@@ -20,14 +21,24 @@ public class MessageQueueService : IMessageQueueService
   public async Task SendScrapeReservedTransactionsMessage(
     CancellationToken? cancellationToken)
   {
-    await _sqs.SendMessageAsync(_options.Value.ScrapeBankTransactionsSqsUrl!,
-      "RESERVED");
+    var request = new SendMessageRequest(
+      _options.Value.ScrapeBankTransactionsSqsUrl!,
+      "RESERVED"
+    ) {
+      MessageGroupId = "default"
+    };
+    await _sqs.SendMessageAsync(request);
   }
 
   public async Task SendScrapeConfirmedTransactionsMessage(
     CancellationToken? cancellationToken)
   {
-    await _sqs.SendMessageAsync(_options.Value.ScrapeBankTransactionsSqsUrl!,
-      "CONFIRMED");
+    var request = new SendMessageRequest(
+      _options.Value.ScrapeBankTransactionsSqsUrl!,
+      "CONFIRMED"
+    ) {
+      MessageGroupId = "default"
+    };
+    await _sqs.SendMessageAsync(request);
   }
 }

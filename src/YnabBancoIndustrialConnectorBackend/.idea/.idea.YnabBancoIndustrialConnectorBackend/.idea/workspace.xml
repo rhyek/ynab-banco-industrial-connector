@@ -8,27 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../docs/architecture.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../infra/deploy/src/lambda-http-api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../infra/deploy/src/sqs-scrape-bank-transactions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application/src/Commands/UpdateBankReservedTransactionsCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/MessageQueueService.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/src/DependencyInjection.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/src/MessageQueueService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interfaces/src/IMessageQueueService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../infra/deploy/Pulumi.dev.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/Pulumi.dev.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../infra/deploy/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../infra/deploy/src/lambda-http-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/src/lambda-http-api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/ApplicationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/ApplicationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand/NewMobileNotificationTransactionCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand/UpdateBankConfirmedTransactionsCommand.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand/UpdateBankConfirmedTransactionsCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/src/DependencyInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/YnabController/src/Repositories/YnabTransactionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/YnabController/src/Repositories/YnabTransactionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/HttpApi.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/src/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +82,7 @@
       <workItem from="1650156345946" duration="2871000" />
       <workItem from="1650239004938" duration="4354000" />
       <workItem from="1650496734102" duration="10969000" />
-      <workItem from="1650663523350" duration="19878000" />
+      <workItem from="1650663523350" duration="20704000" />
     </task>
     <servers />
   </component>
