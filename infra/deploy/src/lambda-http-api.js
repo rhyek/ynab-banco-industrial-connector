@@ -28,13 +28,13 @@ new aws.iam.RolePolicyAttachment(
     policyArn: aws.iam.ManagedPolicy.AWSLambdaExecute,
   }
 );
-new aws.iam.RolePolicyAttachment(
-  `${httpApiNamespace}-lambda-role-sqs-full-access-policy-attachment`,
-  {
-    role: role.name,
-    policyArn: aws.iam.ManagedPolicy.AmazonSQSFullAccess,
-  }
-);
+// new aws.iam.RolePolicyAttachment(
+//   `${httpApiNamespace}-lambda-role-sqs-full-access-policy-attachment`,
+//   {
+//     role: role.name,
+//     policyArn: aws.iam.ManagedPolicy.AmazonSQSFullAccess,
+//   }
+// );
 
 const httpApiFunc = new aws.lambda.Function(`${httpApiNamespace}-lambda`, {
   packageType: 'Image',

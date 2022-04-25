@@ -8,7 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../infra/deploy/src/lambda-http-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/src/lambda-http-api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +81,7 @@
       <workItem from="1650156345946" duration="2871000" />
       <workItem from="1650239004938" duration="4354000" />
       <workItem from="1650496734102" duration="10969000" />
-      <workItem from="1650663523350" duration="20704000" />
+      <workItem from="1650663523350" duration="21982000" />
     </task>
     <servers />
   </component>
