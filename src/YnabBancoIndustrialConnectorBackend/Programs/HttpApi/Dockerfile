@@ -18,9 +18,9 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
   Programs/HttpApi/HttpApi.csproj \
   --no-restore \
   --no-build \
-  --configuration Release \ 
+  --configuration Release \
   --runtime linux-x64 \
-  --self-contained false \ 
+  --self-contained false \
   --output /app/publish
 # this is really slow: https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
 # -p:PublishReadyToRun=true
