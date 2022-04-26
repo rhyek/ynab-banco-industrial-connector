@@ -3,12 +3,12 @@ import { projectName, projectTags } from '../../consts.mjs';
 
 const queueName = `${projectName}-scrape-bank-transactions`;
 
-const queue = new aws.sqs.Queue(queueName, {
+export const queue = new aws.sqs.Queue(queueName, {
   fifoQueue: true,
+  visibilityTimeoutSeconds: 5 * 60,
   tags: {
     ...projectTags,
   },
 });
 
-export const scrapeBankTransactionsSqsArn = queue.arn;
 export const scrapeBankTransactionsSqsUrl = queue.url;

@@ -22,7 +22,8 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
   --runtime linux-x64 \
   --self-contained false \ 
   --output /app/publish
-#  -p:PublishReadyToRun=true # this is really slow: https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
+# this is really slow: https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
+# -p:PublishReadyToRun=true
 
 # https://gallery.ecr.aws/lambda/dotnet
 FROM public.ecr.aws/lambda/dotnet:6

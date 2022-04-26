@@ -1,23 +1,27 @@
 //@ts-check
 import pulumi from '@pulumi/pulumi';
 import aws from '@pulumi/aws';
-import { httpApiNamespace, projectTags } from '../../../../consts.mjs';
+import {
+  scrapeBankTransactionsConsumerNamespace,
+  projectTags,
+} from '../../../../consts.mjs';
 import { role } from './role.js';
 import { backendEnvironmentVariableKeys } from '../../../../../.scripts/consts/backend-environment-variable-keys.mjs';
-import { scrapeBankTransactionsSqsUrl } from '../../sqs-scrape-bank-transactions.js';
 import { buildStack } from '../../build-stack.js';
 
 const config = new pulumi.Config();
 
-const httpApiFuncImage = buildStack.getOutput('httpApiFuncImage');
+const scrapeBankTransactionsConsumerImage = buildStack.getOutput(
+  'scrapeBankTransactionsConsumerImage'
+);
 
-export const httpApiFunc = new aws.lambda.Function(
-  `${httpApiNamespace}-lambda`,
+export const scrapeBankTransactionsConsumerFunc = new aws.lambda.Function(
+  `${scrapeBankTransactionsConsumerNamespace}-lambda`,
   {
     packageType: 'Image',
-    imageUri: httpApiFuncImage,
+    imageUri: scrapeBankTransactionsConsumerImage,
     role: role.arn,
-    timeout: 900,
+    timeout: 3 * 60,
     tags: {
       ...projectTags,
     },
@@ -29,7 +33,6 @@ export const httpApiFunc = new aws.lambda.Function(
             config.requireSecret(key),
           ])
         ),
-        APPLICATION__ScrapeBankTransactionsSqsUrl: scrapeBankTransactionsSqsUrl,
       },
     },
   }
