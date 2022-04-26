@@ -1,16 +1,20 @@
+# syntax=docker/dockerfile:1.3
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim as build
 WORKDIR /sln
 COPY . .
-RUN dotnet restore \
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+  dotnet restore \
   Programs/HttpApi/HttpApi.csproj \
   --runtime linux-x64
-RUN dotnet build \
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+  dotnet build \
   Programs/HttpApi/HttpApi.csproj \
   --no-restore \
   --configuration Release \
   --runtime linux-x64 \
   --self-contained false
-RUN dotnet publish \
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
+  dotnet publish \
   Programs/HttpApi/HttpApi.csproj \
   --no-restore \
   --no-build \
