@@ -1,2 +1,3 @@
+//@ts-check
 export * from './sqs-scrape-bank-transactions.js';
-export * from './lambda-http-api.js';
+export * from './lambdas/http-api/index.js';

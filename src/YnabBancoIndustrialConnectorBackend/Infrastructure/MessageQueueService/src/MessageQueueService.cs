@@ -19,24 +19,28 @@ public class MessageQueueService : IMessageQueueService
   }
 
   public async Task SendScrapeReservedTransactionsMessage(
+    string messageDeduplicationId,
     CancellationToken? cancellationToken)
   {
     var request = new SendMessageRequest(
       _options.Value.ScrapeBankTransactionsSqsUrl!,
       "RESERVED"
     ) {
+      MessageDeduplicationId = messageDeduplicationId,
       MessageGroupId = "default"
     };
     await _sqs.SendMessageAsync(request);
   }
 
   public async Task SendScrapeConfirmedTransactionsMessage(
+    string messageDeduplicationId,
     CancellationToken? cancellationToken)
   {
     var request = new SendMessageRequest(
       _options.Value.ScrapeBankTransactionsSqsUrl!,
       "CONFIRMED"
     ) {
+      MessageDeduplicationId = messageDeduplicationId,
       MessageGroupId = "default"
     };
     await _sqs.SendMessageAsync(request);

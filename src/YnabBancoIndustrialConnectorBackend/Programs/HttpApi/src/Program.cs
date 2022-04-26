@@ -71,7 +71,8 @@ app.MapPost("/scrape-bank-transactions/reserved",
     }
     else {
       // queue sqs message
-      await messageQueue.SendScrapeReservedTransactionsMessage();
+      await messageQueue.SendScrapeReservedTransactionsMessage(Guid.NewGuid()
+        .ToString());
       return Results.Text("message queued");
     }
   });
@@ -85,7 +86,8 @@ app.MapPost("/scrape-bank-transactions/confirmed",
     }
     else {
       // queue sqs message
-      await messageQueue.SendScrapeConfirmedTransactionsMessage();
+      await messageQueue.SendScrapeConfirmedTransactionsMessage(Guid.NewGuid()
+        .ToString());
       return Results.Text("message queued");
     }
   });

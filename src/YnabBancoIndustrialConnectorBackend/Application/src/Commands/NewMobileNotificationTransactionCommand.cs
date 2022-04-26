@@ -104,6 +104,7 @@ public class
           }
           else {
             await _messageQueue.SendScrapeReservedTransactionsMessage(
+              mobileNotificationTx.Reference,
               cancellationToken);
           }
         }

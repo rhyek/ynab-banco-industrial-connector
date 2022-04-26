@@ -24,14 +24,14 @@ https://pikedev.com/net-6-minimal-api-on-aws-lambda/
   docker build -t ynab-banco-idustrial-connector-lambda -f Programs/HttpApi/Dockerfile .
   docker run \
     --rm \
-    -p 9000:8080 \
+    -p 9777:8080 \
     --name ynab-banco-idustrial-connector-lambda \
     ynab-banco-idustrial-connector-lambda
   docker exec -it ynab-banco-idustrial-connector-lambda /bin/bash
   ```
 - Test get status request:
   ```bash
-  curl -s -L -X POST 'http://localhost:9000/2015-03-31/functions/function/invocations' \
+  curl -s -L -X POST 'http://localhost:9777/2015-03-31/functions/function/invocations' \
     -H 'Content-Type: application/json' \
     --data-raw '{
       "version": "2.0",
@@ -46,7 +46,7 @@ https://pikedev.com/net-6-minimal-api-on-aws-lambda/
   ```
 - Test request confirmed requests request:
   ```bash
-  curl -s -L -X POST 'http://localhost:9000/2015-03-31/functions/function/invocations' \
+  curl -s -L -X POST 'http://localhost:9777/2015-03-31/functions/function/invocations' \
     -H 'Content-Type: application/json' \
     --data-raw '{
       "version": "2.0",

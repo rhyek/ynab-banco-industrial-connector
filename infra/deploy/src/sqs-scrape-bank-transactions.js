@@ -10,4 +10,5 @@ const queue = new aws.sqs.Queue(queueName, {
   },
 });
 
+export const scrapeBankTransactionsSqsArn = queue.arn;
 export const scrapeBankTransactionsSqsUrl = queue.url;
