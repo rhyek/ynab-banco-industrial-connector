@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 env:
   DOCKER_BUILDKIT: 1
 

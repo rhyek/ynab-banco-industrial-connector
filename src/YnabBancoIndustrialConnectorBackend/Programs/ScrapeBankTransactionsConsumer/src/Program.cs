@@ -1,4 +1,5 @@
-﻿using Amazon.Lambda.RuntimeSupport;
+﻿using Amazon.Lambda.Core;
+using Amazon.Lambda.RuntimeSupport;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using Amazon.Lambda.SQSEvents;
 using Microsoft.Extensions.Hosting;
@@ -11,10 +12,10 @@ var serviceProvider = builder.Build();
 var serializer = new DefaultLambdaJsonSerializer();
 
 // ReSharper disable once ConvertToLocalFunction
-var handler = async (Stream stream) => {
+var handler = async (Stream stream, ILambdaContext context) => {
   var evt = serializer.Deserialize<SQSEvent>(stream);
   foreach (var record in evt.Records) {
-    Console.WriteLine($"message: {record.Body}");
+    context.Logger.LogInformation($"message: {record.Body}");
   }
 };
 

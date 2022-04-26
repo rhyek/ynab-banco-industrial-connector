@@ -9,27 +9,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/ScrapeBankTransactionsConsumer.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/src/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../infra/build/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/build/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../infra/consts.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/consts.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../infra/deploy/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../infra/deploy/src/sqs-scrape-bank-transactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../infra/deploy/src/sqs-scrape-bank-transactions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/ApplicationOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/ApplicationOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/NewMobileNotificationTransactionCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/NewMobileNotificationTransactionCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/UpdateBankConfirmedTransactionsCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/UpdateBankConfirmedTransactionsCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/Commands/UpdateBankReservedTransactionsCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/UpdateBankReservedTransactionsCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/src/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/DependencyInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/src/CurrencyConverterService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/CurrencyConverterService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/src/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/CurrencyConverter/DependencyInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/MessageQueueService/src/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/DependencyInjection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/MessageQueueService/src/MessageQueueService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/MessageQueueService/MessageQueueService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfaces/src/ICurrencyConverterService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/ICurrencyConverterService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interfaces/src/IMessageQueueService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IMessageQueueService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Programs/HttpApi/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/HttpApi/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/YnabBancoIndustrialConnectorBackend.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/src/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +100,7 @@
       <workItem from="1650156345946" duration="2871000" />
       <workItem from="1650239004938" duration="4354000" />
       <workItem from="1650496734102" duration="10969000" />
-      <workItem from="1650663523350" duration="31974000" />
+      <workItem from="1650663523350" duration="32281000" />
     </task>
     <servers />
   </component>
