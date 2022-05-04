@@ -62,7 +62,7 @@ public class
     // we aren't going to handle transactions with origin: Agency, because
     // the reference numbers for those will always change eventually
     // in the bank statement.
-    if (mobileNotificationTx is {Origin: TransactionOrigin.Establishment} &&
+    if (mobileNotificationTx is { Origin: TransactionOrigin.Establishment } &&
         (mobileNotificationTx.Account == _options
            .BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
          || mobileNotificationTx.Account == _options
@@ -72,7 +72,10 @@ public class
         // if not USD, temporarily convert to USD using an external conversion
         // rates api
         _ => decimal.Round(await _currencyConverterService.ToUsd(
-          mobileNotificationTx.Currency, mobileNotificationTx.Amount), 2)
+                             mobileNotificationTx.Currency,
+                             mobileNotificationTx.Amount) *
+                           1.035m /* bank commission */,
+          2)
       };
       if (mobileNotificationTx.Type == TransactionType.Debit) {
         amount *= -1;
