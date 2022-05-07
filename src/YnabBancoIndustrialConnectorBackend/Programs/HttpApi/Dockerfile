@@ -2,19 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim as build
 WORKDIR /sln
 COPY . .
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-  dotnet restore \
+RUN dotnet restore \
   Programs/HttpApi/HttpApi.csproj \
   --runtime linux-x64
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-  dotnet build \
+RUN dotnet build \
   Programs/HttpApi/HttpApi.csproj \
   --no-restore \
   --configuration Release \
   --runtime linux-x64 \
   --self-contained false
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-  dotnet publish \
+RUN dotnet publish \
   Programs/HttpApi/HttpApi.csproj \
   --no-restore \
   --no-build \
