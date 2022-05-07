@@ -7,17 +7,9 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
   Programs/ScrapeBankTransactionsConsumer/ScrapeBankTransactionsConsumer.csproj \
   --runtime linux-x64
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-  dotnet build \
-  Programs/ScrapeBankTransactionsConsumer/ScrapeBankTransactionsConsumer.csproj \
-  --no-restore \
-  --configuration Release \
-  --runtime linux-x64 \
-  --self-contained false
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
   dotnet publish \
   Programs/ScrapeBankTransactionsConsumer/ScrapeBankTransactionsConsumer.csproj \
   --no-restore \
-  --no-build \
   --configuration Release \
   --runtime linux-x64 \
   --self-contained false \
