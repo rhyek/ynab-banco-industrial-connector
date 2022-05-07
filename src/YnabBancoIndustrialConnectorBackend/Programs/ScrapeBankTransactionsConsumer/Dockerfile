@@ -27,4 +27,5 @@ RUN apt-get update; \
   apt-get update && \
   apt-get install -y aspnetcore-runtime-6.0
 COPY --from=build /app/publish /app
+RUN chown -R pwuser:pwuser /app/.playwright
 CMD ["dotnet", "/app/ScrapeBankTransactionsConsumer.dll"]
