@@ -43,13 +43,13 @@ importers:
     specifiers:
       dotenv: ~16.0.0
       find-up: ~5.0.0
-      ngrok: ~4.3.1
+      ngrok: github:rhyek/ngrok#9977bd88a0ef8e20ee7d83ae563fdb4deb8920d6
       ts-node-dev: ~1.1.8
       typescript: ~4.5.4
     devDependencies:
       dotenv: 16.0.0
       find-up: 5.0.0
-      ngrok: 4.3.1
+      ngrok: github.com/rhyek/ngrok/9977bd88a0ef8e20ee7d83ae563fdb4deb8920d6
       ts-node-dev: 1.1.8_typescript@4.5.4
       typescript: 4.5.4
 
@@ -962,24 +962,6 @@ packages:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
     dev: true
 
-  /ngrok/4.3.1:
-    resolution: {integrity: sha512-s0joO2liKYiGTVARyzL8hfLIXAZT03GDK3oJqsZK6d61Es+HCx77j8E9ysUbtkMEyvBgYmIMr8taQNsvQt4/DQ==}
-    engines: {node: '>=10.19.0 <14 || >=14.2'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@types/node': 8.10.66
-      extract-zip: 2.0.1
-      got: 11.8.3
-      lodash.clonedeep: 4.5.0
-      uuid: 8.3.2
-      yaml: 1.10.2
-    optionalDependencies:
-      hpagent: 0.1.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /normalize-package-data/2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
     dependencies:
@@ -1532,4 +1514,24 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  github.com/rhyek/ngrok/9977bd88a0ef8e20ee7d83ae563fdb4deb8920d6:
+    resolution: {tarball: https://codeload.github.com/rhyek/ngrok/tar.gz/9977bd88a0ef8e20ee7d83ae563fdb4deb8920d6}
+    name: ngrok
+    version: 4.3.1
+    engines: {node: '>=10.19.0 <14 || >=14.2'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@types/node': 8.10.66
+      extract-zip: 2.0.1
+      got: 11.8.3
+      lodash.clonedeep: 4.5.0
+      uuid: 8.3.2
+      yaml: 1.10.2
+    optionalDependencies:
+      hpagent: 0.1.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
