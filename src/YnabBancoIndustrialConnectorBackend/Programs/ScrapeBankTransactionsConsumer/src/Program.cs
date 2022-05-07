@@ -34,7 +34,8 @@ var handler = async (Stream stream, ILambdaContext context) => {
       _ => null
     };
     if (command != null) {
-      await mediator.Send(Activator.CreateInstance(command) ?? throw new InvalidOperationException());
+      await mediator.Send(Activator.CreateInstance(command) ??
+                          throw new InvalidOperationException());
     }
   }
 };
