@@ -9,8 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile.arm64" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/notes.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/src/BancoIndustrialScraperService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/BancoIndustrialScraper/src/BancoIndustrialScraperService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +113,7 @@
       <workItem from="1651633616246" duration="631000" />
       <workItem from="1651727201306" duration="1885000" />
       <workItem from="1651777484678" duration="3114000" />
-      <workItem from="1651941621363" duration="7535000" />
+      <workItem from="1651941621363" duration="10855000" />
     </task>
     <servers />
   </component>
