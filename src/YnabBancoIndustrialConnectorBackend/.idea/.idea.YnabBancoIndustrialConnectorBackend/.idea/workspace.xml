@@ -9,11 +9,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6861c2be-6bea-47c7-84e3-7063520ea64a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile.arm64" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/notes.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.YnabBancoIndustrialConnectorBackend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Programs/ScrapeBankTransactionsConsumer/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,19 +45,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.36636636",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.36636636&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.HttpApi">
     <configuration name="ScrapeBankTransactionsConsumer" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -113,7 +109,7 @@
       <workItem from="1651633616246" duration="631000" />
       <workItem from="1651727201306" duration="1885000" />
       <workItem from="1651777484678" duration="3114000" />
-      <workItem from="1651941621363" duration="10855000" />
+      <workItem from="1651941621363" duration="12485000" />
     </task>
     <servers />
   </component>

@@ -29,6 +29,7 @@ var serializer = new DefaultLambdaJsonSerializer();
 
 // ReSharper disable once ConvertToLocalFunction
 var handler = async (Stream stream, ILambdaContext context) => {
+  BancoIndustrialScraper.Diagnostics.RunDiagnostics();
   var mediator = serviceProvider.Services.GetService<IMediator>();
   if (mediator == null) {
     throw new Exception("mediator is null");
