@@ -54,6 +54,9 @@ public class BancoIndustrialScraperService
   {
     T? result = null;
     await _monitorSemaphore.WaitAsync(stoppingToken);
+    
+    _logger.LogInformation("Scraping with job {JobName}", scraperJob.GetType().Name);
+    _logger.LogInformation("Username: {Username}", _options.Auth?.Username);
 
     using var playwright = await Playwright.CreateAsync();
     await using var browser =
