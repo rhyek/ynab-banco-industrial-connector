@@ -18,5 +18,6 @@ COPY --from=build /publish /app
 RUN chown -R pwuser:pwuser /app
 # https://stackoverflow.com/questions/37374310/how-critical-is-dumb-init-for-docker
 # child processes: playwright node driver
+USER pwuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["dotnet", "/app/ScrapeBankTransactionsConsumer.dll"]
