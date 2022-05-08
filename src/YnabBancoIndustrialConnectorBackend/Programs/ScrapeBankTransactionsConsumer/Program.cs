@@ -45,7 +45,7 @@ var handler = async (Stream stream, ILambdaContext context) => {
       await mediator.Send(Activator.CreateInstance(command) ??
                           throw new InvalidOperationException());
     }
-    const string tracePath = "/trace.zip";
+    const string tracePath = "/tmp/trace.zip";
     if (File.Exists(tracePath)) {
       context.Logger.LogInformation($"trace file: {tracePath}");
     }
