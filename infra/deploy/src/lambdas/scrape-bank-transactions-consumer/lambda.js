@@ -33,6 +33,7 @@ export const scrapeBankTransactionsConsumerFunc = new aws.lambda.Function(
             config.requireSecret(key),
           ])
         ),
+        IN_LAMBDA: 'true',
         DEBUG: 'pw:*',
       },
     },
