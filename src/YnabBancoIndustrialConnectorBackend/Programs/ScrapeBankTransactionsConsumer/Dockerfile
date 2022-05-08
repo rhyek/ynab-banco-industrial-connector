@@ -4,8 +4,10 @@ RUN apt-get update; \
   apt-get install -y wget brotli
 WORKDIR /out
 RUN wget https://raw.githubusercontent.com/alixaxel/chrome-aws-lambda/master/bin/chromium.br
-RUN brotli --decompress chromium.br
-RUN rm chromium.br
+RUN wget https://raw.githubusercontent.com/alixaxel/chrome-aws-lambda/master/bin/swiftshader.tar.br
+RUN brotli --decompress chromium.br swiftshader.tar.br
+RUN mkdir swiftshader; tar -xvf swiftshader.tar -C swiftshader
+RUN rm chromium.br swiftshader.tar.br swiftshader.tar
 RUN chmod +x chromium
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
