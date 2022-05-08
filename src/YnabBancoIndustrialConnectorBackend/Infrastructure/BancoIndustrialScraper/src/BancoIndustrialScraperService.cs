@@ -101,10 +101,10 @@ public class BancoIndustrialScraperService
         Args = _GetBrowserFlags(),
       });
     await using var context = await browser.NewContextAsync();
-    await context.Tracing.StartAsync(new() {
-      Screenshots = true,
-      Snapshots = true,
-    });
+    // await context.Tracing.StartAsync(new() {
+    //   Screenshots = true,
+    //   Snapshots = true,
+    // });
     var attempts = 0;
     const int maxAttempts = 1;
     while (!stoppingToken.IsCancellationRequested &&
@@ -143,10 +143,10 @@ public class BancoIndustrialScraperService
         }
       }
     }
-    await context.Tracing.StopAsync(new ()
-    {
-      Path = "trace.zip"
-    });
+    // await context.Tracing.StopAsync(new ()
+    // {
+    //   Path = "trace.zip"
+    // });
     if (result != null) {
       _logger.LogInformation("Job finished");
     }

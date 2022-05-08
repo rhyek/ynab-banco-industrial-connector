@@ -7,6 +7,7 @@ public class Diagnostics
 {
   public static void RunDiagnostics()
   {
+    Console.WriteLine("in lambda env: {0}", Environment.GetEnvironmentVariable("IN_LAMBDA"));
     Console.WriteLine("current user: {0}", Environment.UserName);
     Console.WriteLine("base directory: {0}", AppContext.BaseDirectory);
     DirectoryInfo assemblyDirectory = new(AppContext.BaseDirectory);
