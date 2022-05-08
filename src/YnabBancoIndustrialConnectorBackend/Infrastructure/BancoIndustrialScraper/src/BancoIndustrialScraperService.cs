@@ -60,7 +60,7 @@ public class BancoIndustrialScraperService
 
     using var playwright = await Playwright.CreateAsync();
     await using var browser =
-      await playwright.Firefox.LaunchAsync(new() {
+      await playwright.Chromium.LaunchAsync(new() {
         Headless = true
       });
 
