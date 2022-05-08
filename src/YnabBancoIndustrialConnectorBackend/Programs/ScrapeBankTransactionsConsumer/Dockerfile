@@ -21,4 +21,4 @@ COPY --from=build /publish /app
 # USER pwuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 WORKDIR /app
-CMD ["dotnet", "/ScrapeBankTransactionsConsumer.dll"]
+CMD ["dotnet", "./ScrapeBankTransactionsConsumer.dll"]
