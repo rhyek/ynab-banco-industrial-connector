@@ -88,21 +88,21 @@ public class BancoIndustrialScraperService
           // "--use-mock-keychain",
           
           // these are new from: https://github.com/JupiterOne/playwright-aws-lambda/blob/main/src/chromium.ts#L24
-          // "--autoplay-policy=user-gesture-required", // no
-          // "--disable-component-update", // no
-          // "--disable-domain-reliability", // no
-          // "--disable-features=AudioServiceOutOfProcess", // no
-          // "--disable-notifications", // no
-          // "--disable-offer-store-unmasked-wallet-cards", // no
-          // "--disable-print-preview", // no
-          // "--disable-setuid-sandbox", // no
-          // "--disable-speech-api", // no
-          // "--disk-cache-size=33554432", // no
+          "--autoplay-policy=user-gesture-required", // no
+          "--disable-component-update", // no
+          "--disable-domain-reliability", // no
+          "--disable-features=AudioServiceOutOfProcess", // no
+          "--disable-notifications", // no
+          "--disable-offer-store-unmasked-wallet-cards", // no
+          "--disable-print-preview", // no
+          "--disable-setuid-sandbox", // no
+          "--disable-speech-api", // no
+          "--disk-cache-size=33554432", // no
           "--ignore-gpu-blacklist", // no
-          // "--no-default-browser-check", // no
-          // "--no-pings", // no
-          // "--no-zygote", // no
-          // "--use-gl=swiftshader", // no
+          "--no-default-browser-check", // no
+          "--no-pings", // no
+          "--no-zygote", // no
+          "--use-gl=swiftshader", // no
           // "--single-process" // no
         }
       });
