@@ -106,8 +106,9 @@ public class BancoIndustrialScraperService
       Snapshots = true,
     });
     var attempts = 0;
+    const int maxAttempts = 1;
     while (!stoppingToken.IsCancellationRequested &&
-           attempts < 1) {
+           attempts < maxAttempts) {
       attempts++;
       _logger.LogInformation(
         "Attempt: {Attempts}", attempts);
@@ -132,12 +133,14 @@ public class BancoIndustrialScraperService
         break;
       }
       catch (TaskCanceledException) {
-        _logger.LogInformation("Task canceled");
+        _logger.LogInformation("Task cancelled");
         break;
       }
       catch (Exception e) {
         _logger.LogError(e, message: "Some error");
-        await WaitFor(60_000, stoppingToken);
+        if (attempts < maxAttempts) {
+          await WaitFor(60_000, stoppingToken);
+        }
       }
     }
     await context.Tracing.StopAsync(new ()
