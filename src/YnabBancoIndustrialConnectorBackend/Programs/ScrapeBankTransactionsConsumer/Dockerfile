@@ -15,10 +15,11 @@ FROM mcr.microsoft.com/playwright/dotnet:v1.21.0-focal
 RUN apt-get update; \
   apt-get install -y dumb-init
 COPY --from=build /publish /app
-# RUN chown -R pwuser:pwuser /app
+WORKDIR /app
+# https://docs.aws.amazon.com/lambda/latest/dg/troubleshooting-deployment.html
+RUN chmod 644 $(find . -type f) && \
+  chmod 755 $(find . -type d)
 # https://stackoverflow.com/questions/37374310/how-critical-is-dumb-init-for-docker
 # child processes: playwright node driver
-# USER pwuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-WORKDIR /app
 CMD ["dotnet", "./ScrapeBankTransactionsConsumer.dll"]
