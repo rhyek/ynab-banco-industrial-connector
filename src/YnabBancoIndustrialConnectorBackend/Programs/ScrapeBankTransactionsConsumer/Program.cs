@@ -47,7 +47,8 @@ var handler = async (Stream stream, ILambdaContext context) => {
     }
     const string tracePath = "/tmp/trace.zip";
     if (File.Exists(tracePath)) {
-      context.Logger.LogInformation($"trace file: {tracePath}");
+      context.Logger.LogInformation(
+        $"trace file: {tracePath}, {File.Exists(tracePath)}");
     }
   }
 };
