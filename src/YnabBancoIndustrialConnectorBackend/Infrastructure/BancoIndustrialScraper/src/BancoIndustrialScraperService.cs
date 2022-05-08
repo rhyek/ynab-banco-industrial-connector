@@ -138,7 +138,7 @@ public class BancoIndustrialScraperService
 
     var attempts = 1;
     while (!stoppingToken.IsCancellationRequested &&
-           attempts <= 3) {
+           attempts <= 1) {
       _logger.LogInformation(
         "Attempt: {Attempts}", attempts);
       _logger.LogInformation("Logging in to bank...");
@@ -148,7 +148,9 @@ public class BancoIndustrialScraperService
       try {
         var page = await browser.NewPageAsync();
         await page.GotoAsync(
-          "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
+          "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar", new () {
+            WaitUntil = WaitUntilState.NetworkIdle
+          });
         await page.FillAsync("#campoInstalacion", _options.Auth.UserId);
         await page.FillAsync("#campoUsuario", _options.Auth.Username);
         await page.FillAsync("#campoContrasenia", _options.Auth.Password);
