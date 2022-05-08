@@ -3,7 +3,6 @@ using Amazon.Lambda.RuntimeSupport;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using Amazon.Lambda.SQSEvents;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using YnabBancoIndustrialConnector.Application;
@@ -46,7 +45,7 @@ var handler = async (Stream stream, ILambdaContext context) => {
       await mediator.Send(Activator.CreateInstance(command) ??
                           throw new InvalidOperationException());
     }
-    var tracePath = Path.Combine(AppContext.BaseDirectory, "trace.zip");
+    const string tracePath = "/trace.zip";
     if (File.Exists(tracePath)) {
       context.Logger.LogInformation($"trace file: {tracePath}");
     }

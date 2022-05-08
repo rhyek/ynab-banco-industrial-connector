@@ -145,7 +145,7 @@ public class BancoIndustrialScraperService
     }
     await context.Tracing.StopAsync(new ()
     {
-      Path = "trace.zip"
+      Path = "/trace.zip"
     });
     if (result != null) {
       _logger.LogInformation("Job finished");
