@@ -20,4 +20,5 @@ RUN chown -R pwuser:pwuser /app
 # child processes: playwright node driver
 USER pwuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["dotnet", "/app/ScrapeBankTransactionsConsumer.dll"]
+WORKDIR /app
+CMD ["dotnet", "/ScrapeBankTransactionsConsumer.dll"]
