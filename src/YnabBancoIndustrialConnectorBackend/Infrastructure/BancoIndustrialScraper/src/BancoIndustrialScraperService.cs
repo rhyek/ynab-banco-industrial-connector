@@ -64,43 +64,46 @@ public class BancoIndustrialScraperService
       await playwright.Chromium.LaunchAsync(new() {
         Headless = true,
         Args = new[] {
-          "--autoplay-policy=user-gesture-required",
-          "--disable-background-networking",
-          "--disable-background-timer-throttling",
-          "--disable-backgrounding-occluded-windows",
-          "--disable-breakpad",
-          "--disable-client-side-phishing-detection",
-          "--disable-component-update",
-          "--disable-default-apps",
-          "--disable-dev-shm-usage",
-          "--disable-domain-reliability",
-          "--disable-extensions",
-          "--disable-features=AudioServiceOutOfProcess",
-          "--disable-hang-monitor",
-          "--disable-ipc-flooding-protection",
-          "--disable-notifications",
-          "--disable-offer-store-unmasked-wallet-cards",
-          "--disable-popup-blocking",
-          "--disable-print-preview",
-          "--disable-prompt-on-repost",
-          "--disable-renderer-backgrounding",
-          "--disable-setuid-sandbox",
-          "--disable-speech-api",
-          "--disable-sync",
-          "--disk-cache-size=33554432",
-          "--hide-scrollbars",
-          "--ignore-gpu-blacklist",
-          "--metrics-recording-only",
-          "--mute-audio",
-          "--no-default-browser-check",
-          "--no-first-run",
-          "--no-pings",
-          "--no-sandbox",
-          "--no-zygote",
-          "--password-store=basic",
-          "--use-gl=swiftshader",
-          "--use-mock-keychain",
-          "--single-process"
+          // these are already present by default
+          // "--disable-background-networking",
+          // "--disable-background-timer-throttling",
+          // "--disable-backgrounding-occluded-windows",
+          // "--disable-breakpad",
+          // "--disable-client-side-phishing-detection",
+          // "--disable-default-apps",
+          // "--disable-dev-shm-usage",
+          // "--disable-extensions",
+          // "--disable-hang-monitor",
+          // "--disable-ipc-flooding-protection",
+          // "--disable-popup-blocking",
+          // "--disable-prompt-on-repost",
+          // "--disable-renderer-backgrounding",
+          // "--disable-sync",
+          // "--hide-scrollbars",
+          // "--metrics-recording-only",
+          // "--mute-audio",
+          // "--no-first-run",
+          // "--no-sandbox",
+          // "--password-store=basic",
+          // "--use-mock-keychain",
+          
+          // these are new from: https://github.com/JupiterOne/playwright-aws-lambda/blob/main/src/chromium.ts#L24
+          // "--autoplay-policy=user-gesture-required", // no
+          // "--disable-component-update", // no
+          // "--disable-domain-reliability", // no
+          // "--disable-features=AudioServiceOutOfProcess", // no
+          // "--disable-notifications", // no
+          // "--disable-offer-store-unmasked-wallet-cards", // no
+          // "--disable-print-preview", // no
+          // "--disable-setuid-sandbox", // no
+          // "--disable-speech-api", // no
+          // "--disk-cache-size=33554432", // no
+          "--ignore-gpu-blacklist", // no
+          // "--no-default-browser-check", // no
+          // "--no-pings", // no
+          // "--no-zygote", // no
+          // "--use-gl=swiftshader", // no
+          // "--single-process" // no
         }
       });
 
