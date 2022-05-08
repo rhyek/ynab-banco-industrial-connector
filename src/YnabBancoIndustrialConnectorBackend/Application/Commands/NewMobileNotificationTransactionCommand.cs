@@ -100,17 +100,24 @@ public class
       _logger.LogInformation("YNAB tx was created: {WasCreated}", wasCreated);
       if (wasCreated) {
         await _ynabTransactionRepository.CommitChanges();
-        if (mobileNotificationTx.Currency == "GTQ") {
-          if (_hostEnvironment.IsDevelopment()) {
-            await _mediator.Send(new UpdateBankReservedTransactionsCommand(),
-              cancellationToken);
-          }
-          else {
-            await _messageQueue.SendScrapeReservedTransactionsMessage(
-              mobileNotificationTx.Reference,
-              cancellationToken);
-          }
-        }
+        // scraping reserved txs is not entirely necessary. it doesn't work for
+        // currencies != GTQ since they are not recorded on the website.
+        // for USD we just record the dollars directly
+        // for all other currencies we just convert them to USD and record that.
+        // eventually that amount will be adjusted to the real value when the tx
+        // is added to the bank statement
+
+        // if (mobileNotificationTx.Currency == "GTQ") {
+        //   if (_hostEnvironment.IsDevelopment()) {
+        //     await _mediator.Send(new UpdateBankReservedTransactionsCommand(),
+        //       cancellationToken);
+        //   }
+        //   else {
+        //     await _messageQueue.SendScrapeReservedTransactionsMessage(
+        //       mobileNotificationTx.Reference,
+        //       cancellationToken);
+        //   }
+        // }
       }
     }
     _logger.LogInformation("End");
