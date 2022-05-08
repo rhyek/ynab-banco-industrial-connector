@@ -100,10 +100,15 @@ public class BancoIndustrialScraperService
         // ExecutablePath = "/lambda-chromium/chromium",
         Args = _GetBrowserFlags(),
       });
-
-    var attempts = 1;
+    await using var context = await browser.NewContextAsync();
+    await context.Tracing.StartAsync(new() {
+      Screenshots = true,
+      Snapshots = true,
+    });
+    var attempts = 0;
     while (!stoppingToken.IsCancellationRequested &&
-           attempts <= 1) {
+           attempts < 1) {
+      attempts++;
       _logger.LogInformation(
         "Attempt: {Attempts}", attempts);
       _logger.LogInformation("Logging in to bank...");
@@ -111,7 +116,7 @@ public class BancoIndustrialScraperService
         throw new Exception("Options are null");
       }
       try {
-        var page = await browser.NewPageAsync();
+        var page = await context.NewPageAsync();
         await page.GotoAsync(
           "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
         await page.FillAsync("#campoInstalacion", _options.Auth.UserId);
@@ -132,10 +137,13 @@ public class BancoIndustrialScraperService
       }
       catch (Exception e) {
         _logger.LogError(e, message: "Some error");
-        attempts++;
         await WaitFor(60_000, stoppingToken);
       }
     }
+    await context.Tracing.StopAsync(new ()
+    {
+      Path = "trace.zip"
+    });
     if (result != null) {
       _logger.LogInformation("Job finished");
     }

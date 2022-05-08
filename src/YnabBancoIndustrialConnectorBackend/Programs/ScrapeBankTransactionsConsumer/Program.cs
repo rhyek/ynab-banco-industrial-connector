@@ -46,6 +46,10 @@ var handler = async (Stream stream, ILambdaContext context) => {
       await mediator.Send(Activator.CreateInstance(command) ??
                           throw new InvalidOperationException());
     }
+    var tracePath = Path.Combine(AppContext.BaseDirectory, "trace.zip");
+    if (File.Exists(tracePath)) {
+      context.Logger.LogInformation($"trace file: {tracePath}");
+    }
   }
 };
 
