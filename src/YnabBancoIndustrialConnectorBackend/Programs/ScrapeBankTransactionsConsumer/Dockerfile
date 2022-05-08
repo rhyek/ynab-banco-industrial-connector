@@ -15,10 +15,10 @@ FROM mcr.microsoft.com/playwright/dotnet:v1.21.0-focal
 RUN apt-get update; \
   apt-get install -y dumb-init
 COPY --from=build /publish /app
-RUN chown -R pwuser:pwuser /app
+# RUN chown -R pwuser:pwuser /app
 # https://stackoverflow.com/questions/37374310/how-critical-is-dumb-init-for-docker
 # child processes: playwright node driver
-USER pwuser
+# USER pwuser
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 WORKDIR /app
 CMD ["dotnet", "/ScrapeBankTransactionsConsumer.dll"]
