@@ -63,7 +63,7 @@ public class BancoIndustrialScraperService
     await using var browser =
       await playwright.Chromium.LaunchAsync(new() {
         Headless = true,
-        ExecutablePath = "/lambda-chromium/chromium",
+        // ExecutablePath = "/lambda-chromium/chromium",
         Args = new[] {
           // https://github.com/GoogleChrome/chrome-launcher/blob/master/docs/chrome-flags-for-tools.md
 
@@ -148,9 +148,7 @@ public class BancoIndustrialScraperService
       try {
         var page = await browser.NewPageAsync();
         await page.GotoAsync(
-          "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar", new () {
-            WaitUntil = WaitUntilState.NetworkIdle
-          });
+          "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
         await page.FillAsync("#campoInstalacion", _options.Auth.UserId);
         await page.FillAsync("#campoUsuario", _options.Auth.Username);
         await page.FillAsync("#campoContrasenia", _options.Auth.Password);
