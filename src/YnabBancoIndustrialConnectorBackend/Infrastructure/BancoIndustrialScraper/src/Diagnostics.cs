@@ -7,6 +7,7 @@ public class Diagnostics
 {
   public static void RunDiagnostics()
   {
+    Console.WriteLine("current user: {0}", Environment.UserName);
     Console.WriteLine("base directory: {0}", AppContext.BaseDirectory);
     DirectoryInfo assemblyDirectory = new(AppContext.BaseDirectory);
     Console.WriteLine("assembly directory exists: {0}, {1}", assemblyDirectory.FullName, assemblyDirectory.Exists);
