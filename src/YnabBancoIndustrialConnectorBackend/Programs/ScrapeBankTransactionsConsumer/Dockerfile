@@ -1,4 +1,13 @@
 # syntax=docker/dockerfile:1.3
+FROM ubuntu:22.04 as lambda-chromium
+RUN apt-get update; \
+  apt-get install -y wget brotli
+WORKDIR /out
+RUN wget https://raw.githubusercontent.com/alixaxel/chrome-aws-lambda/master/bin/chromium.br
+RUN brotli --decompress chromium.br
+RUN rm chromium.br
+RUN chmod +x chromium
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
 WORKDIR /sln
 COPY . .
@@ -18,6 +27,7 @@ WORKDIR /app
 RUN chmod 644 $(find . -type f) && \
   chmod 755 $(find . -type d)
 RUN chmod +x ./.playwright/node/linux/*
+COPY --from=lambda-chromium /out /lambda-chromium
 # https://stackoverflow.com/questions/37374310/how-critical-is-dumb-init-for-docker
 # child processes: playwright node driver
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]

@@ -63,6 +63,7 @@ public class BancoIndustrialScraperService
     await using var browser =
       await playwright.Chromium.LaunchAsync(new() {
         Headless = true,
+        ExecutablePath = "/lambda-chromium/chromium",
         Args = new[] {
           // https://github.com/GoogleChrome/chrome-launcher/blob/master/docs/chrome-flags-for-tools.md
           
@@ -106,7 +107,7 @@ public class BancoIndustrialScraperService
           // "--no-zygote", // no
           "--use-gl=swiftshader", // no
           // "--single-process", // no
-          
+          // mine
           "--in-process-gpu",
         }
       });
