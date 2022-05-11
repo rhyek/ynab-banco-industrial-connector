@@ -97,7 +97,7 @@ public class BancoIndustrialScraperService
     await using var browser =
       await playwright.Chromium.LaunchAsync(new() {
         Headless = true,
-        ExecutablePath = "/lambda-chromium/chromium",
+        ExecutablePath = null, // "/lambda-chromium/chromium",
         Args = _GetBrowserFlags(),
       });
     await using var context = await browser.NewContextAsync();
@@ -145,7 +145,7 @@ public class BancoIndustrialScraperService
     }
     await context.Tracing.StopAsync(new ()
     {
-      Path = "/tmp/trace.zip"
+      Path = _options.PlaywrightTraceFile,
     });
     if (result != null) {
       _logger.LogInformation("Job finished");

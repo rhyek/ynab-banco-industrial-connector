@@ -10,7 +10,7 @@ public class Diagnostics
     Console.WriteLine("in lambda env: {0}", Environment.GetEnvironmentVariable("IN_LAMBDA"));
     Console.WriteLine("current user: {0}", Environment.UserName);
     Console.WriteLine("base directory: {0}", AppContext.BaseDirectory);
-    DirectoryInfo assemblyDirectory = new(AppContext.BaseDirectory);
+    DirectoryInfo? assemblyDirectory = new(AppContext.BaseDirectory);
     Console.WriteLine("assembly directory exists: {0}, {1}", assemblyDirectory.FullName, assemblyDirectory.Exists);
     Console.WriteLine("dll exists in assembly directory: {0}, {1}",
       Path.Combine(assemblyDirectory.FullName, "Microsoft.Playwright.dll"),
@@ -20,11 +20,16 @@ public class Diagnostics
     {
       var assemblyLocation = typeof(Playwright).Assembly.Location;
       assemblyDirectory = new FileInfo(assemblyLocation).Directory;
-      Console.WriteLine("assembly directory exists 2: {0}, {1}", assemblyDirectory.FullName, assemblyDirectory.Exists);
+      Console.WriteLine("assembly directory exists 2: {0}, {1}", assemblyDirectory?.FullName, assemblyDirectory?.Exists);
     }
-
-    string executableFile = GetPath(assemblyDirectory.FullName);
-    Console.WriteLine("executableFile exists: {0}, {1}", executableFile, File.Exists(executableFile));
+    if (assemblyDirectory != null) {
+      var executableFile = GetPath(assemblyDirectory.FullName);
+      Console.WriteLine("executableFile exists: {0}, {1}", executableFile,
+        File.Exists(executableFile));
+    }
+    else {
+      Console.WriteLine("assemblyDirectory == null");
+    }
   }
   
   private static string GetPath(string driversPath)

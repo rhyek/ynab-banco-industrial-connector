@@ -5,6 +5,7 @@ using Amazon.Lambda.SQSEvents;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
 using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
@@ -23,16 +24,17 @@ var builder = Host.CreateDefaultBuilder(args)
     services.AddBancoIndustrialScraper();
     services.AddYnabController();
   });
-var serviceProvider = builder.Build();
+var host = builder.Build();
 var serializer = new DefaultLambdaJsonSerializer();
+
 
 // ReSharper disable once ConvertToLocalFunction
 var handler = async (Stream stream, ILambdaContext context) => {
   BancoIndustrialScraper.Diagnostics.RunDiagnostics();
-  var mediator = serviceProvider.Services.GetService<IMediator>();
-  if (mediator == null) {
-    throw new Exception("mediator is null");
-  }
+  var bancoIndustrialScraperOptions = host.Services
+    .GetService<IOptions<BancoIndustrialScraperOptions>>()!.Value;
+  var mediator = host.Services.GetService<IMediator>()!;
+  
   var evt = serializer.Deserialize<SQSEvent>(stream);
   foreach (var record in evt.Records) {
     context.Logger.LogInformation($"message received: {record.Body}");
@@ -45,7 +47,7 @@ var handler = async (Stream stream, ILambdaContext context) => {
       await mediator.Send(Activator.CreateInstance(command) ??
                           throw new InvalidOperationException());
     }
-    const string tracePath = "/tmp/trace.zip";
+    var tracePath = bancoIndustrialScraperOptions.PlaywrightTraceFile;
     if (File.Exists(tracePath)) {
       context.Logger.LogInformation(
         $"trace file: {tracePath}, exists: {File.Exists(tracePath)}");
