@@ -74,6 +74,8 @@ public class BancoIndustrialScraperService
       "--no-zygote", // https://source.chromium.org/search?q=lang:cpp+symbol:kNoZygote&ss=chromium
       "--use-gl=swiftshader", // https://source.chromium.org/search?q=lang:cpp+symbol:kUseGl&ss=chromium
       "--window-size=1920,1080", // https://source.chromium.org/search?q=lang:cpp+symbol:kWindowSize&ss=chromium
+      "--disable-gpu",
+      "--disable-dev-shm-usage"
     };
     if (!string.IsNullOrEmpty(
           Environment.GetEnvironmentVariable("IN_LAMBDA"))) {
