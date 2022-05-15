@@ -102,7 +102,10 @@ public class BancoIndustrialScraperService
         ExecutablePath = "/lambda-chromium/chromium",
         Args = _GetBrowserFlags(),
       });
-    await using var context = await browser.NewContextAsync();
+    await using var context = await browser.NewContextAsync(new() {
+      UserAgent =
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
+    });
     await context.Tracing.StartAsync(new() {
       Screenshots = true,
       Snapshots = true,
@@ -145,8 +148,7 @@ public class BancoIndustrialScraperService
         }
       }
     }
-    await context.Tracing.StopAsync(new ()
-    {
+    await context.Tracing.StopAsync(new() {
       Path = _options.PlaywrightTraceFile,
     });
     if (result != null) {

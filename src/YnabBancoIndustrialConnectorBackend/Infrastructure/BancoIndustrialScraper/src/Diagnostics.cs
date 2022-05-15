@@ -7,20 +7,26 @@ public class Diagnostics
 {
   public static void RunDiagnostics()
   {
-    Console.WriteLine("in lambda env: {0}", Environment.GetEnvironmentVariable("IN_LAMBDA"));
+    Console.WriteLine("in lambda env: {0}",
+      Environment.GetEnvironmentVariable("IN_LAMBDA"));
+    Console.WriteLine("aws lambda runtime api env: {0}",
+      Environment.GetEnvironmentVariable("AWS_LAMBDA_RUNTIME_API"));
     Console.WriteLine("current user: {0}", Environment.UserName);
     Console.WriteLine("base directory: {0}", AppContext.BaseDirectory);
     DirectoryInfo? assemblyDirectory = new(AppContext.BaseDirectory);
-    Console.WriteLine("assembly directory exists: {0}, {1}", assemblyDirectory.FullName, assemblyDirectory.Exists);
+    Console.WriteLine("assembly directory exists: {0}, {1}",
+      assemblyDirectory.FullName, assemblyDirectory.Exists);
     Console.WriteLine("dll exists in assembly directory: {0}, {1}",
       Path.Combine(assemblyDirectory.FullName, "Microsoft.Playwright.dll"),
       File.Exists(Path.Combine(assemblyDirectory.FullName,
         "Microsoft.Playwright.dll")));
-    if (!assemblyDirectory.Exists || !File.Exists(Path.Combine(assemblyDirectory.FullName, "Microsoft.Playwright.dll")))
-    {
+    if (!assemblyDirectory.Exists || !File.Exists(
+          Path.Combine(assemblyDirectory.FullName,
+            "Microsoft.Playwright.dll"))) {
       var assemblyLocation = typeof(Playwright).Assembly.Location;
       assemblyDirectory = new FileInfo(assemblyLocation).Directory;
-      Console.WriteLine("assembly directory exists 2: {0}, {1}", assemblyDirectory?.FullName, assemblyDirectory?.Exists);
+      Console.WriteLine("assembly directory exists 2: {0}, {1}",
+        assemblyDirectory?.FullName, assemblyDirectory?.Exists);
     }
     if (assemblyDirectory != null) {
       var executableFile = GetPath(assemblyDirectory.FullName);
@@ -31,31 +37,28 @@ public class Diagnostics
       Console.WriteLine("assemblyDirectory == null");
     }
   }
-  
+
   private static string GetPath(string driversPath)
   {
     string platformId;
     string runnerName;
-    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-    {
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
       platformId = "win32_x64";
       runnerName = "playwright.cmd";
     }
-    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-    {
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
       runnerName = "playwright.sh";
       platformId = "mac";
     }
-    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-    {
+    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
       runnerName = "playwright.sh";
       platformId = "linux";
     }
-    else
-    {
+    else {
       throw new PlaywrightException("Unknown platform");
     }
 
-    return Path.Combine(driversPath, ".playwright", "node", platformId, runnerName);
+    return Path.Combine(driversPath, ".playwright", "node", platformId,
+      runnerName);
   }
 }
