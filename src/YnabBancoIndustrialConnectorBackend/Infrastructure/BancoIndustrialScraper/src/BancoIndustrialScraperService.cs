@@ -123,8 +123,9 @@ public class BancoIndustrialScraperService
       }
       try {
         var page = await context.NewPageAsync();
-        await page.GotoAsync(
-          "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
+        await page.GotoAsync("https://www.wikipedia.org");
+        // await page.GotoAsync(
+        //   "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
         await page.FillAsync("#campoInstalacion", _options.Auth.UserId);
         await page.FillAsync("#campoUsuario", _options.Auth.Username);
         await page.FillAsync("#campoContrasenia", _options.Auth.Password);
