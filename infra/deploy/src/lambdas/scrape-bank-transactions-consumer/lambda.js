@@ -8,6 +8,7 @@ import {
 import { role } from './role.js';
 import { backendEnvironmentVariableKeys } from '../../../../../.scripts/consts/backend-environment-variable-keys.mjs';
 import { buildStack } from '../../build-stack.js';
+import { playwrightTracesBucketName } from '../../playwright-traces-s3-bucket.js';
 
 const config = new pulumi.Config();
 
@@ -34,6 +35,7 @@ export const scrapeBankTransactionsConsumerFunc = new aws.lambda.Function(
           ])
         ),
         IN_LAMBDA: 'true',
+        PLAYWRIGHT_TRACES_S3_BUCKET_NAME: playwrightTracesBucketName,
         DEBUG: 'pw:*',
       },
     },

@@ -12,6 +12,7 @@
       <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.7.0" />
       <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.0" />
       <PackageReference Include="Amazon.Lambda.SQSEvents" Version="2.1.0" />
+      <PackageReference Include="AWSSDK.S3" Version="3.7.9.2" />
       <PackageReference Include="AWSSDK.SQS" Version="3.7.2.47" />
       <PackageReference Include="MediatR" Version="10.0.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
