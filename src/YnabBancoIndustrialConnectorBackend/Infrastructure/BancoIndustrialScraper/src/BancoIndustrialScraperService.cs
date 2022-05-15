@@ -97,7 +97,7 @@ public class BancoIndustrialScraperService
     await using var browser =
       await playwright.Chromium.LaunchAsync(new() {
         Headless = true,
-        ExecutablePath = null, // "/lambda-chromium/chromium",
+        ExecutablePath = "/lambda-chromium/chromium",
         Args = _GetBrowserFlags(),
       });
     await using var context = await browser.NewContextAsync();
