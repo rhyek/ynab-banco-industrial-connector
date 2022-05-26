@@ -15,6 +15,8 @@ public class BancoIndustrialScraperOptions
 
   public string AccountId { get; set; } = default!;
 
+  public string PlaywrightServerUrl { get; set; } = default!;
+
   public string PlaywrightTraceFile { get; set; } =
     "/tmp/banco-industrial-scraper-trace.zip";
 }

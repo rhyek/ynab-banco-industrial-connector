@@ -7,6 +7,7 @@ export const backendEnvironmentVariableKeys = [
   'BANCO_INDUSTRIAL_SCRAPER__Auth__Username',
   'BANCO_INDUSTRIAL_SCRAPER__Auth__Password',
   'BANCO_INDUSTRIAL_SCRAPER__AccountId',
+  'BANCO_INDUSTRIAL_SCRAPER__PlaywrightServerUrl',
   'APPLICATION__BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions',
   'APPLICATION__BancoIndustrialMobileNotificationCreditCardAccountNameForEstablishmentTransactions',
 ];

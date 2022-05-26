@@ -49,55 +49,6 @@ public class BancoIndustrialScraperService
     return ScrapeWithJob(_confirmedTransactionsScraperJob, stoppingToken);
   }
 
-  private static IEnumerable<string> _GetBrowserFlags()
-  {
-    var flags = new List<string> {
-      "--autoplay-policy=user-gesture-required",
-      "--disable-background-networking",
-      "--disable-background-timer-throttling",
-      "--disable-backgrounding-occluded-windows",
-      "--disable-breakpad",
-      "--disable-client-side-phishing-detection",
-      "--disable-component-update",
-      "--disable-default-apps",
-      "--disable-dev-shm-usage",
-      "--disable-domain-reliability",
-      "--disable-extensions",
-      "--disable-features=AudioServiceOutOfProcess",
-      "--disable-hang-monitor",
-      "--disable-ipc-flooding-protection",
-      "--disable-notifications",
-      "--disable-offer-store-unmasked-wallet-cards",
-      "--disable-popup-blocking",
-      "--disable-print-preview",
-      "--disable-prompt-on-repost",
-      "--disable-renderer-backgrounding",
-      "--disable-setuid-sandbox",
-      "--disable-speech-api",
-      "--disable-sync",
-      "--disk-cache-size=33554432",
-      "--hide-scrollbars",
-      "--ignore-gpu-blacklist",
-      "--metrics-recording-only",
-      "--mute-audio",
-      "--no-default-browser-check",
-      "--no-first-run",
-      "--no-pings",
-      "--no-sandbox",
-      "--no-zygote",
-      "--password-store=basic",
-      "--use-gl=swiftshader",
-      "--use-mock-keychain",
-      "--single-process"
-    };
-    if (!string.IsNullOrEmpty(
-          Environment.GetEnvironmentVariable("IN_LAMBDA"))) {
-      flags.Add(
-        "--single-process"); // https://source.chromium.org/search?q=lang:cpp+symbol:kSingleProcess&ss=chromium"
-    }
-    return flags.ToArray();
-  }
-
   private async Task<T?> ScrapeWithJob<T>(IScraperJob<T> scraperJob,
     CancellationToken stoppingToken) where T : class
   {
@@ -110,11 +61,7 @@ public class BancoIndustrialScraperService
 
     using var playwright = await Playwright.CreateAsync();
     await using var browser =
-      await playwright.Chromium.LaunchAsync(new() {
-        Headless = true,
-        // ExecutablePath = "/lambda-chromium/chromium",
-        Args = _GetBrowserFlags(),
-      });
+      await playwright.Chromium.ConnectAsync(_options.PlaywrightServerUrl);
     await using var context = await browser.NewContextAsync(new() {
       UserAgent =
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
@@ -136,9 +83,8 @@ public class BancoIndustrialScraperService
       }
       try {
         var page = await context.NewPageAsync();
-        await page.GotoAsync("https://www.wikipedia.org");
-        // await page.GotoAsync(
-        //   "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
+        await page.GotoAsync(
+          "https://www.bienlinea.bi.com.gt/InicioSesion/Inicio/Autenticar");
         await page.FillAsync("#campoInstalacion", _options.Auth.UserId);
         await page.FillAsync("#campoUsuario", _options.Auth.Username);
         await page.FillAsync("#campoContrasenia", _options.Auth.Password);

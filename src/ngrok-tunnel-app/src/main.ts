@@ -15,7 +15,7 @@ import { config as dotenv } from 'dotenv';
   while (true) {
     try {
       const url = await ngrok.connect({
-        authtoken: process.env['DEV_NGROK_AUTH_TOKEN'],
+        authtoken: process.env.NGROK_AUTH_TOKEN,
         addr: 3700,
         subdomain: 'ynab-controller.rhyek',
       });

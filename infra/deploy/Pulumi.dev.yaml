@@ -1,23 +1,25 @@
 config:
   ? ynab-banco-industrial-connector.deploy:APPLICATION__BancoIndustrialMobileNotificationCreditCardAccountNameForEstablishmentTransactions
-  : secure: AAABAK1YkRlc+04JbGaM+BjEPcvTJQ4cw4a/tH9TstaS74fUQIb/MA==
+  : secure: AAABAHi5t4ziPRYN71lcaEPcPicXtxe7BtGHcPHbgxwahIaPTUAvhA==
   ? ynab-banco-industrial-connector.deploy:APPLICATION__BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
-  : secure: AAABADQ3jr9JkrjFVwMYY6FoY7FysXeAK+mt+iwtZ178VXYHPh7ZFok=
+  : secure: AAABABnAbOdt1OB2n55WMmfWVyhLqCU0jgUMYDIPP7IVzuapvvsOXt4=
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__AccountId:
-    secure: AAABANtak43KEFW78V1HmRAX345fnf0NzZCrqBsQP+X8tdbBy1WaH8Xj
+    secure: AAABALDYI4RaCIdDgbJvPPDs8lMQ9Zmwn2bS++7GpsGJyzrTNrucuOcT
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__Password:
-    secure: AAABAEh2qa7bh3uBojfdCaWljWRMBWrLlAuN4uZw2pu9RvfuNZxbmF78ncCepO8=
+    secure: AAABADoLtOmNgn99GgdujbOaODc8pXne+9D5+zmPIcF2bG6T2/uqu4A2Ri58/2k=
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__UserId:
-    secure: AAABAGfTG+vXex8uqFrTw7h7RGiqpjjoL97oyp4vFFOrjqHllIyY
+    secure: AAABAP/eBnQbb90QJEMiDwocQUuwK4d90VXKC17F20PtRIWLFFRM
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__Username:
-    secure: AAABAMoMzOg42iwctdxWF6xmSCCDy29+TbrBenvYhazFmWzT5A==
+    secure: AAABAN9a62EHvWYM1LznmWtTN4IkXbzQEEwOdn+KYEc2r26m9w==
+  ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__PlaywrightServerUrl:
+    secure: AAABAP4C4H0Z9YCHT2tw/vjwHPGjv2Vt+Xto2qFPtXjDFoChmsp8O/nN8wswx+ogKk/J8s/HfwN8fqWVxBdoexTP1SF42vdVf3GLZEarJg0Xnuk0Q0tH+1ciBMm6tW/o
   ynab-banco-industrial-connector.deploy:YNAB__AccountId:
     secure: AAABAJu49rAtlIeLwcX4mtiIr2QjmcG4LLQUZTdv43d737lnoWA8Y371HEZ9qQQ4xnudclh4qmlBHD/+0Zlg7O1iQyE=
   ynab-banco-industrial-connector.deploy:YNAB__BudgetId:
-    secure: AAABAHyzay94qs4RxnnImlR7w8Muz3gJ5wmPMFsXxAkf7KaTFfoxePUZ8VmXHR1NZA4aSyrtF90AtwCFktOkilfZWTg=
+    secure: AAABACL9un5+8Fx9CZInfB/I6peQpDZePxP5pcz1BDJSOpyn4JcCMUBYgtkOT+FgHzQVlrJiSLlwRCUsiaTEl67P+kg=
   ynab-banco-industrial-connector.deploy:YNAB__CreditCardAccountId:
-    secure: AAABAGFrAz8QWYUWc1CoI1guIBSbjkkfQ027Sq0lMkA2kSUd7R+LdBYCkGgAiF1nDE80fYmXCQ1Eo4UUyk1bEdd03Tk=
+    secure: AAABANodqb2KPo3O+Ie40m9oMmBA358F3wPnsBXGn710gt6n3CtrkMZP0d5MwORvYtwJd2fjYZqckTxp+7kbodfrXwk=
   ynab-banco-industrial-connector.deploy:YNAB__DebitCardAccountId:
-    secure: AAABABAX4Okv8QeWlv8zV6+zLybpiZ6QYo8Wv8el+BhQTeZSBhvmcpQyCPKclwnWT49EDemeIWcCFBw9cFQmyC/XzHI=
+    secure: AAABADp+x7RHeUTSm8dj7oxXGmDpIGgVaCmEekIoiidFN7pw1glN0dcJqos8jghvOlQMw/E05GGqv42vH+u6mYAsufU=
   ynab-banco-industrial-connector.deploy:YNAB__PersonalAccessToken:
-    secure: AAABAABbH+moBDhnSf90FbDl7BBs9XnS2PzMxHLj9mRnZsBhVsHEtv/+LfS4QRyyfTVQk6rQDO0qqrFIvm1WUMIKbLZT/0zZQozlJXYI2dRVmqZDuUsubFXHz75BmRCe
+    secure: AAABAErn2pMPYR0z5iARdNP+rQ+l2W5tYdLQqxlvTe150P4Qjsqm8pniwbksc09w2/KYtsG79Q0i68LaSjIEy/fmhO3BlUxHRa06GzCr1ja/peaaIga3fpuA9geNxU8C

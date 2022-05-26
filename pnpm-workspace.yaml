@@ -1,4 +1,5 @@
 packages:
   - 'src/ngrok-tunnel-app'
+  - 'src/playwright-server'
   - 'src/tasker-javascriptlet'
   - 'infra/*'

@@ -1,0 +1,23 @@
+{
+  "name": "playwright-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.ts",
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "dev": "dotenv -e ../../.env -- ts-node src/main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "~1.1.8"
+  },
+  "dependencies": {
+    "@types/node": "^14",
+    "ngrok": "github:rhyek/ngrok#9977bd88a0ef8e20ee7d83ae563fdb4deb8920d6",
+    "playwright": "~1.22.2",
+    "ts-node": "~10.8.0",
+    "typescript": "~4.7.2"
+  }
+}
