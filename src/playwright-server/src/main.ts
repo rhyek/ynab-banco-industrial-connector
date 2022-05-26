@@ -4,8 +4,8 @@ import { chromium } from 'playwright';
 async function main() {
   const port = 3800;
   const playwrightServerToken = process.env.PLAYWRIGHT_SERVER_TOKEN;
-  const ngrokSubdomain = 'playwright.rhyek';
   const ngrokAuthToken = process.env.NGROK_AUTH_TOKEN;
+  const ngrokSubdomain = 'playwright.rhyek';
 
   await chromium.launchServer({
     headless: true,
@@ -14,8 +14,8 @@ async function main() {
   });
   await ngrok.connect({
     authtoken: ngrokAuthToken,
-    addr: port,
     subdomain: ngrokSubdomain,
+    addr: port,
   });
 
   console.log(
