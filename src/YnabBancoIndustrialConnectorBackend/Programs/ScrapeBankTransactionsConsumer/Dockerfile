@@ -11,4 +11,5 @@ RUN dotnet publish \
 
 FROM public.ecr.aws/lambda/dotnet:6
 COPY --from=build /publish ${LAMBDA_TASK_ROOT}
+RUN chmod +x ${LAMBDA_TASK_ROOT}/.playwright/node/linux/*
 CMD ["ScrapeBankTransactionsConsumer"]
