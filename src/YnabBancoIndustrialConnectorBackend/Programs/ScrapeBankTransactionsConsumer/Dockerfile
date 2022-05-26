@@ -10,5 +10,5 @@ RUN dotnet publish \
 # -p:PublishReadyToRun=true
 
 FROM public.ecr.aws/lambda/dotnet:6
-COPY --from=build /app/publish ${LAMBDA_TASK_ROOT}
+COPY --from=build /publish ${LAMBDA_TASK_ROOT}
 CMD ["ScrapeBankTransactionsConsumer"]
