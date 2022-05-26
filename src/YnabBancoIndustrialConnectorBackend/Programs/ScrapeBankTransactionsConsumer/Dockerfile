@@ -6,10 +6,10 @@ RUN dotnet publish \
   Programs/ScrapeBankTransactionsConsumer/ScrapeBankTransactionsConsumer.csproj \
   --configuration Release \
   --output /publish
+RUN chmod +x /publish/.playwright/node/linux/*
 # this is really slow: https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
 # -p:PublishReadyToRun=true
 
 FROM public.ecr.aws/lambda/dotnet:6
 COPY --from=build /publish ${LAMBDA_TASK_ROOT}
-RUN chmod +x ${LAMBDA_TASK_ROOT}/.playwright/node/linux/*
 CMD ["ScrapeBankTransactionsConsumer"]
