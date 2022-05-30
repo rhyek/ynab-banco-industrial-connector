@@ -12,11 +12,22 @@ async function main() {
     port,
     wsPath: playwrightServerToken,
   });
-  await ngrok.connect({
-    authtoken: ngrokAuthToken,
-    subdomain: ngrokSubdomain,
-    addr: port,
-  });
+
+  while (true) {
+    try {
+      await ngrok.connect({
+        authtoken: ngrokAuthToken,
+        subdomain: ngrokSubdomain,
+        addr: port,
+      });
+      break;
+    } catch (error) {
+      console.error(error);
+      const waitTime = 10;
+      console.log(`Waiting for ${waitTime} seconds...`);
+      await new Promise((resolve) => setTimeout(resolve, waitTime * 1_000));
+    }
+  }
 
   console.log(
     'Playwright Url:',
