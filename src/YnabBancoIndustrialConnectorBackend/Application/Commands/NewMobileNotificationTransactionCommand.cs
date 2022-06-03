@@ -107,17 +107,17 @@ public class
         // eventually that amount will be adjusted to the real value when the tx
         // is added to the bank statement
 
-        // if (mobileNotificationTx.Currency == "GTQ") {
-        //   if (_hostEnvironment.IsDevelopment()) {
-        //     await _mediator.Send(new UpdateBankReservedTransactionsCommand(),
-        //       cancellationToken);
-        //   }
-        //   else {
-        //     await _messageQueue.SendScrapeReservedTransactionsMessage(
-        //       mobileNotificationTx.Reference,
-        //       cancellationToken);
-        //   }
-        // }
+        if (mobileNotificationTx.Currency == "GTQ") {
+          if (_hostEnvironment.IsDevelopment()) {
+            await _mediator.Send(new UpdateBankReservedTransactionsCommand(),
+              cancellationToken);
+          }
+          else {
+            await _messageQueue.SendScrapeReservedTransactionsMessage(
+              mobileNotificationTx.Reference,
+              cancellationToken);
+          }
+        }
       }
     }
     _logger.LogInformation("End");

@@ -52,9 +52,9 @@ public class YnabTransactionRepository
     AccountType accountType)
   {
     var accountId = GetAccountIdForType(accountType);
-    var lastMonth = DateTime.Now.AddMonths(-2);
+    var searchPeriod = DateTime.Now.AddDays(-60);
     var sinceDate = DateOnly
-      .FromDateTime(new(lastMonth.Year, lastMonth.Month, 1))
+      .FromDateTime(searchPeriod)
       .ToString("o");
     var json = await _httpClient
       .Request(

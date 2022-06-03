@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Playwright;
@@ -11,26 +12,24 @@ namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper;
 // https://docs.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/background-tasks-with-ihostedservice#implementing-ihostedservice-with-a-custom-hosted-service-class-deriving-from-the-backgroundservice-base-class
 public class BancoIndustrialScraperService
 {
+  private readonly IHostEnvironment _hostEnvironment;
   private readonly BancoIndustrialScraperOptions _options;
-
   private readonly ILogger<BancoIndustrialScraperService> _logger;
-
   private readonly SemaphoreSlim _monitorSemaphore = new(initialCount: 1);
-
   private readonly ReservedTransactionsScraperJob
     _reservedTransactionsScraperJob;
-
   private readonly ConfirmedTransactionsScraperJob
     _confirmedTransactionsScraperJob;
 
   public BancoIndustrialScraperService
   (
+    IHostEnvironment hostEnvironment,
     IOptions<BancoIndustrialScraperOptions> options,
     ILogger<BancoIndustrialScraperService> logger,
     ReservedTransactionsScraperJob reservedTransactionsScraperJob,
-    ConfirmedTransactionsScraperJob confirmedTransactionsScraperJob
-  )
+    ConfirmedTransactionsScraperJob confirmedTransactionsScraperJob)
   {
+    _hostEnvironment = hostEnvironment;
     _options = options.Value;
     _logger = logger;
     _reservedTransactionsScraperJob = reservedTransactionsScraperJob;
@@ -60,16 +59,21 @@ public class BancoIndustrialScraperService
     _logger.LogInformation("Username: {Username}", _options.Auth?.Username);
 
     using var playwright = await Playwright.CreateAsync();
-    await using var browser =
-      await playwright.Chromium.ConnectAsync(_options.PlaywrightServerUrl);
+    await using var browser = _hostEnvironment.IsDevelopment()
+      ? await playwright.Chromium.LaunchAsync(new() {
+        Headless = false,
+      })
+      : await playwright.Chromium.ConnectAsync(_options.PlaywrightServerUrl);
     await using var context = await browser.NewContextAsync(new() {
       UserAgent =
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
     });
-    await context.Tracing.StartAsync(new() {
-      Screenshots = true,
-      Snapshots = true,
-    });
+    if (!_hostEnvironment.IsDevelopment()) {
+      await context.Tracing.StartAsync(new() {
+        Screenshots = true,
+        Snapshots = true,
+      });
+    }
     var attempts = 0;
     const int maxAttempts = 1;
     while (!stoppingToken.IsCancellationRequested &&
@@ -108,9 +112,11 @@ public class BancoIndustrialScraperService
         }
       }
     }
-    await context.Tracing.StopAsync(new() {
-      Path = _options.PlaywrightTraceFile,
-    });
+    if (!_hostEnvironment.IsDevelopment()) {
+      await context.Tracing.StopAsync(new() {
+        Path = _options.PlaywrightTraceFile,
+      });
+    }
     if (result != null) {
       _logger.LogInformation("Job finished");
     }

@@ -84,12 +84,10 @@ app.MapPost("/scrape-bank-transactions/confirmed",
         new UpdateBankConfirmedTransactionsCommand());
       return Results.Text("ok");
     }
-    else {
-      // queue sqs message
-      await messageQueue.SendScrapeConfirmedTransactionsMessage(Guid.NewGuid()
-        .ToString());
-      return Results.Text("message queued");
-    }
+    // queue sqs message
+    await messageQueue.SendScrapeConfirmedTransactionsMessage(Guid.NewGuid()
+      .ToString());
+    return Results.Text("message queued");
   });
 
 if (app.Environment.IsDevelopment()) {

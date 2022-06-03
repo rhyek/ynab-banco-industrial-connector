@@ -27,7 +27,8 @@ public class YnabControllerService
   {
     _logger.LogInformation("Processing {Count} reserved bank transactions",
       reservedBankTransactions.Count);
-    var recentYnabTransactions = await _ynabTransactionRepository.GetRecent(AccountType.Debit);
+    var recentYnabTransactions =
+      await _ynabTransactionRepository.GetRecent(AccountType.Debit);
     foreach (var reservedTx in reservedBankTransactions) {
       var (reference, date, amount) = reservedTx;
       var ynabTx =
@@ -63,8 +64,14 @@ public class YnabControllerService
   {
     _logger.LogInformation("Processing {Count} confirmed bank transactions",
       confirmedBankTransactions.Count);
-    var recentYnabTransactions = await _ynabTransactionRepository.GetRecent(AccountType.Debit);
+    var recentYnabTransactions =
+      await _ynabTransactionRepository.GetRecent(AccountType.Debit);
     foreach (var confirmedTx in confirmedBankTransactions) {
+      if (confirmedTx is
+          {Reference: "179680"}) {
+        // this reference is duplicated. TODO: handle reference duplications
+        continue;
+      }
       var ynabTx =
         await _ynabTransactionRepository.FindByReference(
           confirmedTx.Reference,
@@ -73,7 +80,9 @@ public class YnabControllerService
 
       // if reserved tx not in ynab, create it
       if (ynabTx == null) {
-        if (confirmedTx.Date >= new DateOnly(2022, 2, 20)) {
+        if ((DateTime.Today -
+             confirmedTx.Date.ToDateTime(TimeOnly.Parse("12:00AM")))
+            .TotalDays <= 60) {
           await _ynabTransactionRepository.CreateTransaction(
             reference: confirmedTx.Reference,
             accountType: AccountType.Debit,
@@ -128,7 +137,7 @@ public class YnabControllerService
           categoryId);
       }
 
-      if (ynabTx.IsOpen) {
+      // if (ynabTx.IsOpen) {
         if (confirmedTx.Amount != ynabTx.Amount) {
           _ynabTransactionRepository.UpdateTransactionAmount(ynabTx.Id,
             confirmedTx.Amount);
@@ -138,7 +147,7 @@ public class YnabControllerService
           _ynabTransactionRepository.UpdateTransactionSetToCleared(
             ynabTx.Id);
         }
-      }
+      // }
     }
     await _ynabTransactionRepository.CommitChanges();
   }
