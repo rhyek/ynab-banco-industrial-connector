@@ -21,3 +21,7 @@ queue.onEvent(
 );
 
 export const scrapeBankTransactionsSqsUrl = queue.url;
+
+export const scrapeBankTransactionsSqsUrlEnvironmentVariable = {
+  APPLICATION__ScrapeBankTransactionsSqsUrl: scrapeBankTransactionsSqsUrl,
+};

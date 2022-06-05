@@ -7,6 +7,7 @@ import {
 } from '../../../consts';
 import { buildStack } from '../build-stack';
 import { lambdaRole } from './common/lambda-role';
+import { scrapeBankTransactionsSqsUrlEnvironmentVariable } from '../sqs-scrape-bank-transactions';
 
 const config = new pulumi.Config();
 
@@ -32,6 +33,7 @@ export const pushNotificationTxDocumentHandlerFunc = new aws.lambda.Function(
             config.requireSecret(key),
           ])
         ),
+        ...scrapeBankTransactionsSqsUrlEnvironmentVariable,
       },
     },
   }
