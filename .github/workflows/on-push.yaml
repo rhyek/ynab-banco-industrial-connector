@@ -54,7 +54,7 @@ jobs:
         with:
           version: 6.32.8
       - uses: actions/checkout@v2
-      - run: pnpm --filter={infra/deploy} install
+      - run: pnpm --filter={infra/deploy} exec npm install --frozen-lockfile
       - uses: pulumi/actions@v3
         with:
           work-dir: infra/deploy
