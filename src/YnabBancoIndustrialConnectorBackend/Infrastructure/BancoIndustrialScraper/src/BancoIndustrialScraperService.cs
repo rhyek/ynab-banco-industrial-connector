@@ -68,17 +68,19 @@ public class BancoIndustrialScraperService
       UserAgent =
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
     });
-    if (!_hostEnvironment.IsDevelopment()) {
-      await context.Tracing.StartAsync(new() {
-        Screenshots = true,
-        Snapshots = true,
-      });
-    }
     var attempts = 0;
-    const int maxAttempts = 1;
+    const int maxAttempts = 3;
     while (!stoppingToken.IsCancellationRequested &&
            attempts < maxAttempts) {
       attempts++;
+      var shouldTrace =
+        attempts == maxAttempts && !_hostEnvironment.IsDevelopment();
+      if (shouldTrace) {
+        await context.Tracing.StartAsync(new() {
+          Screenshots = true,
+          Snapshots = true,
+        });
+      }
       _logger.LogInformation(
         "Attempt: {Attempts}", attempts);
       _logger.LogInformation("Logging in to bank...");
@@ -107,15 +109,15 @@ public class BancoIndustrialScraperService
       }
       catch (Exception e) {
         _logger.LogError(e, message: "Some error");
+        if (shouldTrace) {
+          await context.Tracing.StopAsync(new() {
+            Path = _options.PlaywrightTraceFile,
+          });
+        }
         if (attempts < maxAttempts) {
           await WaitFor(60_000, stoppingToken);
         }
       }
-    }
-    if (!_hostEnvironment.IsDevelopment()) {
-      await context.Tracing.StopAsync(new() {
-        Path = _options.PlaywrightTraceFile,
-      });
     }
     if (result != null) {
       _logger.LogInformation("Job finished");
