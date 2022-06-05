@@ -1,6 +1,6 @@
 import * as aws from '@pulumi/aws';
 import { projectName, projectTags } from '../../consts';
-import { scrapeBankTransactionsConsumerFunc } from './lambdas/scrape-bank-transactions-consumer/lambda';
+import { scrapeBankTransactionsConsumerFunc } from './lambdas/scrape-bank-transactions-consumer';
 
 const queueName = `${projectName}-scrape-bank-transactions`;
 

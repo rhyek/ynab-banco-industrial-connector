@@ -1,13 +1,13 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
-import { backendEnvironmentVariableKeys } from '../../../../../.scripts/consts/backend-environment-variable-keys';
+import { backendEnvironmentVariableKeys } from '../../../../.scripts/consts/backend-environment-variable-keys';
 import {
   scrapeBankTransactionsConsumerNamespace,
   projectTags,
-} from '../../../../consts';
-import { buildStack } from '../../build-stack';
-import { playwrightTracesBucketName } from '../../playwright-traces-s3-bucket';
-import { lambdaRole } from '../common/lambda-role';
+} from '../../../consts';
+import { buildStack } from '../build-stack';
+import { playwrightTracesBucketName } from '../playwright-traces-s3-bucket';
+import { lambdaRole } from './common/lambda-role';
 
 const config = new pulumi.Config();
 
