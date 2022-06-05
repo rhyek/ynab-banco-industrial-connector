@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Application\Application.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\CurrencyConverter\CurrencyConverter.csproj" />
       <ProjectReference Include="..\..\Infrastructure\MessageQueueService\MessageQueueService.csproj" />
       <ProjectReference Include="..\..\Infrastructure\YnabController\YnabController.csproj" />
     </ItemGroup>

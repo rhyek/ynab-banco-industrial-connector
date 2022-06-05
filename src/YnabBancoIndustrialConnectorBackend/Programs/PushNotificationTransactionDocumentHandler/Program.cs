@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
+using YnabBancoIndustrialConnector.Infrastructure.CurrencyConverter;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 var host = Host.CreateDefaultBuilder(args)
@@ -22,6 +23,7 @@ var host = Host.CreateDefaultBuilder(args)
       hostContext.Configuration.GetSection("YNAB"));
     services.AddApplication();
     services.AddYnabController();
+    services.AddCurrencyConverter();
     services.AddMessageQueueService();
   })
   .Build();
