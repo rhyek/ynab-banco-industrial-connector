@@ -32,6 +32,9 @@ export const pushNotificationTxApiHandler = new aws.lambda.CallbackFunction(
                 text: {
                   S: body.text,
                 },
+                timestamp: {
+                  S: new Date().toISOString(),
+                },
               },
             },
             (error, data) => {
