@@ -23,6 +23,7 @@ const lambdaRolePolicy = new aws.iam.Policy(
             'logs:CreateLogStream',
             'logs:PutLogEvents',
 
+            'sqs:SendMessage',
             'sqs:ReceiveMessage',
             'sqs:DeleteMessage',
             'sqs:GetQueueAttributes',
