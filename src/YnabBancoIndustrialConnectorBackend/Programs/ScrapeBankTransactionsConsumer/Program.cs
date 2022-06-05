@@ -16,12 +16,12 @@ using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 var builder = Host.CreateDefaultBuilder(args)
   .ConfigureServices((hostContext, services) => {
+    services.Configure<ApplicationOptions>(
+      hostContext.Configuration.GetSection("APPLICATION"));
     services.Configure<YnabControllerOptions>(
       hostContext.Configuration.GetSection("YNAB"));
     services.Configure<BancoIndustrialScraperOptions>(
       hostContext.Configuration.GetSection("BANCO_INDUSTRIAL_SCRAPER"));
-    services.Configure<ApplicationOptions>(
-      hostContext.Configuration.GetSection("APPLICATION"));
     services.AddApplication();
     services.AddBancoIndustrialScraper();
     services.AddYnabController();
@@ -62,7 +62,7 @@ var handler = async (Stream stream, ILambdaContext context) => {
         Key = $"playwright-scrape-{txType}-transactions-trace-file",
         FilePath = tracePath,
       };
-      var putObjectResponse = await s3Client.PutObjectAsync(putObjectRequest);
+      await s3Client.PutObjectAsync(putObjectRequest);
       context.Logger.LogInformation($"trace file uploaded to s3");
     }
   }
