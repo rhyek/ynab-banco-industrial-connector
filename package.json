@@ -7,9 +7,12 @@
   },
   "keywords": [],
   "scripts": {
+    "clean": "pnpm -r exec rm -rf node_modules",
+    "bootstrap": "pnpm -r exec npm i",
     "dev": "pnpm -r --filter={src/ngrok-tunnel-app} dev"
   },
   "devDependencies": {
+    "@types/node": "~17.0.39",
     "dotenv": "~16.0.0",
     "dotenv-cli": "~5.1.0",
     "execa": "~6.1.0",

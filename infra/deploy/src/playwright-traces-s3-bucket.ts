@@ -1,5 +1,5 @@
 import * as aws from '@pulumi/aws';
-import { projectTags } from '../../consts.mjs';
+import { projectTags } from '../../consts';
 
 // Create our bucket using infrastructure as code.
 export const playwrightTracesBucket = new aws.s3.Bucket('playwright-traces', {

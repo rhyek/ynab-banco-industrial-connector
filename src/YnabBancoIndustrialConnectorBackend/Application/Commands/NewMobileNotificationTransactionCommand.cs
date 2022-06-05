@@ -1,6 +1,5 @@
 using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper.Models;
 using MediatR;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
@@ -25,8 +24,6 @@ public class
     _logger;
   private readonly YnabTransactionRepository _ynabTransactionRepository;
   private readonly ICurrencyConverterService _currencyConverterService;
-  private readonly IMediator _mediator;
-  private readonly IHostEnvironment _hostEnvironment;
   private readonly IMessageQueueService _messageQueue;
 
   public NewMobileNotificationTransactionCommandHandler(
@@ -34,16 +31,12 @@ public class
     ILogger<NewMobileNotificationTransactionCommandHandler> logger,
     YnabTransactionRepository ynabTransactionRepository,
     ICurrencyConverterService currencyConverterService,
-    IMediator mediator,
-    IHostEnvironment hostEnvironment,
     IMessageQueueService messageQueue)
   {
     _options = options.Value;
     _logger = logger;
     _ynabTransactionRepository = ynabTransactionRepository;
     _currencyConverterService = currencyConverterService;
-    _mediator = mediator;
-    _hostEnvironment = hostEnvironment;
     _messageQueue = messageQueue;
   }
 
@@ -62,7 +55,7 @@ public class
     // we aren't going to handle transactions with origin: Agency, because
     // the reference numbers for those will always change eventually
     // in the bank statement.
-    if (mobileNotificationTx is { Origin: TransactionOrigin.Establishment } &&
+    if (mobileNotificationTx is {Origin: TransactionOrigin.Establishment} &&
         (mobileNotificationTx.Account == _options
            .BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
          || mobileNotificationTx.Account == _options
@@ -108,15 +101,9 @@ public class
         // is added to the bank statement
 
         if (mobileNotificationTx.Currency == "GTQ") {
-          if (_hostEnvironment.IsDevelopment()) {
-            await _mediator.Send(new UpdateBankReservedTransactionsCommand(),
-              cancellationToken);
-          }
-          else {
-            await _messageQueue.SendScrapeReservedTransactionsMessage(
-              mobileNotificationTx.Reference,
-              cancellationToken);
-          }
+          await _messageQueue.SendScrapeReservedTransactionsMessage(
+            mobileNotificationTx.Reference,
+            cancellationToken);
         }
       }
     }

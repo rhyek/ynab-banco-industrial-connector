@@ -1,6 +1,5 @@
 {
   "name": "build",
-  "type": "module",
   "main": "src/index.js",
   "devDependencies": {
     "@types/node": "^14",

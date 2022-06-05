@@ -61,7 +61,7 @@ public class BancoIndustrialScraperService
     using var playwright = await Playwright.CreateAsync();
     await using var browser = _hostEnvironment.IsDevelopment()
       ? await playwright.Chromium.LaunchAsync(new() {
-        Headless = false,
+        Headless = true,
       })
       : await playwright.Chromium.ConnectAsync(_options.PlaywrightServerUrl);
     await using var context = await browser.NewContextAsync(new() {

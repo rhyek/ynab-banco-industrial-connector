@@ -64,26 +64,14 @@ app.MapPost("/mobile-app-notifications/register-new",
 
 app.MapPost("/scrape-bank-transactions/reserved",
   async (IMediator mediator, IMessageQueueService messageQueue) => {
-    if (app.Environment.IsDevelopment()) {
-      await mediator.Send(
-        new UpdateBankReservedTransactionsCommand());
-      return Results.Text("ok");
-    }
-    else {
-      // queue sqs message
-      await messageQueue.SendScrapeReservedTransactionsMessage(Guid.NewGuid()
-        .ToString());
-      return Results.Text("message queued");
-    }
+    // queue sqs message
+    await messageQueue.SendScrapeReservedTransactionsMessage(Guid.NewGuid()
+      .ToString());
+    return Results.Text("message queued");
   });
 
 app.MapPost("/scrape-bank-transactions/confirmed",
   async (IMediator mediator, IMessageQueueService messageQueue) => {
-    if (app.Environment.IsDevelopment()) {
-      await mediator.Send(
-        new UpdateBankConfirmedTransactionsCommand());
-      return Results.Text("ok");
-    }
     // queue sqs message
     await messageQueue.SendScrapeConfirmedTransactionsMessage(Guid.NewGuid()
       .ToString());

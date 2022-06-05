@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node-transpile-only
 import { config } from 'dotenv';
 import { execaCommand as execa } from 'execa';
-import { backendEnvironmentVariableKeys } from './consts/backend-environment-variable-keys.mjs';
+import { backendEnvironmentVariableKeys } from './consts/backend-environment-variable-keys';
 
 config();
 

@@ -1,6 +1,5 @@
-// @ts-check
-import aws from '@pulumi/aws';
-import { httpApiNamespace, projectTags } from '../../../../consts.mjs';
+import * as aws from '@pulumi/aws';
+import { httpApiNamespace, projectTags } from '../../../../consts';
 
 const role = new aws.iam.Role(`${httpApiNamespace}-lambda-role`, {
   assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({

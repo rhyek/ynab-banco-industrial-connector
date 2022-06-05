@@ -1,7 +1,7 @@
 //@ts-check
-import aws from '@pulumi/aws';
-import { httpApiNamespace, projectTags } from '../../../../consts.mjs';
-import { httpApiFunc } from './lambda.js';
+import * as aws from '@pulumi/aws';
+import { httpApiNamespace, projectTags } from '../../../../consts';
+import { httpApiFunc } from './lambda';
 
 // pulumi aws crosswalk does not support api gateways v2 (http api) only rest apis
 // http apis are supposed to be cheaper, so we will define it manually

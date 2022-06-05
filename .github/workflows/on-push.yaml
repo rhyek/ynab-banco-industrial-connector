@@ -28,7 +28,7 @@ jobs:
         with:
           version: 6.32.8
       - uses: actions/checkout@v2
-      - run: pnpm --filter={infra/build} install
+      - run: pnpm --filter={infra/build} exec npm install --frozen-lockfile
       - uses: pulumi/actions@v3
         with:
           work-dir: infra/build

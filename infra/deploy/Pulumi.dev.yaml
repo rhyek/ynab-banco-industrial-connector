@@ -1,4 +1,5 @@
 config:
+  aws:region: us-east-1
   ? ynab-banco-industrial-connector.deploy:APPLICATION__BancoIndustrialMobileNotificationCreditCardAccountNameForEstablishmentTransactions
   : secure: AAABAHi5t4ziPRYN71lcaEPcPicXtxe7BtGHcPHbgxwahIaPTUAvhA==
   ? ynab-banco-industrial-connector.deploy:APPLICATION__BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions

@@ -1,9 +1,9 @@
 // @ts-check
-import aws from '@pulumi/aws';
+import * as aws from '@pulumi/aws';
 import {
   scrapeBankTransactionsConsumerNamespace,
   projectTags,
-} from '../../../../consts.mjs';
+} from '../../../../consts';
 
 const role = new aws.iam.Role(
   `${scrapeBankTransactionsConsumerNamespace}-lambda-role`,

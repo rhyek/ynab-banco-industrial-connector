@@ -1,10 +1,9 @@
-// @ts-check
 import * as awsx from '@pulumi/awsx';
 import {
   httpApiNamespace,
   projectTags,
   scrapeBankTransactionsConsumerNamespace,
-} from '../../consts.mjs';
+} from '../../consts';
 
 const httpApiFuncRepo = new awsx.ecr.Repository(`${httpApiNamespace}-repo`, {
   tags: {

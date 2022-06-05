@@ -1,5 +1,5 @@
 import * as aws from '@pulumi/aws';
-import { projectName, projectTags } from '../../consts.mjs';
+import { projectName, projectTags } from '../../consts';
 
 const queueName = `${projectName}-scrape-bank-transactions`;
 
