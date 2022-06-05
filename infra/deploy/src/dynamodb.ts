@@ -1,6 +1,6 @@
 import * as aws from '@pulumi/aws';
 import { projectName, projectTags } from '../../consts';
-import { pushNotificationTxDocumentHandlerFunc } from './lambdas/push-notification-tx-document-handler/lambda';
+import { pushNotificationTxDocumentHandlerFunc } from './lambdas/push-notification-tx-document-handler';
 
 const pushNotificationTxsTable = new aws.dynamodb.Table(
   `${projectName}-push-notif-txs`,
