@@ -1,4 +1,3 @@
-//@ts-check
 import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import { backendEnvironmentVariableKeys } from '../../../../../.scripts/consts/backend-environment-variable-keys';
@@ -8,7 +7,7 @@ import {
 } from '../../../../consts';
 import { buildStack } from '../../build-stack';
 import { playwrightTracesBucketName } from '../../playwright-traces-s3-bucket';
-import { role } from './role';
+import { lambdaRole } from '../common/lambda-role';
 
 const config = new pulumi.Config();
 
@@ -21,7 +20,7 @@ export const scrapeBankTransactionsConsumerFunc = new aws.lambda.Function(
   {
     packageType: 'Image',
     imageUri: scrapeBankTransactionsConsumerImage,
-    role: role.arn,
+    role: lambdaRole.arn,
     timeout: 3 * 60,
     tags: {
       ...projectTags,
@@ -34,7 +33,6 @@ export const scrapeBankTransactionsConsumerFunc = new aws.lambda.Function(
             config.requireSecret(key),
           ])
         ),
-        IN_LAMBDA: 'true',
         PLAYWRIGHT_TRACES_S3_BUCKET_NAME: playwrightTracesBucketName,
         DEBUG: 'pw:*',
       },

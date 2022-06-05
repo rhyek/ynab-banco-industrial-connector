@@ -3,14 +3,15 @@ import * as awsx from '@pulumi/awsx';
 import { DynamoDB } from 'aws-sdk';
 import { nanoid } from 'nanoid';
 import { projectName, projectTags } from '../../../consts';
-import { mobileNotificationTxsTable } from '../dynamodb';
+import { pushNotificationTxsTableName } from '../dynamodb';
 import { parseBody } from '../utils/parse-body';
 
-export const newMobileAppNotificationTxHandler =
-  new aws.lambda.CallbackFunction(`${projectName}-new-mobile-notif-tx`, {
+export const pushNotificationTxApiHandler = new aws.lambda.CallbackFunction(
+  `${projectName}-push-notif-tx-api-handler`,
+  {
     environment: {
       variables: {
-        TABLE_NAME: mobileNotificationTxsTable.name,
+        TABLE_NAME: pushNotificationTxsTableName,
       },
     },
 
@@ -53,4 +54,5 @@ export const newMobileAppNotificationTxHandler =
     tags: {
       ...projectTags,
     },
-  });
+  }
+);

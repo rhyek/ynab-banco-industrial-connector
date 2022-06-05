@@ -2,6 +2,7 @@ import * as awsx from '@pulumi/awsx';
 import {
   httpApiNamespace,
   projectTags,
+  pushNotificationTxDocumentHandlerNamespace,
   scrapeBankTransactionsConsumerNamespace,
 } from '../../consts';
 
@@ -25,10 +26,24 @@ const scrapeBankTransactionsConsumerRepo = new awsx.ecr.Repository(
     },
   }
 );
-
 export const scrapeBankTransactionsConsumerImage =
   scrapeBankTransactionsConsumerRepo.buildAndPushImage({
     dockerfile:
       '../../src/YnabBancoIndustrialConnectorBackend/Programs/ScrapeBankTransactionsConsumer/Dockerfile',
+    context: '../../src/YnabBancoIndustrialConnectorBackend',
+  });
+
+const pushNotificationTxDocumentHandlerRepo = new awsx.ecr.Repository(
+  `${pushNotificationTxDocumentHandlerNamespace}-repo`,
+  {
+    tags: {
+      ...projectTags,
+    },
+  }
+);
+export const pushNotificationTxDocumentHandlerImage =
+  pushNotificationTxDocumentHandlerRepo.buildAndPushImage({
+    dockerfile:
+      '../../src/YnabBancoIndustrialConnectorBackend/Programs/PushNotificationTransactionDocumentHandler/Dockerfile',
     context: '../../src/YnabBancoIndustrialConnectorBackend',
   });

@@ -7,8 +7,6 @@ public class Diagnostics
 {
   public static void RunDiagnostics()
   {
-    Console.WriteLine("in lambda env: {0}",
-      Environment.GetEnvironmentVariable("IN_LAMBDA"));
     Console.WriteLine("aws lambda runtime api env: {0}",
       Environment.GetEnvironmentVariable("AWS_LAMBDA_RUNTIME_API"));
     Console.WriteLine("current user: {0}", Environment.UserName);

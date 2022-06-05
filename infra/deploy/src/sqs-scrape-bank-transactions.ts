@@ -1,5 +1,6 @@
 import * as aws from '@pulumi/aws';
 import { projectName, projectTags } from '../../consts';
+import { scrapeBankTransactionsConsumerFunc } from './lambdas/scrape-bank-transactions-consumer/lambda';
 
 const queueName = `${projectName}-scrape-bank-transactions`;
 
@@ -10,5 +11,13 @@ export const queue = new aws.sqs.Queue(queueName, {
     ...projectTags,
   },
 });
+
+queue.onEvent(
+  `${projectName}-scrape-bank-txs-event-handler`,
+  scrapeBankTransactionsConsumerFunc,
+  {
+    batchSize: 1,
+  }
+);
 
 export const scrapeBankTransactionsSqsUrl = queue.url;
