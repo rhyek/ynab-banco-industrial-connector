@@ -50,4 +50,10 @@ new aws.iam.RolePolicyAttachment(`${projectName}-role-policy-attachment`, {
   policyArn: lambdaRolePolicy.arn,
 });
 
+// insteresting snippet from https://www.pulumi.com/blog/aws-lambda-functions-powered-by-graviton2/:
+// const fullAccess = new aws.iam.RolePolicyAttachment("mylambda-access", {
+//   role: role,
+//   policyArn: aws.iam.ManagedPolicy.LambdaFullAccess,
+// });
+
 export { lambdaRole };
