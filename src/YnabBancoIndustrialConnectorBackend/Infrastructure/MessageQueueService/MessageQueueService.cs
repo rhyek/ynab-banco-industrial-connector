@@ -37,6 +37,7 @@ public class MessageQueueService : IMessageQueueService
         _options.Value.ScrapeBankTransactionsSqsUrl!,
         "RESERVED"
       ) {
+        // fifo queue properties
         MessageDeduplicationId = messageDeduplicationId,
         MessageGroupId = "default"
       };
