@@ -4,7 +4,7 @@ import { scrapeBankTransactionsConsumerFunc } from './lambdas/scrape-bank-transa
 
 const queueName = `${projectName}-scrape-bank-transactions`;
 
-export const queue = new aws.sqs.Queue(queueName, {
+export const scrapeBankTxsQueue = new aws.sqs.Queue(queueName, {
   fifoQueue: true,
   visibilityTimeoutSeconds: 5 * 60,
   tags: {
@@ -12,7 +12,7 @@ export const queue = new aws.sqs.Queue(queueName, {
   },
 });
 
-queue.onEvent(
+scrapeBankTxsQueue.onEvent(
   `${projectName}-scrape-bank-txs-event-handler`,
   scrapeBankTransactionsConsumerFunc,
   {
@@ -20,7 +20,7 @@ queue.onEvent(
   }
 );
 
-export const scrapeBankTransactionsSqsUrl = queue.url;
+export const scrapeBankTransactionsSqsUrl = scrapeBankTxsQueue.url;
 
 export const scrapeBankTransactionsSqsUrlEnvironmentVariable = {
   APPLICATION__ScrapeBankTransactionsSqsUrl: scrapeBankTransactionsSqsUrl,
