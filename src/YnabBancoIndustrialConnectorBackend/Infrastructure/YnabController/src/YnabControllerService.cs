@@ -61,7 +61,7 @@ public class YnabControllerService
     await _ynabTransactionRepository.CommitChanges();
   }
 
-  private IList<ConfirmedBankTransaction> _ConfirmedTxsWithoutDuplicates(
+  private async Task<IList<ConfirmedBankTransaction>> _ConfirmedTxsWithoutDuplicates(
     IEnumerable<ConfirmedBankTransaction> confirmedTxs)
   {
     var grouped = confirmedTxs
@@ -71,8 +71,10 @@ public class YnabControllerService
       .Where(g => g.Count() > 1)
       .Select(g => g.Key)
       .ToList();
-    _messageQueue.SendDuplicateConfirmedReferences(
-      references: duplicates.ToArray());
+    if (duplicates.Any()) {
+      await _messageQueue.SendDuplicateConfirmedReferences(
+        references: duplicates.ToArray());
+    }
     var unique = grouped
       .Where(g => g.Count() == 1)
       .Select(g => g.First())
@@ -85,7 +87,7 @@ public class YnabControllerService
     CancellationToken stoppingToken)
   {
     confirmedBankTransactions =
-      _ConfirmedTxsWithoutDuplicates(confirmedBankTransactions);
+      await _ConfirmedTxsWithoutDuplicates(confirmedBankTransactions);
     _logger.LogInformation("Processing {Count} confirmed bank transactions",
       confirmedBankTransactions.Count);
     var recentYnabTransactions =
