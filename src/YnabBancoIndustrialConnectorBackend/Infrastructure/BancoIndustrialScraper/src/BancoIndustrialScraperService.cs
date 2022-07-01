@@ -2,12 +2,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Playwright;
+using YnabBancoIndustrialConnector.Domain.Interfaces;
+using YnabBancoIndustrialConnector.Domain.Models;
+using YnabBancoIndustrialConnector.Domain.MonitorJobs;
 using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Interfaces;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.MonitorJobs;
 
-namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper;
+namespace YnabBancoIndustrialConnector.Domain;
 
 // https://docs.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/background-tasks-with-ihostedservice#implementing-ihostedservice-with-a-custom-hosted-service-class-deriving-from-the-backgroundservice-base-class
 public class BancoIndustrialScraperService

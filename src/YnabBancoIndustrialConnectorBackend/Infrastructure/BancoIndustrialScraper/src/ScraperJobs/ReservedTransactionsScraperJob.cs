@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Interfaces;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
+using YnabBancoIndustrialConnector.Domain.Interfaces;
+using YnabBancoIndustrialConnector.Domain.Models;
 
-namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper.MonitorJobs;
+namespace YnabBancoIndustrialConnector.Domain.MonitorJobs;
 
 public class
   ReservedTransactionsScraperJob : IScraperJob<IList<ReservedBankTransaction>>

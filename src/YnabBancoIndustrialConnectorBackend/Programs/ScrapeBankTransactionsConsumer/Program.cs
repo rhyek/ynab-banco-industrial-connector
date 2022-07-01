@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
 using YnabBancoIndustrialConnector.Infrastructure.BancoIndustrialScraper;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper;
+using YnabBancoIndustrialConnector.Domain;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 var builder = Host.CreateDefaultBuilder(args)

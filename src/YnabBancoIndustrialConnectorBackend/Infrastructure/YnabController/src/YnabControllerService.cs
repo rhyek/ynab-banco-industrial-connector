@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
+using YnabBancoIndustrialConnector.Domain.Models;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
 using YnabBancoIndustrialConnector.Interfaces;
@@ -69,7 +69,7 @@ public class YnabControllerService
       .ToList();
     var duplicates = grouped
       .Where(g => g.Count() > 1)
-      .Select(g => g.Key)
+      .SelectMany(g => g)
       .ToList();
     if (duplicates.Any()) {
       await _messageQueue.SendDuplicateConfirmedReferences(

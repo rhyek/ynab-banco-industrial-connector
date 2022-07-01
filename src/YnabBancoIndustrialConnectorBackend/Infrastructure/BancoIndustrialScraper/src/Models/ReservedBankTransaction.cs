@@ -1,4 +1,4 @@
-namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
+namespace YnabBancoIndustrialConnector.Domain.Models;
 
 public record ReservedBankTransaction (
   string Reference,

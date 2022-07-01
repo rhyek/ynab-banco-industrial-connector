@@ -1,3 +1,5 @@
+using YnabBancoIndustrialConnector.Domain.Models;
+
 namespace YnabBancoIndustrialConnector.Interfaces;
 
 public interface IMessageQueueService
@@ -11,5 +13,5 @@ public interface IMessageQueueService
     CancellationToken? cancellationToken = null);
 
   Task SendDuplicateConfirmedReferences(
-    string[] references);
+    ConfirmedBankTransaction[] references);
 }

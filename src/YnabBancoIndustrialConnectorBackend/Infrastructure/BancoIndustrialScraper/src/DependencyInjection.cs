@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper.MonitorJobs;
+using YnabBancoIndustrialConnector.Domain.MonitorJobs;
 
-namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper;
+namespace YnabBancoIndustrialConnector.Domain;
 
 public static class DependencyInjection
 {

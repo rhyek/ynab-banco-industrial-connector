@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
+using YnabBancoIndustrialConnector.Domain.Models;
 using YnabBancoIndustrialConnector.Interfaces;
 
 namespace MessageQueueService;
@@ -70,14 +71,17 @@ public class MessageQueueService : IMessageQueueService
   }
 
   public async Task SendDuplicateConfirmedReferences(
-    string[] references)
+    ConfirmedBankTransaction[] duplicateConfirmedTxs)
   {
     _logger.LogInformation("Found duplicate confirmed references: {References}",
-      string.Join(", ", references));
+      string.Join(", ",
+        duplicateConfirmedTxs
+          .GroupBy(tx => tx.Reference)
+          .Select(g => g.Key)));
     var isDev = _hostEnvironment.IsDevelopment();
     _logger.LogInformation("isDev: {IsDev}", isDev);
     if (!isDev) {
-      var serialized = JsonSerializer.Serialize(references);
+      var serialized = JsonSerializer.Serialize(duplicateConfirmedTxs);
       _logger.LogInformation("Sending to sqs: {Serialized}", serialized);
       _logger.LogInformation("to url {Url}",
         _options.Value.DuplicateConfirmedReferencesSqsUrl!);

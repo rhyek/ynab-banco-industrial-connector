@@ -3,6 +3,13 @@ import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { projectName, projectTags } from '../../../consts';
 import { lambdaRole } from './common/lambda-role';
 
+interface IConfirmedBankTransaction {
+  Date: string;
+  Description: string;
+  Reference: string;
+  Amount: number;
+}
+
 export const duplicateConfirmedReferencesHandler =
   new aws.lambda.CallbackFunction(
     `${projectName}-duplicate-confirmed-refs-handler`,
@@ -13,7 +20,7 @@ export const duplicateConfirmedReferencesHandler =
         console.log(`ey man. got duplicates: ${JSON.stringify(evt, null, 2)}`);
         const client = new SESClient({});
         for (const record of evt.Records) {
-          const references: string[] = JSON.parse(record.body);
+          const txs: IConfirmedBankTransaction[] = JSON.parse(record.body);
           const command = new SendEmailCommand({
             Source: 'carlos.rgn@gmail.com',
             Destination: {
@@ -25,7 +32,7 @@ export const duplicateConfirmedReferencesHandler =
               },
               Body: {
                 Text: {
-                  Data: `references: ${references.join(', ')}`,
+                  Data: `txs: ${JSON.stringify(txs, null, 2)}`,
                 },
               },
             },

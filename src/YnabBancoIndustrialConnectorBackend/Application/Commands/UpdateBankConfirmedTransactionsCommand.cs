@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper;
+using YnabBancoIndustrialConnector.Domain;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 namespace YnabBancoIndustrialConnector.Application.Commands;

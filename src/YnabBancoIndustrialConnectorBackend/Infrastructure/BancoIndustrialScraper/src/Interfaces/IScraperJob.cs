@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace YnabBancoIndustrialConnector.Infrastructure.BIScraper.Interfaces;
+namespace YnabBancoIndustrialConnector.Domain.Interfaces;
 
 public interface IScraperJob<T>
 {

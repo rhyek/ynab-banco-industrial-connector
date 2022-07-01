@@ -1,4 +1,4 @@
-using YnabBancoIndustrialConnector.Infrastructure.BIScraper;
+using YnabBancoIndustrialConnector.Domain;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController;
 using YnabBancoIndustrialConnector.Programs.HttpApi;
 using MediatR;
