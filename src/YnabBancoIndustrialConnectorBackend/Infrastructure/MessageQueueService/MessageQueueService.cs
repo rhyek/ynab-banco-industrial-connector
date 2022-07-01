@@ -81,7 +81,13 @@ public class MessageQueueService : IMessageQueueService
     var isDev = _hostEnvironment.IsDevelopment();
     _logger.LogInformation("isDev: {IsDev}", isDev);
     if (!isDev) {
-      var serialized = JsonSerializer.Serialize(duplicateConfirmedTxs);
+      var serialized = JsonSerializer.Serialize(duplicateConfirmedTxs
+        .Select(tx => new {
+          reference = tx.Reference,
+          date = tx.Date.ToString("o"),
+          description = tx.Description,
+          amount = tx.Amount
+        }));
       _logger.LogInformation("Sending to sqs: {Serialized}", serialized);
       _logger.LogInformation("to url {Url}",
         _options.Value.DuplicateConfirmedReferencesSqsUrl!);

@@ -4,10 +4,10 @@ import { projectName, projectTags } from '../../../consts';
 import { lambdaRole } from './common/lambda-role';
 
 interface IConfirmedBankTransaction {
-  Date: string;
-  Description: string;
-  Reference: string;
-  Amount: number;
+  date: string;
+  description: string;
+  reference: string;
+  amount: number;
 }
 
 export const duplicateConfirmedReferencesHandler =
