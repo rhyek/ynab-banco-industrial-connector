@@ -6,6 +6,7 @@ export const duplicateConfirmedReferencesHandler =
   new aws.lambda.CallbackFunction(
     `${projectName}-duplicate-confirmed-refs-handler`,
     {
+      runtime: 'nodejs14.x',
       callback: async (evt: aws.sqs.QueueEvent) => {
         const client = new SESClient({});
         for (const record of evt.Records) {
@@ -26,7 +27,12 @@ export const duplicateConfirmedReferencesHandler =
               },
             },
           });
-          await client.send(command);
+          console.log(
+            `sending email with config:`,
+            JSON.stringify(command, null, 2)
+          );
+          const response = await client.send(command);
+          console.log('response:', JSON.stringify(response, null, 2));
         }
       },
       tags: {
