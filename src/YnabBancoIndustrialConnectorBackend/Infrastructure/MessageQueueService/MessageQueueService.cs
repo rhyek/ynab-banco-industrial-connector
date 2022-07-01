@@ -84,10 +84,7 @@ public class MessageQueueService : IMessageQueueService
       var request = new SendMessageRequest(
         _options.Value.DuplicateConfirmedReferencesSqsUrl!,
         serialized
-      ) {
-        MessageDeduplicationId = Guid.NewGuid().ToString(),
-        MessageGroupId = "default"
-      };
+      );
       var response = await _sqs.SendMessageAsync(request);
       _logger.LogInformation("sqs response: {Response}",
         JsonSerializer.Serialize(response));
