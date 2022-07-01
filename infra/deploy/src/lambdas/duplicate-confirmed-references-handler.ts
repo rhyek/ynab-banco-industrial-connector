@@ -1,11 +1,13 @@
 import * as aws from '@pulumi/aws';
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { projectName, projectTags } from '../../../consts';
+import { lambdaRole } from './common/lambda-role';
 
 export const duplicateConfirmedReferencesHandler =
   new aws.lambda.CallbackFunction(
     `${projectName}-duplicate-confirmed-refs-handler`,
     {
+      role: lambdaRole,
       runtime: 'nodejs14.x',
       callback: async (evt: aws.sqs.QueueEvent) => {
         console.log(`ey man. got duplicates: ${JSON.stringify(evt, null, 2)}`);
