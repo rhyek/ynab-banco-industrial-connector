@@ -74,7 +74,9 @@ public class MessageQueueService : IMessageQueueService
   {
     _logger.LogInformation("Found duplicate confirmed references: {References}",
       string.Join(", ", references));
-    if (!_hostEnvironment.IsDevelopment()) {
+    var isDev = _hostEnvironment.IsDevelopment();
+    _logger.LogInformation("isDev: {IsDev}", isDev);
+    if (!isDev) {
       var serialized = JsonSerializer.Serialize(references);
       _logger.LogInformation("Sending to sqs: {Serialized}", serialized);
       var request = new SendMessageRequest(
