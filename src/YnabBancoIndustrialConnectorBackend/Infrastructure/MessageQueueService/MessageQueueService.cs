@@ -75,9 +75,11 @@ public class MessageQueueService : IMessageQueueService
     _logger.LogInformation("Found duplicate confirmed references: {References}",
       string.Join(", ", references));
     if (!_hostEnvironment.IsDevelopment()) {
+      var serialized = JsonSerializer.Serialize(references);
+      _logger.LogInformation("Sending to sqs: {Serialized}", serialized);
       var request = new SendMessageRequest(
         _options.Value.DuplicateConfirmedReferencesSqsUrl!,
-        JsonSerializer.Serialize(references)
+        serialized
       ) {
         MessageDeduplicationId = Guid.NewGuid().ToString(),
         MessageGroupId = "default"
