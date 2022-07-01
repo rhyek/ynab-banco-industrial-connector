@@ -5,6 +5,7 @@ import { duplicateConfirmedReferencesHandler } from '../lambdas/duplicate-confir
 export const duplicateConfirmedReferencesQueue = new aws.sqs.Queue(
   `${projectName}-duplicate-confirmed-refs-queue`,
   {
+    visibilityTimeoutSeconds: 5 * 60,
     tags: {
       ...projectTags,
     },
