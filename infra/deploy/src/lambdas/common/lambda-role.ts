@@ -34,6 +34,8 @@ const lambdaRolePolicy = new aws.iam.Policy(
             'dynamodb:ListStreams',
 
             's3:PutObject',
+
+            'ses:SendEmail',
           ],
           Resource: '*',
         },
