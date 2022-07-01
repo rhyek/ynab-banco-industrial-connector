@@ -79,6 +79,7 @@ public class MessageQueueService : IMessageQueueService
     if (!isDev) {
       var serialized = JsonSerializer.Serialize(references);
       _logger.LogInformation("Sending to sqs: {Serialized}", serialized);
+      _logger.LogInformation("to url {Url}", _options.Value.DuplicateConfirmedReferencesSqsUrl!);
       var request = new SendMessageRequest(
         _options.Value.DuplicateConfirmedReferencesSqsUrl!,
         serialized
