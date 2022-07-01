@@ -8,6 +8,7 @@ export const duplicateConfirmedReferencesHandler =
     {
       runtime: 'nodejs14.x',
       callback: async (evt: aws.sqs.QueueEvent) => {
+        console.log(`ey man. got duplicates: ${JSON.stringify(evt, null, 2)}`);
         const client = new SESClient({});
         for (const record of evt.Records) {
           const references: string[] = JSON.parse(record.body);
