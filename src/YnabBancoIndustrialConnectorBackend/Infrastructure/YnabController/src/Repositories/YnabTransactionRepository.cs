@@ -52,7 +52,7 @@ public class YnabTransactionRepository
     AccountType accountType)
   {
     var accountId = GetAccountIdForType(accountType);
-    var searchPeriod = DateTime.Now.AddDays(-60);
+    var searchPeriod = DateTime.Now.AddDays(-75);
     var sinceDate = DateOnly
       .FromDateTime(searchPeriod)
       .ToString("o");
