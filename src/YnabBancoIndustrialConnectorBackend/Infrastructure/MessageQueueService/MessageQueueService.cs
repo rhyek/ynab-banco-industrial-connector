@@ -79,7 +79,8 @@ public class MessageQueueService : IMessageQueueService
     if (!isDev) {
       var serialized = JsonSerializer.Serialize(references);
       _logger.LogInformation("Sending to sqs: {Serialized}", serialized);
-      _logger.LogInformation("to url {Url}", _options.Value.DuplicateConfirmedReferencesSqsUrl!);
+      _logger.LogInformation("to url {Url}",
+        _options.Value.DuplicateConfirmedReferencesSqsUrl!);
       var request = new SendMessageRequest(
         _options.Value.DuplicateConfirmedReferencesSqsUrl!,
         serialized
@@ -87,7 +88,9 @@ public class MessageQueueService : IMessageQueueService
         MessageDeduplicationId = Guid.NewGuid().ToString(),
         MessageGroupId = "default"
       };
-      await _sqs.SendMessageAsync(request);
+      var response = await _sqs.SendMessageAsync(request);
+      _logger.LogInformation("sqs response: {Response}",
+        JsonSerializer.Serialize(response));
     }
   }
 }
