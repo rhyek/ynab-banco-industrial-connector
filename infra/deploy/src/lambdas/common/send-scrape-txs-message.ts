@@ -1,6 +1,6 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
-import { scrapeBankTxsQueue } from '../../sqs-scrape-bank-transactions';
+import { scrapeBankTxsQueue } from '../../sqs/sqs-scrape-bank-transactions';
 
 export async function sendScrapeTxsMessage(type: 'RESERVED' | 'CONFIRMED') {
   // wtf - https://www.pulumi.com/blog/lambdas-as-lambdas-the-magic-of-simple-serverless-functions/

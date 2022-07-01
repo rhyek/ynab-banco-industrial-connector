@@ -13,4 +13,6 @@ public class ApplicationOptions
   } = default!;
 
   public string? ScrapeBankTransactionsSqsUrl { get; set; } = null;
+
+  public string? DuplicateConfirmedReferencesSqsUrl { get; set; } = null;
 }

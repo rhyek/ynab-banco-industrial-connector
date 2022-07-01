@@ -1,7 +1,9 @@
+using System.Text.Json;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using MediatR;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YnabBancoIndustrialConnector.Application;
 using YnabBancoIndustrialConnector.Application.Commands;
@@ -11,18 +13,21 @@ namespace MessageQueueService;
 
 public class MessageQueueService : IMessageQueueService
 {
+  private readonly ILogger<MessageQueueService> _logger;
   private readonly IHostEnvironment _hostEnvironment;
   private readonly IMediator _mediator;
   private readonly IAmazonSQS _sqs;
   private readonly IOptions<ApplicationOptions> _options;
 
-  public MessageQueueService(IHostEnvironment hostEnvironment, IMediator mediator, IAmazonSQS sqs,
-    IOptions<ApplicationOptions> options)
+  public MessageQueueService(IHostEnvironment hostEnvironment,
+    IMediator mediator, IAmazonSQS sqs,
+    IOptions<ApplicationOptions> options, ILogger<MessageQueueService> logger)
   {
     _hostEnvironment = hostEnvironment;
     _mediator = mediator;
     _sqs = sqs;
     _options = options;
+    _logger = logger;
   }
 
   public async Task SendScrapeReservedTransactionsMessage(
@@ -51,13 +56,30 @@ public class MessageQueueService : IMessageQueueService
   {
     if (_hostEnvironment.IsDevelopment()) {
       await _mediator.Send(new UpdateBankConfirmedTransactionsCommand());
-    } else
-    {
+    }
+    else {
       var request = new SendMessageRequest(
         _options.Value.ScrapeBankTransactionsSqsUrl!,
         "CONFIRMED"
       ) {
         MessageDeduplicationId = messageDeduplicationId,
+        MessageGroupId = "default"
+      };
+      await _sqs.SendMessageAsync(request);
+    }
+  }
+
+  public async Task SendDuplicateConfirmedReferences(
+    string[] references)
+  {
+    _logger.LogInformation("Found duplicate confirmed references: {References}",
+      string.Join(", ", references));
+    if (!_hostEnvironment.IsDevelopment()) {
+      var request = new SendMessageRequest(
+        _options.Value.DuplicateConfirmedReferencesSqsUrl!,
+        JsonSerializer.Serialize(references)
+      ) {
+        MessageDeduplicationId = Guid.NewGuid().ToString(),
         MessageGroupId = "default"
       };
       await _sqs.SendMessageAsync(request);

@@ -9,4 +9,7 @@ public interface IMessageQueueService
   Task SendScrapeConfirmedTransactionsMessage(
     string messageDeduplicationId,
     CancellationToken? cancellationToken = null);
+
+  Task SendDuplicateConfirmedReferences(
+    string[] references);
 }

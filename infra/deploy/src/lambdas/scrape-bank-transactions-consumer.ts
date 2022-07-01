@@ -8,6 +8,7 @@ import {
 import { buildStack } from '../build-stack';
 import { playwrightTracesBucketName } from '../playwright-traces-s3-bucket';
 import { lambdaRole } from './common/lambda-role';
+import { duplicateConfirmedReferencesQueueUrlEnvironmentVariable } from '../sqs/duplicate-confirmed-references-queue';
 
 const config = new pulumi.Config();
 
@@ -33,6 +34,7 @@ export const scrapeBankTransactionsConsumerFunc = new aws.lambda.Function(
             config.requireSecret(key),
           ])
         ),
+        ...duplicateConfirmedReferencesQueueUrlEnvironmentVariable,
         PLAYWRIGHT_TRACES_S3_BUCKET_NAME: playwrightTracesBucketName,
         DEBUG: 'pw:*',
       },

@@ -2,23 +2,26 @@
 using YnabBancoIndustrialConnector.Infrastructure.BIScraper.Models;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Models;
 using YnabBancoIndustrialConnector.Infrastructure.YnabController.Repositories;
+using YnabBancoIndustrialConnector.Interfaces;
 
 namespace YnabBancoIndustrialConnector.Infrastructure.YnabController;
 
 public class YnabControllerService
 {
   private readonly ILogger<YnabControllerService> _logger;
-
+  private readonly IMessageQueueService _messageQueue;
   private readonly YnabTransactionRepository _ynabTransactionRepository;
 
   public YnabControllerService
   (
     ILogger<YnabControllerService> logger,
+    IMessageQueueService messageQueue,
     YnabTransactionRepository ynabTransactionRepository
   )
   {
     _logger = logger;
     _ynabTransactionRepository = ynabTransactionRepository;
+    _messageQueue = messageQueue;
   }
 
   public async Task ProcessReservedBankTransactions(
@@ -58,10 +61,31 @@ public class YnabControllerService
     await _ynabTransactionRepository.CommitChanges();
   }
 
+  private IList<ConfirmedBankTransaction> _ConfirmedTxsWithoutDuplicates(
+    IEnumerable<ConfirmedBankTransaction> confirmedTxs)
+  {
+    var grouped = confirmedTxs
+      .GroupBy((tx) => tx.Reference)
+      .ToList();
+    var duplicates = grouped
+      .Where(g => g.Count() > 1)
+      .Select(g => g.Key)
+      .ToList();
+    _messageQueue.SendDuplicateConfirmedReferences(
+      references: duplicates.ToArray());
+    var unique = grouped
+      .Where(g => g.Count() == 1)
+      .Select(g => g.First())
+      .ToList();
+    return unique;
+  }
+
   public async Task ProcessConfirmedBankTransactions(
     IList<ConfirmedBankTransaction> confirmedBankTransactions,
     CancellationToken stoppingToken)
   {
+    confirmedBankTransactions =
+      _ConfirmedTxsWithoutDuplicates(confirmedBankTransactions);
     _logger.LogInformation("Processing {Count} confirmed bank transactions",
       confirmedBankTransactions.Count);
     var recentYnabTransactions =
@@ -138,15 +162,15 @@ public class YnabControllerService
       }
 
       // if (ynabTx.IsOpen) {
-        if (confirmedTx.Amount != ynabTx.Amount) {
-          _ynabTransactionRepository.UpdateTransactionAmount(ynabTx.Id,
-            confirmedTx.Amount);
-        }
+      if (confirmedTx.Amount != ynabTx.Amount) {
+        _ynabTransactionRepository.UpdateTransactionAmount(ynabTx.Id,
+          confirmedTx.Amount);
+      }
 
-        if (ynabTx.Cleared == YnabTransactionCleared.Uncleared) {
-          _ynabTransactionRepository.UpdateTransactionSetToCleared(
-            ynabTx.Id);
-        }
+      if (ynabTx.Cleared == YnabTransactionCleared.Uncleared) {
+        _ynabTransactionRepository.UpdateTransactionSetToCleared(
+          ynabTx.Id);
+      }
       // }
     }
     await _ynabTransactionRepository.CommitChanges();

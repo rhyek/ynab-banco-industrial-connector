@@ -3,7 +3,7 @@ import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import { backendEnvironmentVariableKeys } from '../../../../../.scripts/consts/backend-environment-variable-keys';
 import { httpApiNamespace, projectTags } from '../../../../consts';
-import { scrapeBankTransactionsSqsUrlEnvironmentVariable } from '../../sqs-scrape-bank-transactions';
+import { scrapeBankTransactionsSqsUrlEnvironmentVariable } from '../../sqs/sqs-scrape-bank-transactions';
 import { buildStack } from '../../build-stack';
 import { role } from './role';
 

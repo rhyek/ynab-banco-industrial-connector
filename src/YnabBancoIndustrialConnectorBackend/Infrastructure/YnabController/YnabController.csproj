@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Interfaces\Interfaces.csproj" />
       <ProjectReference Include="..\BancoIndustrialScraper\BancoIndustrialScraper.csproj" />
     </ItemGroup>
 

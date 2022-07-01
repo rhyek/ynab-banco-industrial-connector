@@ -5,6 +5,7 @@ using Amazon.Lambda.SQSEvents;
 using Amazon.S3;
 using Amazon.S3.Model;
 using MediatR;
+using MessageQueueService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -25,6 +26,7 @@ var builder = Host.CreateDefaultBuilder(args)
     services.AddApplication();
     services.AddBancoIndustrialScraper();
     services.AddYnabController();
+    services.AddMessageQueueService();
   });
 var host = builder.Build();
 var serializer = new DefaultLambdaJsonSerializer();

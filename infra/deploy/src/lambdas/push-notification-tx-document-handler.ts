@@ -7,7 +7,7 @@ import {
 } from '../../../consts';
 import { buildStack } from '../build-stack';
 import { lambdaRole } from './common/lambda-role';
-import { scrapeBankTransactionsSqsUrlEnvironmentVariable } from '../sqs-scrape-bank-transactions';
+import { scrapeBankTransactionsSqsUrlEnvironmentVariable } from '../sqs/sqs-scrape-bank-transactions';
 
 const config = new pulumi.Config();
 
