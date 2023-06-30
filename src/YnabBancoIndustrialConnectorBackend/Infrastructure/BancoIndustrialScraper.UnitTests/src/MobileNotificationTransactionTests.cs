@@ -110,6 +110,19 @@ public class MobileNotificationTransactionTests
         }
       },
       new object?[] {
+        "BiMovil: Consumo por Q.56.00 en el Establecimiento: PedidosYa RESTAURANTES Cuenta: BICHEQUE6 29-Jun 19:35 Aut.233207.",
+        new MobileNotificationTransaction() {
+          Reference = "233207",
+          Currency = "GTQ",
+          Amount = 56.00m,
+          Type = TransactionType.Debit,
+          Description = "PedidosYa RESTAURANTES",
+          Account = "BICHEQUE6",
+          DateTime = new(2022, 6, 29, 19, 35, 0),
+          Origin = TransactionOrigin.Establishment
+        }
+      },
+      new object?[] {
         "This is gibberish",
         null
       }

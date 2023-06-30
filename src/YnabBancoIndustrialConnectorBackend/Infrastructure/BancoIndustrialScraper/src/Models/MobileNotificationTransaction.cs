@@ -34,6 +34,7 @@ public record MobileNotificationTransaction()
     var finalCurrentDateTime = currentDateTime ?? DateTime.Now;
     var culture = CultureInfo.CreateSpecificCulture("es-ES");
     var datetime = DateTime.ParseExact(str, "dd-MMM HH:mm", culture);
+    datetime = datetime.AddYears(finalCurrentDateTime.Year - datetime.Year);
     var datetimeLastYear = datetime.AddYears(-1);
 
     if (Math.Abs(finalCurrentDateTime.Ticks - datetime.Ticks) <
@@ -48,7 +49,7 @@ public record MobileNotificationTransaction()
   {
     const string datetimeRegex = @"(?<datetime>\d{2}-[a-zA-Z]{3} \d{2}:\d{2})";
     var regex = new Regex(
-      @$"BiMovil: Se ha (?<operation>.+) (?<currency>(.+?))\.(?<amount>.+) en (?<originPhrase>el Establecimiento|la Agencia): (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
+      @$"BiMovil: (Se ha )?(?<operation>.+) (?<currency>(.+?))\.(?<amount>.+) en (?<originPhrase>el Establecimiento|la Agencia): (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
     var match = regex.Match(message);
     if (match.Success) {
       var currency = match.Groups["currency"].Value switch {
