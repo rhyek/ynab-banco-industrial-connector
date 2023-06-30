@@ -1,5 +1,6 @@
 {
   "files.exclude": {
     "src/BancoIndustrialMonitor": false
-  }
+  },
+  "dotnet.defaultSolution": "src/YnabBancoIndustrialConnectorBackend/YnabBancoIndustrialConnectorBackend.sln"
 }

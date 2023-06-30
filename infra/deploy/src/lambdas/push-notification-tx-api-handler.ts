@@ -28,8 +28,8 @@ export const pushNotificationTxApiHandler = new aws.lambda.CallbackFunction(
       },
     },
     callback: async (
-      evt: awsx.apigateway.Request
-    ): Promise<awsx.apigateway.Response> => {
+      evt: awsx.classic.apigateway.Request
+    ): Promise<awsx.classic.apigateway.Response> => {
       const body = parseBody<{ text: string }>(evt);
       console.log('received tx:', body.text);
       console.log('table name:', process.env.TABLE_NAME);

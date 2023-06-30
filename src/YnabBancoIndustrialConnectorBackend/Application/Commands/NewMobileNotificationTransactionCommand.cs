@@ -55,11 +55,11 @@ public class
     // we aren't going to handle transactions with origin: Agency, because
     // the reference numbers for those will always change eventually
     // in the bank statement.
-    if (mobileNotificationTx is {Origin: TransactionOrigin.Establishment} &&
+    if (mobileNotificationTx is { Origin: TransactionOrigin.Establishment } &&
         (mobileNotificationTx.Account == _options
-           .BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
+           .BancoIndustrialMobileNotificationDebitCardAccountName
          || mobileNotificationTx.Account == _options
-           .BancoIndustrialMobileNotificationCreditCardAccountNameForEstablishmentTransactions)) {
+           .BancoIndustrialMobileNotificationCreditCardAccountName)) {
       var amount = mobileNotificationTx.Currency switch {
         "USD" => mobileNotificationTx.Amount,
         // if not USD, temporarily convert to USD using an external conversion
@@ -74,7 +74,7 @@ public class
         amount *= -1;
       }
       var accountType = mobileNotificationTx.Account == _options
-        .BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions
+        .BancoIndustrialMobileNotificationDebitCardAccountName
         ? AccountType.Debit
         : AccountType.Credit;
 

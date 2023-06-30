@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node-transpile-only
+#!/usr/bin/env tsx
 import { config } from 'dotenv';
 import { command } from 'execa';
 import { backendEnvironmentVariableKeys } from './consts/backend-environment-variable-keys';

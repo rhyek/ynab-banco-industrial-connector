@@ -2,12 +2,12 @@ namespace YnabBancoIndustrialConnector.Application;
 
 public class ApplicationOptions
 {
-  public string BancoIndustrialMobileNotificationDebitCardAccountNameForEstablishmentTransactions {
+  public string BancoIndustrialMobileNotificationDebitCardAccountName {
     get;
     set;
   } = default!;
 
-  public string BancoIndustrialMobileNotificationCreditCardAccountNameForEstablishmentTransactions {
+  public string BancoIndustrialMobileNotificationCreditCardAccountName {
     get;
     set;
   } = default!;

@@ -1,6 +1,6 @@
 import * as awsx from '@pulumi/awsx';
 
-export function parseBody<T>(event: awsx.apigateway.Request): T {
+export function parseBody<T>(event: awsx.classic.apigateway.Request): T {
   if (!event.body) {
     throw new Error('Body is empty');
   }

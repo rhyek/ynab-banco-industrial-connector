@@ -2,17 +2,17 @@
   "name": "deploy",
   "main": "src/index.ts",
   "devDependencies": {
-    "@types/node": "^14"
+    "@types/node": "^16"
   },
   "comments": [
     "packages in 'dependencies' key are included in serialized inline lambda functions",
     "https://www.pulumi.com/docs/intro/concepts/function-serialization/#determining-the-required-node_modules-packages"
   ],
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.100.0",
-    "@aws-sdk/client-ses": "3.100.0",
-    "@aws-sdk/client-sqs": "3.100.0",
-    "@aws-sdk/lib-dynamodb": "3.100.0",
+    "@aws-sdk/client-dynamodb": "3.363.0",
+    "@aws-sdk/client-ses": "3.363.0",
+    "@aws-sdk/client-sqs": "3.363.0",
+    "@aws-sdk/lib-dynamodb": "3.363.0",
     "@pulumi/aws": "~5.41.0",
     "@pulumi/awsx": "~1.0.2",
     "@pulumi/pulumi": "^3.73.0",

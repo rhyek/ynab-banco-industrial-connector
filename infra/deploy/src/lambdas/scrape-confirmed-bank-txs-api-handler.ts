@@ -11,7 +11,7 @@ export const scrapeConfirmedBankTxsApiHandler = new aws.lambda.CallbackFunction(
     //     SQS_URL: scrapeBankTransactionsSqsUrl,
     //   },
     // },
-    callback: async (): Promise<awsx.apigateway.Response> => {
+    callback: async (): Promise<awsx.classic.apigateway.Response> => {
       const response = await sendScrapeTxsMessage('CONFIRMED');
       return {
         statusCode: 200,
