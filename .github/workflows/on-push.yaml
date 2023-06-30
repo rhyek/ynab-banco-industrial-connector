@@ -29,7 +29,7 @@ jobs:
           version: 6.32.8
       - uses: actions/checkout@v2
       - run: pnpm --filter={infra/build} exec npm install --frozen-lockfile
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         with:
           work-dir: infra/build
           stack-name: dev
@@ -55,7 +55,7 @@ jobs:
           version: 6.32.8
       - uses: actions/checkout@v2
       - run: pnpm --filter={infra/deploy} exec npm install --frozen-lockfile
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         with:
           work-dir: infra/deploy
           stack-name: dev
