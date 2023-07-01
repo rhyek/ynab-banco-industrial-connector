@@ -1,6 +1,6 @@
 {
   "name": "deploy",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "devDependencies": {
     "@types/node": "^16"
   },
