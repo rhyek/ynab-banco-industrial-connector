@@ -1,6 +1,6 @@
 {
   "name": "deploy",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "devDependencies": {
     "@types/node": "^16"
   },
@@ -13,6 +13,7 @@
     "@aws-sdk/client-ses": "3.363.0",
     "@aws-sdk/client-sqs": "3.363.0",
     "@aws-sdk/lib-dynamodb": "3.363.0",
+    "@aws-sdk/smithy-client": "^3.360.0",
     "@pulumi/aws": "~5.41.0",
     "@pulumi/awsx": "~1.0.2",
     "@pulumi/pulumi": "^3.73.0",
