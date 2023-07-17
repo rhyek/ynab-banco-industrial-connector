@@ -121,6 +121,18 @@ public class MobileNotificationTransactionTests
           DateTime = new(2022, 6, 29, 19, 35, 0),
           Origin = TransactionOrigin.Establishment
         }
+      },      new object?[] {
+        "BiMovil: Consumo por Q.60.00 en: PedidosYa RESTAURANTES Cuenta: BICHEQUE6 17-Jul 12:10 Aut.187045.",
+        new MobileNotificationTransaction() {
+          Reference = "187045",
+          Currency = "GTQ",
+          Amount = 60.00m,
+          Type = TransactionType.Debit,
+          Description = "PedidosYa RESTAURANTES",
+          Account = "BICHEQUE6",
+          DateTime = new(2022, 7, 17, 12, 10, 0),
+          Origin = TransactionOrigin.Establishment
+        }
       },
       new object?[] {
         "This is gibberish",

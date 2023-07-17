@@ -49,7 +49,7 @@ public record MobileNotificationTransaction()
   {
     const string datetimeRegex = @"(?<datetime>\d{2}-[a-zA-Z]{3} \d{2}:\d{2})";
     var regex = new Regex(
-      @$"BiMovil: (Se ha )?(?<operation>.+) (?<currency>(.+?))\.(?<amount>.+) en (?<originPhrase>el Establecimiento|la Agencia): (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
+      @$"BiMovil: (Se ha )?(?<operation>.+) (?<currency>(.+?))\.(?<amount>.+) en\s?(?<originPhrase>el Establecimiento|la Agencia)?: (?<description>.+) Cuenta: (?<account>.+) {datetimeRegex} (Aut\.|Autorizacion: )(?<reference>.+)\.");
     var match = regex.Match(message);
     if (match.Success) {
       var currency = match.Groups["currency"].Value switch {
@@ -57,13 +57,13 @@ public record MobileNotificationTransaction()
         "US" => "USD",
         _ => match.Groups["currency"].Value
       };
-      var type = match.Groups["operation"].Value.Contains("credito")
+      var type = match.Groups["operation"].Value.ToLower().Contains("credito")
         ? TransactionType.Credit
         : TransactionType.Debit;
-      var origin =
-        match.Groups["originPhrase"].Value.Contains("Establecimiento")
-          ? TransactionOrigin.Establishment
-          : TransactionOrigin.Agency;
+      var origin = match.Groups["originPhrase"].Value switch {
+        var s when s.ToLower().Contains("establecimiento") || s == "" => TransactionOrigin.Establishment,
+        _ => TransactionOrigin.Agency
+      };
       return new() {
         Reference = match.Groups["reference"].Value,
         Currency = currency,
