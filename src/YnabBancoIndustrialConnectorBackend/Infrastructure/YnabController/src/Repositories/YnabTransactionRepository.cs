@@ -148,9 +148,12 @@ public class YnabTransactionRepository
   {
     string? payeeId = null;
     string? categoryId = null;
-    // if no description, or if i transferred to myself, don't assign payee or category
+    // if no description, or if i transferred to myself,
+    // or if we transferred with mobile app and don't know to what account,
+    // don't assign payee or category
     if (description == null || description.ToLower()
-          .Contains("BELWEB TRANSF. PROPIA A 0180135097".ToLower()))
+          .Contains("BELWEB TRANSF. PROPIA A 0180135097".ToLower()) ||
+        description.ToLower() == "BANCA MOVIL".ToLower())
       return (payeeId, categoryId);
     var othersWithSameDescription = recentTransactions
       .Where(t => t.Metadata.Description == description)
