@@ -15,11 +15,15 @@ public enum AccountType
 
 public class YnabTransactionRepository
 {
-  private readonly YnabControllerOptions _options;
+  private readonly FlurlClient _httpClient;
 
   private readonly ILogger<YnabTransactionRepository> _logger;
+  private readonly YnabControllerOptions _options;
 
-  private readonly FlurlClient _httpClient;
+  private readonly IList<object> _pendingCreations = new List<object>();
+
+  private readonly Dictionary<string, Dictionary<string, dynamic>>
+    _pendingUpdates = new();
 
   public YnabTransactionRepository(
     IOptions<YnabControllerOptions> options,
@@ -32,11 +36,10 @@ public class YnabTransactionRepository
       .AfterCall(call => {
         var requestsUsed =
           call.Response.Headers.FirstOrDefault("X-Rate-Limit");
-        if (requestsUsed != null) {
+        if (requestsUsed != null)
           _logger.LogInformation(
             "YNAB rate limit used requests for this hour: {Value}",
             requestsUsed);
-        }
       });
   }
 
@@ -65,7 +68,7 @@ public class YnabTransactionRepository
       .GetAsync()
       .ReceiveJson<TransactionsResponse>();
     var transactions = json.Data.Transactions
-      .Select(t => t with {Amount = t.Amount / 1_000})
+      .Select(t => t with { Amount = t.Amount / 1_000 })
       .ToList();
     return transactions;
   }
@@ -77,8 +80,6 @@ public class YnabTransactionRepository
     return (source ?? await GetRecent(accountType))
       .FirstOrDefault(t => t.Metadata.Reference == reference);
   }
-
-  private readonly IList<object> _pendingCreations = new List<object>();
 
   private async Task<int> CommitPendingCreations()
   {
@@ -99,23 +100,19 @@ public class YnabTransactionRepository
     return 0;
   }
 
-  private readonly Dictionary<string, Dictionary<string, dynamic>>
-    _pendingUpdates = new();
-
   private void AddPendingUpdate(string ynabTxId, string key, dynamic? value)
   {
-    if (!_pendingUpdates.ContainsKey(ynabTxId)) {
-      _pendingUpdates.Add(ynabTxId, new() {{"id", ynabTxId}});
-    }
+    if (!_pendingUpdates.ContainsKey(ynabTxId))
+      _pendingUpdates.Add(ynabTxId,
+        new Dictionary<string, dynamic> { { "id", ynabTxId } });
 
     _pendingUpdates[ynabTxId].Add(key: key, value: value);
   }
 
   private void AddPendingUpdate(string ynabTxId, object dict)
   {
-    foreach (var property in dict.GetType().GetProperties()) {
+    foreach (var property in dict.GetType().GetProperties())
       AddPendingUpdate(ynabTxId, property.Name, property.GetValue(dict));
-    }
   }
 
   private async Task<int> CommitPendingUpdates()
@@ -151,25 +148,23 @@ public class YnabTransactionRepository
   {
     string? payeeId = null;
     string? categoryId = null;
-    if (description != null) {
-      var othersWithSameDescription = recentTransactions
-        .Where(t => t.Metadata.Description == description)
-        .ToList();
-      if (othersWithSameDescription.Count > 0) {
-        var lastForPayeeId = othersWithSameDescription
-          .Where(t => t.PayeeId != null)
-          .MaxBy(t => t.Date);
-        if (lastForPayeeId != null) {
-          payeeId = lastForPayeeId.PayeeId;
-        }
+    // if no description, or if i transferred to myself, don't assign payee or category
+    if (description == null || description.ToLower()
+          .Contains("BELWEB TRANSF. PROPIA A 0180135097".ToLower()))
+      return (payeeId, categoryId);
+    var othersWithSameDescription = recentTransactions
+      .Where(t => t.Metadata.Description == description)
+      .ToList();
+    if (othersWithSameDescription.Count > 0) {
+      var lastForPayeeId = othersWithSameDescription
+        .Where(t => t.PayeeId != null)
+        .MaxBy(t => t.Date);
+      if (lastForPayeeId != null) payeeId = lastForPayeeId.PayeeId;
 
-        var lastForCategoryId = othersWithSameDescription
-          .Where(t => t.CategoryId != null)
-          .MaxBy(t => t.Date);
-        if (lastForCategoryId != null) {
-          categoryId = lastForCategoryId.CategoryId;
-        }
-      }
+      var lastForCategoryId = othersWithSameDescription
+        .Where(t => t.CategoryId != null)
+        .MaxBy(t => t.Date);
+      if (lastForCategoryId != null) categoryId = lastForCategoryId.CategoryId;
     }
     return (payeeId, categoryId);
   }
@@ -198,13 +193,13 @@ public class YnabTransactionRepository
         AddPendingUpdate(txGeneratedFromSchedule.Id, new {
           date = date.ToString("o"),
           amount = ynabAmount,
-          memo = metadata.SerializeMemo(),
+          memo = metadata.SerializeMemo()
         });
         return true;
       }
     }
     var existing = await FindByReference(reference, accountType,
-      source: recentTransactions);
+      recentTransactions);
     if (existing != null) {
       if (existing.Metadata != metadata || existing.Amount != amount ||
           (payeeId != null && existing.PayeeId != payeeId) ||
@@ -213,7 +208,7 @@ public class YnabTransactionRepository
           amount = ynabAmount,
           memo = metadata.SerializeMemo(),
           payee_id = payeeId ?? existing.PayeeId,
-          category_id = categoryId ?? existing.CategoryId,
+          category_id = categoryId ?? existing.CategoryId
         });
         return true;
       }
@@ -227,7 +222,7 @@ public class YnabTransactionRepository
       cleared,
       memo = metadata.SerializeMemo(),
       payee_id = payeeId,
-      category_id = categoryId,
+      category_id = categoryId
     });
     return true;
   }
