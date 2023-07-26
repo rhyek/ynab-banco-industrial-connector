@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,10 +16,10 @@ public enum AccountType
 
 public class YnabTransactionRepository
 {
-    private static readonly Dictionary<string, List<string>>
+    private static readonly Dictionary<string, List<Regex>>
         AlternateDescriptionsForMatching = new()
         {
-            // { "SUPERMERCADOS LA TORRE", new() { "SUPERMERCADOS LA TORRE GT" } }
+            { "AMZN Mktp US", new() { new("^AMZN Mktp US\\*.+ US$", RegexOptions.IgnoreCase) } }
         };
 
     private readonly FlurlClient _httpClient;
@@ -174,18 +175,19 @@ public class YnabTransactionRepository
         {
             return (payeeId, categoryId);
         }
-        var descriptions = new List<string>
+        var descriptionRegexs = new List<Regex>
         {
-            description,
-            $"{description} GT" // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
+            new(description),
+            new($"{description} GT") // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
         };
         if (AlternateDescriptionsForMatching.TryGetValue(description, out var alternates))
         {
-            descriptions.AddRange(alternates);
+            descriptionRegexs.AddRange(alternates);
         }
         var othersWithSameDescription = recentTransactions
             .Where(t =>
-                descriptions.Any(d => t.Metadata.Description == description))
+                descriptionRegexs.Any(descriptionRegex =>
+                    t.Metadata.Description is not null && descriptionRegex.IsMatch(t.Metadata.Description)))
             .OrderByDescending(t => t.Date)
             .ToList();
         if (othersWithSameDescription.Count > 0)
