@@ -164,8 +164,8 @@ public class YnabTransactionRepository
             IEnumerable<YnabTransaction> recentTransactions)
     {
         string? payeeId = null;
-
         string? categoryId = null;
+
         // if no description, or if i transferred to myself,
         // or if we transferred with mobile app and don't know to what account,
         // don't assign payee or category
@@ -175,6 +175,7 @@ public class YnabTransactionRepository
         {
             return (payeeId, categoryId);
         }
+
         var descriptionRegexes = new List<Regex>
         {
             new(description),
@@ -184,10 +185,11 @@ public class YnabTransactionRepository
         {
             descriptionRegexes.AddRange(alternates);
         }
+
         var othersWithSameDescription = recentTransactions
             .Where(t =>
-                descriptionRegexes.Any(descriptionRegex =>
-                    t.Metadata.Description is not null && descriptionRegex.IsMatch(t.Metadata.Description)))
+                descriptionRegexes.Any(regex =>
+                    t.Metadata.Description is not null && regex.IsMatch(t.Metadata.Description)))
             .OrderByDescending(t => t.Date)
             .ToList();
         if (othersWithSameDescription.Count > 0)
@@ -229,8 +231,7 @@ public class YnabTransactionRepository
             var txGeneratedFromSchedule = recentTransactions.FirstOrDefault(
                 ynabTx =>
                     ynabTx.PayeeId == payeeId &&
-                    ynabTx.CategoryId == categoryId && ynabTx.Memo == "" &&
-                    !ynabTx.Approved);
+                    ynabTx.CategoryId == categoryId && ynabTx is { Memo: "", Approved: false });
             if (txGeneratedFromSchedule != null)
             {
                 AddPendingUpdate(txGeneratedFromSchedule.Id, new
