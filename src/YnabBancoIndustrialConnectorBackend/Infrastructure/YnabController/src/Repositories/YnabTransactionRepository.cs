@@ -175,18 +175,18 @@ public class YnabTransactionRepository
         {
             return (payeeId, categoryId);
         }
-        var descriptionRegexs = new List<Regex>
+        var descriptionRegexes = new List<Regex>
         {
             new(description),
             new($"{description} GT") // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
         };
         if (AlternateDescriptionsForMatching.TryGetValue(description, out var alternates))
         {
-            descriptionRegexs.AddRange(alternates);
+            descriptionRegexes.AddRange(alternates);
         }
         var othersWithSameDescription = recentTransactions
             .Where(t =>
-                descriptionRegexs.Any(descriptionRegex =>
+                descriptionRegexes.Any(descriptionRegex =>
                     t.Metadata.Description is not null && descriptionRegex.IsMatch(t.Metadata.Description)))
             .OrderByDescending(t => t.Date)
             .ToList();
