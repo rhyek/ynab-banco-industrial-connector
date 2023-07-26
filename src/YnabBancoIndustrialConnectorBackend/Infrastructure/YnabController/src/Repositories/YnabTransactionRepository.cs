@@ -18,7 +18,7 @@ public class YnabTransactionRepository
     private static readonly Dictionary<string, List<string>>
         AlternateDescriptionsForMatching = new()
         {
-            { "SUPERMERCADOS LA TORRE", new() { "SUPERMERCADOS LA TORRE GT" } }
+            // { "SUPERMERCADOS LA TORRE", new() { "SUPERMERCADOS LA TORRE GT" } }
         };
 
     private readonly FlurlClient _httpClient;
@@ -176,7 +176,8 @@ public class YnabTransactionRepository
         }
         var descriptions = new List<string>
         {
-            description
+            description,
+            $"{description} GT" // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
         };
         if (AlternateDescriptionsForMatching.TryGetValue(description, out var alternates))
         {
