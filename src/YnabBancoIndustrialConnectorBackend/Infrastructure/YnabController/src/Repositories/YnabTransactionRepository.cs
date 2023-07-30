@@ -19,7 +19,8 @@ public class YnabTransactionRepository
     private static readonly Dictionary<string, List<Regex>>
         AlternateDescriptionsForMatching = new()
         {
-            { "AMZN Mktp US", new() { new("^AMZN Mktp US\\*.+ US$", RegexOptions.IgnoreCase) } }
+            { "AMZN Mktp US", new() { new("^AMZN Mktp US\\*.+ US$", RegexOptions.IgnoreCase) } },
+            { "UBER   * EATS PENDING", new() { new("^uber\\s?\\*?eats", RegexOptions.IgnoreCase) } }
         };
 
     private readonly FlurlClient _httpClient;
