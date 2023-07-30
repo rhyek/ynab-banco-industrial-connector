@@ -178,8 +178,8 @@ public class YnabTransactionRepository
 
         var descriptionRegexes = new List<Regex>
         {
-            new(description),
-            new($"{description} GT") // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
+            new(Regex.Escape(description)),
+            new($"{Regex.Escape(description)} GT") // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
         };
         if (AlternateDescriptionsForMatching.TryGetValue(description, out var alternates))
         {
