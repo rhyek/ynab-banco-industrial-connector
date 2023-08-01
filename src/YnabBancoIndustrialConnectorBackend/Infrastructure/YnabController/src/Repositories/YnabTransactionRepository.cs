@@ -20,7 +20,11 @@ public class YnabTransactionRepository
         AlternateDescriptionsForMatching = new()
         {
             { new("AMZN Mktp US"), new() { new("^AMZN Mktp US\\*.+ US$", RegexOptions.IgnoreCase) } },
-            { new("^uber\\s*\\*?eats", RegexOptions.IgnoreCase), new() { new("^uber\\s*\\*?eats", RegexOptions.IgnoreCase) } }
+            { new("^uber\\s*\\*?eats", RegexOptions.IgnoreCase), new() { new("^uber\\s*\\*?eats", RegexOptions.IgnoreCase) } },
+            {
+                new("^ube?r\\s*\\*\\s*pending", RegexOptions.IgnoreCase),
+                new() { new("UBER\\*RIDES", RegexOptions.IgnoreCase), new("UBER \\*TRIP", RegexOptions.IgnoreCase) }
+            }
         };
 
     private readonly FlurlClient _httpClient;
