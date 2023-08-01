@@ -16,11 +16,11 @@ public enum AccountType
 
 public class YnabTransactionRepository
 {
-    private static readonly Dictionary<string, List<Regex>>
+    private static readonly Dictionary<Regex, List<Regex>>
         AlternateDescriptionsForMatching = new()
         {
-            { "AMZN Mktp US", new() { new("^AMZN Mktp US\\*.+ US$", RegexOptions.IgnoreCase) } },
-            { "UBER   * EATS PENDING", new() { new("^uber\\s?\\*?eats", RegexOptions.IgnoreCase) } }
+            { new("AMZN Mktp US"), new() { new("^AMZN Mktp US\\*.+ US$", RegexOptions.IgnoreCase) } },
+            { new("^uber\\s*\\*?eats", RegexOptions.IgnoreCase), new() { new("^uber\\s*\\*?eats", RegexOptions.IgnoreCase) } }
         };
 
     private readonly FlurlClient _httpClient;
@@ -182,9 +182,13 @@ public class YnabTransactionRepository
             new(Regex.Escape(description)),
             new($"{Regex.Escape(description)} GT") // several establishments notify with a name, but in the estado de cuenta it adds a " GT"
         };
-        if (AlternateDescriptionsForMatching.TryGetValue(description, out var alternates))
+        var descriptionRegexesFromAlternate = AlternateDescriptionsForMatching
+            .Where(entry => entry.Key.IsMatch(description))
+            .SelectMany(entry => entry.Value)
+            .ToList();
+        if (descriptionRegexesFromAlternate.Count > 0)
         {
-            descriptionRegexes.AddRange(alternates);
+            descriptionRegexes.AddRange(descriptionRegexesFromAlternate);
         }
 
         var othersWithSameDescription = recentTransactions
