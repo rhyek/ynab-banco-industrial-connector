@@ -24,7 +24,8 @@ public class YnabTransactionRepository
             {
                 new("^ube?r\\s*\\*\\s*pending", RegexOptions.IgnoreCase),
                 new() { new("UBER\\*RIDES", RegexOptions.IgnoreCase), new("UBER \\*TRIP", RegexOptions.IgnoreCase) }
-            }
+            },
+            { new("SEGUROS EL_A", RegexOptions.IgnoreCase), new() { new("SEGUROS EL_A-\\d+_ GT", RegexOptions.IgnoreCase) } }
         };
 
     private readonly FlurlClient _httpClient;
