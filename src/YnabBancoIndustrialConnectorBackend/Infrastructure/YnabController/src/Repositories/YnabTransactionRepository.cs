@@ -29,12 +29,13 @@ public class YnabTransactionRepository
                 new(@"uber\s*\*\s*trip", RegexOptions.IgnoreCase),
                 new() { new("UBER\\*RIDES", RegexOptions.IgnoreCase), new("UBER \\*TRIP", RegexOptions.IgnoreCase) }
             },
-            { new("SEGUROS EL_A", RegexOptions.IgnoreCase), new() { new("SEGUROS EL_A-\\d+_ GT", RegexOptions.IgnoreCase) } },
             {
-                new(@"Spotify.*", RegexOptions.IgnoreCase), new()
-                {
-                    new(@"Spotify.*", RegexOptions.IgnoreCase)
-                }
+                new("SEGUROS EL_A", RegexOptions.IgnoreCase),
+                new() { new("SEGUROS EL_A-\\d+_ GT", RegexOptions.IgnoreCase) }
+            },
+            {
+                new(@"Spotify.*", RegexOptions.IgnoreCase),
+                new() { new(@"Spotify.*", RegexOptions.IgnoreCase) }
             }
         };
 
