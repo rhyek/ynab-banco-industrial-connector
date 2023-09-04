@@ -7,7 +7,7 @@ config:
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__AccountId:
     secure: AAABAMPkujClNi+JyohVsry4cQc6os1wtJwa5JTDkBiptUQiosDYa3PM
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__Password:
-    secure: AAABAMXwm6T759fi6MBDn7wY+HE7rJBrKiB403mYXFhlpxsN80ppNLi2vPnI84k=
+    secure: AAABAKwalFiuHHuzflwNJ2zLuK2zUPVRlkUnF7/TuOYGN+Qvwh2Ji3tbs8rFcUo4h9eh4Q==
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__UserId:
     secure: AAABALXLHUGhUEdInXh/zn9KqShdTXA+KH4EDsXDdMpzCxYMfazV
   ynab-banco-industrial-connector.deploy:BANCO_INDUSTRIAL_SCRAPER__Auth__Username:
