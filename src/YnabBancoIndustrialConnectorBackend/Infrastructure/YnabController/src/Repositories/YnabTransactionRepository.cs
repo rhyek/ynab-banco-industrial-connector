@@ -36,6 +36,10 @@ public class YnabTransactionRepository
             {
                 new(@"Spotify.*", RegexOptions.IgnoreCase),
                 new() { new(@"Spotify.*", RegexOptions.IgnoreCase) }
+            },
+            {
+                new(@"PedidosYa SUPERMERCADOS", RegexOptions.IgnoreCase),
+                new() { new(@"PedidosYa SUPERMERCADO GT", RegexOptions.IgnoreCase) }
             }
         };
 
