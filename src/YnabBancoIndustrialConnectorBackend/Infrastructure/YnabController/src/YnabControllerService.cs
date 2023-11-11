@@ -32,22 +32,27 @@ public class YnabControllerService
       reservedBankTransactions.Count);
     var recentYnabTransactions =
       await _ynabTransactionRepository.GetRecent(AccountType.Debit);
-    foreach (var reservedTx in reservedBankTransactions) {
+    foreach (var reservedTx in reservedBankTransactions)
+    {
       var (reference, date, amount) = reservedTx;
       var ynabTx =
         await _ynabTransactionRepository.FindByReference(reference,
           AccountType.Debit,
           recentYnabTransactions);
-      if (ynabTx != null) {
-        if (amount != Math.Abs(ynabTx.Amount)) {
-          if (ynabTx.IsOpen) {
+      if (ynabTx != null)
+      {
+        if (amount != Math.Abs(ynabTx.Amount))
+        {
+          if (ynabTx.IsOpen)
+          {
             _ynabTransactionRepository.UpdateTransactionAmount(
               ynabTx.Id,
               -amount);
           }
         }
       }
-      else {
+      else
+      {
         await _ynabTransactionRepository.CreateTransaction(
           reference,
           AccountType.Debit,
@@ -71,7 +76,8 @@ public class YnabControllerService
       .Where(g => g.Count() > 1)
       .SelectMany(g => g)
       .ToList();
-    if (duplicates.Any()) {
+    if (duplicates.Any())
+    {
       await _messageQueue.SendDuplicateConfirmedReferences(
         references: duplicates.ToArray());
     }
@@ -92,9 +98,11 @@ public class YnabControllerService
       confirmedBankTransactions.Count);
     var recentYnabTransactions =
       await _ynabTransactionRepository.GetRecent(AccountType.Debit);
-    foreach (var confirmedTx in confirmedBankTransactions) {
+    foreach (var confirmedTx in confirmedBankTransactions)
+    {
       if (confirmedTx is
-          {Reference: "179680"}) {
+        { Reference: "179680" })
+      {
         // this reference is duplicated. TODO: handle reference duplications
         continue;
       }
@@ -105,10 +113,12 @@ public class YnabControllerService
           recentYnabTransactions);
 
       // if reserved tx not in ynab, create it
-      if (ynabTx == null) {
+      if (ynabTx == null)
+      {
         if ((DateTime.Today -
              confirmedTx.Date.ToDateTime(TimeOnly.Parse("12:00AM")))
-            .TotalDays <= 60) {
+            .TotalDays <= 60)
+        {
           await _ynabTransactionRepository.CreateTransaction(
             reference: confirmedTx.Reference,
             accountType: AccountType.Debit,
@@ -120,6 +130,10 @@ public class YnabControllerService
             recentTransactions: recentYnabTransactions);
         }
 
+        continue;
+      }
+      else if (ynabTx.Cleared == YnabTransactionCleared.Cleared)
+      {
         continue;
       }
 
@@ -134,7 +148,8 @@ public class YnabControllerService
         myDescription: ynabTx.Metadata.MyDescription,
         overrideDate: ynabTx.Metadata.OverrideDate
       );
-      if (ynabTx.Metadata != whatMetadataShouldBe) {
+      if (ynabTx.Metadata != whatMetadataShouldBe)
+      {
         _ynabTransactionRepository.UpdateTransactionMetadata(ynabTx.Id,
           whatMetadataShouldBe);
       }
@@ -155,21 +170,25 @@ public class YnabControllerService
         YnabTransactionRepository.GetPayeeAndCategoryForDescription(
           finalDescription,
           recentYnabTransactions);
-      if (ynabTx.PayeeId == null && payeeId != null) {
+      if (ynabTx.PayeeId == null && payeeId != null)
+      {
         _ynabTransactionRepository.UpdateTransactionPayee(ynabTx.Id, payeeId);
       }
-      if (ynabTx.CategoryId == null && categoryId != null) {
+      if (ynabTx.CategoryId == null && categoryId != null)
+      {
         _ynabTransactionRepository.UpdateTransactionCategory(ynabTx.Id,
           categoryId);
       }
 
       // if (ynabTx.IsOpen) {
-      if (confirmedTx.Amount != ynabTx.Amount) {
+      if (confirmedTx.Amount != ynabTx.Amount)
+      {
         _ynabTransactionRepository.UpdateTransactionAmount(ynabTx.Id,
           confirmedTx.Amount);
       }
 
-      if (ynabTx.Cleared == YnabTransactionCleared.Uncleared) {
+      if (ynabTx.Cleared == YnabTransactionCleared.Uncleared)
+      {
         _ynabTransactionRepository.UpdateTransactionSetToCleared(
           ynabTx.Id);
       }
